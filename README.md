@@ -9,6 +9,18 @@
 
 ---
 
+## 🌐 Live Deployment & Project Links
+
+| Resource | Link / Access Details |
+|---|---|
+| 💻 **GitHub Repository** | [https://github.com/psryogeshwar-14/serenetrack-forces](https://github.com/psryogeshwar-14/serenetrack-forces) |
+| ⚡ **Live Web Application** | [https://thick-turkeys-invent.loca.lt](https://thick-turkeys-invent.loca.lt) *(Tunnel Password: `103.214.61.125`)* |
+| ☁️ **Render Cloud Production Service** | [https://serenetrack-forces.onrender.com](https://serenetrack-forces.onrender.com) |
+| 🏥 **Live API Health Check** | [https://thick-turkeys-invent.loca.lt/api/health](https://thick-turkeys-invent.loca.lt/api/health) |
+| 📁 **Anonymized HR Dataset Export** | [`/api/forces/export/anonymized-dataset`](https://thick-turkeys-invent.loca.lt/api/forces/export/anonymized-dataset) |
+
+---
+
 ## 📋 Executive Overview & Problem Context
 
 Personnel serving in **Central Armed Police Forces (CAPFs - CRPF, BSF, CISF, ITBP, SSB, Assam Rifles)**, the Armed Forces, and State Police operate under extreme physical strain, combat threats, irregular working hours, extended deployments in hostile hardship zones (Left-Wing Extremism / CoBRA in Bastar & Sukma, High-Altitude counter-insurgency in J&K, rapid riot deployment with RAF), prolonged separation from families, and exposure to traumatic events.
@@ -169,8 +181,8 @@ npm run test:sih
 ### 2. Quickstart
 ```bash
 # Clone the repository
-git clone https://github.com/your-org/SIH01.git
-cd SIH01
+git clone https://github.com/psryogeshwar-14/serenetrack-forces.git
+cd serenetrack-forces
 
 # Install dependencies
 npm install
