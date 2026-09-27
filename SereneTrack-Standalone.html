@@ -1,0 +1,1690 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+  <title>SereneTrack - Offline Stress & Sleep Manager</title>
+  <style>
+    /* RESET & BASE */
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    html {
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+      line-height: 1.5; -webkit-text-size-adjust: 100%; color: #0f172a; background-color: #f8fafc;
+    }
+    body { min-height: 100vh; display: flex; flex-direction: column; }
+    
+    /* LAYOUT UTILITIES */
+    .max-w-7xl { max-width: 80rem; margin-left: auto; margin-right: auto; }
+    .w-full { width: 100%; }
+    .flex { display: flex; }
+    .inline-flex { display: inline-flex; }
+    .grid { display: grid; }
+    .hidden { display: none !important; }
+    .items-center { align-items: center; }
+    .items-start { align-items: flex-start; }
+    .justify-between { justify-content: space-between; }
+    .justify-center { justify-content: center; }
+    .justify-end { justify-content: flex-end; }
+    .flex-col { flex-direction: column; }
+    .flex-1 { flex: 1 1 0%; }
+    .flex-wrap { flex-wrap: wrap; }
+    .shrink-0 { flex-shrink: 0; }
+    .space-between { justify-content: space-between; }
+
+    /* SPACING */
+    .gap-1 { gap: 0.25rem; }
+    .gap-1\.5 { gap: 0.375rem; }
+    .gap-2 { gap: 0.5rem; }
+    .gap-2\.5 { gap: 0.625rem; }
+    .gap-3 { gap: 0.75rem; }
+    .gap-4 { gap: 1rem; }
+    .gap-5 { gap: 1.25rem; }
+    .gap-6 { gap: 1.5rem; }
+    .p-1 { padding: 0.25rem; }
+    .p-1\.5 { padding: 0.375rem; }
+    .p-2 { padding: 0.5rem; }
+    .p-2\.5 { padding: 0.625rem; }
+    .p-3 { padding: 0.75rem; }
+    .p-3\.5 { padding: 0.875rem; }
+    .p-4 { padding: 1rem; }
+    .p-5 { padding: 1.25rem; }
+    .p-6 { padding: 1.5rem; }
+    .px-2 { padding-left: 0.5rem; padding-right: 0.5rem; }
+    .px-2\.5 { padding-left: 0.625rem; padding-right: 0.625rem; }
+    .px-3 { padding-left: 0.75rem; padding-right: 0.75rem; }
+    .px-3\.5 { padding-left: 0.875rem; padding-right: 0.875rem; }
+    .px-4 { padding-left: 1rem; padding-right: 1rem; }
+    .px-5 { padding-left: 1.25rem; padding-right: 1.25rem; }
+    .px-6 { padding-left: 1.5rem; padding-right: 1.5rem; }
+    .py-0\.5 { padding-top: 0.125rem; padding-bottom: 0.125rem; }
+    .py-1 { padding-top: 0.25rem; padding-bottom: 0.25rem; }
+    .py-1\.5 { padding-top: 0.375rem; padding-bottom: 0.375rem; }
+    .py-2 { padding-top: 0.5rem; padding-bottom: 0.5rem; }
+    .py-2\.5 { padding-top: 0.625rem; padding-bottom: 0.625rem; }
+    .py-3 { padding-top: 0.75rem; padding-bottom: 0.75rem; }
+    .mt-1 { margin-top: 0.25rem; }
+    .mt-1\.5 { margin-top: 0.375rem; }
+    .mt-2 { margin-top: 0.5rem; }
+    .mt-3 { margin-top: 0.75rem; }
+    .mt-4 { margin-top: 1rem; }
+    .mb-1 { margin-bottom: 0.25rem; }
+    .mb-2 { margin-bottom: 0.5rem; }
+    .mb-3 { margin-bottom: 0.75rem; }
+    .mb-4 { margin-bottom: 1rem; }
+    .mb-6 { margin-bottom: 1.5rem; }
+
+    /* TYPOGRAPHY */
+    .text-\[10px\] { font-size: 10px; line-height: 14px; }
+    .text-\[11px\] { font-size: 11px; line-height: 15px; }
+    .text-xs { font-size: 0.75rem; line-height: 1rem; }
+    .text-sm { font-size: 0.875rem; line-height: 1.25rem; }
+    .text-base { font-size: 1rem; line-height: 1.5rem; }
+    .text-lg { font-size: 1.125rem; line-height: 1.75rem; }
+    .text-xl { font-size: 1.25rem; line-height: 1.75rem; }
+    .text-2xl { font-size: 1.5rem; line-height: 2rem; }
+    .text-3xl { font-size: 1.875rem; line-height: 2.25rem; }
+    .text-4xl { font-size: 2.25rem; line-height: 2.5rem; }
+    .font-normal { font-weight: 400; }
+    .font-medium { font-weight: 500; }
+    .font-semibold { font-weight: 600; }
+    .font-bold { font-weight: 700; }
+    .font-extrabold { font-weight: 800; }
+    .uppercase { text-transform: uppercase; }
+    .tracking-wider { letter-spacing: 0.05em; }
+    .text-center { text-align: center; }
+    .text-right { text-align: right; }
+    .leading-relaxed { line-height: 1.625; }
+
+    /* PALETTE */
+    .text-slate-400 { color: #94a3b8; }
+    .text-slate-500 { color: #64748b; }
+    .text-slate-600 { color: #475569; }
+    .text-slate-700 { color: #334155; }
+    .text-slate-800 { color: #1e293b; }
+    .text-slate-900 { color: #0f172a; }
+    .text-teal-600 { color: #0d9488; }
+    .text-teal-700 { color: #0f766e; }
+    .text-teal-800 { color: #115e59; }
+    .text-teal-900 { color: #134e4a; }
+    .text-teal-950 { color: #042f2e; }
+    .text-cyan-600 { color: #0891b2; }
+    .text-cyan-700 { color: #0e7490; }
+    .text-cyan-800 { color: #155e75; }
+    .text-amber-600 { color: #d97706; }
+    .text-amber-700 { color: #b45309; }
+    .text-amber-800 { color: #92400e; }
+    .text-rose-600 { color: #e11d48; }
+    .text-rose-700 { color: #be123c; }
+    .text-white { color: #ffffff; }
+
+    .bg-white { background-color: #ffffff; }
+    .bg-slate-50 { background-color: #f8fafc; }
+    .bg-slate-100 { background-color: #f1f5f9; }
+    .bg-slate-200 { background-color: #e2e8f0; }
+    .bg-slate-800 { background-color: #1e293b; }
+    .bg-slate-900 { background-color: #0f172a; }
+    .bg-teal-50 { background-color: #f0fdfa; }
+    .bg-teal-100 { background-color: #ccfbf1; }
+    .bg-teal-200 { background-color: #99f6e4; }
+    .bg-teal-600 { background-color: #0d9488; }
+    .bg-teal-700 { background-color: #0f766e; }
+    .bg-cyan-50 { background-color: #ecfeff; }
+    .bg-cyan-100 { background-color: #cffafe; }
+    .bg-cyan-600 { background-color: #0891b2; }
+    .bg-amber-50 { background-color: #fffbeb; }
+    .bg-amber-100 { background-color: #fef3c7; }
+    .bg-rose-50 { background-color: #fff1f2; }
+    .bg-rose-100 { background-color: #ffe4e6; }
+
+    /* BORDERS & CARDS */
+    .rounded-md { border-radius: 0.375rem; }
+    .rounded-lg { border-radius: 0.5rem; }
+    .rounded-xl { border-radius: 0.75rem; }
+    .rounded-2xl { border-radius: 1rem; }
+    .rounded-full { border-radius: 9999px; }
+    .border { border-width: 1px; border-style: solid; border-color: #e2e8f0; }
+    .border-b { border-bottom-width: 1px; border-bottom-style: solid; border-color: #e2e8f0; }
+    .border-t { border-top-width: 1px; border-top-style: solid; border-color: #e2e8f0; }
+    .border-slate-100 { border-color: #f1f5f9; }
+    .border-slate-200 { border-color: #e2e8f0; }
+    .border-teal-100 { border-color: #ccfbf1; }
+    .border-teal-200 { border-color: #99f6e4; }
+    .border-teal-300 { border-color: #5eead4; }
+    .border-cyan-200 { border-color: #a5f3fc; }
+    .border-amber-200 { border-color: #fde68a; }
+    .border-rose-200 { border-color: #fecdd3; }
+
+    .shadow-xs { box-shadow: 0 1px 2px 0 rgba(0, 0, 0, 0.05); }
+    .shadow-sm { box-shadow: 0 1px 3px 0 rgba(0, 0, 0, 0.1), 0 1px 2px -1px rgba(0, 0, 0, 0.1); }
+    .shadow-md { box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -2px rgba(0, 0, 0, 0.1); }
+    .shadow-lg { box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -4px rgba(0, 0, 0, 0.1); }
+
+    /* BUTTONS */
+    button { font-family: inherit; cursor: pointer; border: none; outline: none; transition: all 0.15s ease; }
+    .btn-primary {
+      background-color: #0d9488; color: #ffffff; font-weight: 600; padding: 0.625rem 1.25rem;
+      border-radius: 0.75rem; display: inline-flex; align-items: center; justify-content: center; gap: 0.5rem;
+      box-shadow: 0 1px 2px 0 rgba(13, 148, 136, 0.2);
+    }
+    .btn-primary:hover { background-color: #0f766e; }
+    .btn-secondary {
+      background-color: #ffffff; color: #334155; font-weight: 600; border: 1px solid #cbd5e1;
+      padding: 0.5rem 1rem; border-radius: 0.75rem; display: inline-flex; align-items: center; justify-content: center; gap: 0.375rem;
+    }
+    .btn-secondary:hover { background-color: #f8fafc; border-color: #94a3b8; }
+    .btn-sm { font-size: 0.75rem; padding: 0.375rem 0.75rem; border-radius: 0.5rem; }
+    .btn-xs { font-size: 11px; padding: 0.25rem 0.5rem; border-radius: 0.375rem; }
+
+    /* INPUTS & RANGES */
+    input[type="text"], input[type="time"], input[type="number"], select, textarea {
+      width: 100%; padding: 0.5rem 0.75rem; font-size: 0.875rem; font-weight: 500; color: #0f172a;
+      background-color: #f8fafc; border: 1px solid #cbd5e1; border-radius: 0.75rem; outline: none;
+      transition: border-color 0.15s ease, background-color 0.15s ease;
+    }
+    input[type="text"]:focus, input[type="time"]:focus, input[type="number"]:focus, select:focus, textarea:focus {
+      border-color: #0d9488; background-color: #ffffff; box-shadow: 0 0 0 3px rgba(13, 148, 136, 0.1);
+    }
+    input[type="range"] {
+      -webkit-appearance: none; width: 100%; height: 6px; background: #e2e8f0; border-radius: 9999px; outline: none; margin: 0.5rem 0;
+    }
+    input[type="range"]::-webkit-slider-thumb {
+      -webkit-appearance: none; appearance: none; width: 18px; height: 18px; border-radius: 50%;
+      background: #0d9488; cursor: pointer; border: 2px solid #ffffff; box-shadow: 0 1px 3px rgba(0,0,0,0.3);
+    }
+
+    /* TOGGLE SWITCHES */
+    .toggle-switch {
+      width: 44px; height: 24px; background-color: #cbd5e1; border-radius: 9999px; position: relative;
+      cursor: pointer; transition: background-color 0.2s ease; shrink-0;
+    }
+    .toggle-switch.active { background-color: #0d9488; }
+    .toggle-thumb {
+      width: 18px; height: 18px; background-color: #ffffff; border-radius: 50%; position: absolute;
+      top: 3px; left: 3px; transition: transform 0.2s ease; box-shadow: 0 1px 2px rgba(0,0,0,0.25);
+    }
+    .toggle-switch.active .toggle-thumb { transform: translateX(20px); }
+
+    /* RESPONSIVE LAYOUT */
+    .grid-cols-1 { grid-template-columns: repeat(1, minmax(0, 1fr)); }
+    @media (min-width: 640px) {
+      .sm\:grid-cols-2 { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+      .sm\:grid-cols-3 { grid-template-columns: repeat(3, minmax(0, 1fr)); }
+      .sm\:grid-cols-4 { grid-template-columns: repeat(4, minmax(0, 1fr)); }
+      .sm\:flex-row { flex-direction: row; }
+      .sm\:text-3xl { font-size: 1.875rem; line-height: 2.25rem; }
+    }
+    @media (min-width: 1024px) {
+      .lg\:grid-cols-12 { grid-template-columns: repeat(12, minmax(0, 1fr)); }
+      .lg\:col-span-5 { grid-column: span 5 / span 5; }
+      .lg\:col-span-6 { grid-column: span 6 / span 6; }
+      .lg\:col-span-7 { grid-column: span 7 / span 7; }
+    }
+
+    /* PACER VISUALIZER */
+    .breath-circle {
+      width: 190px; height: 190px; border-radius: 50%;
+      background: radial-gradient(circle, rgba(13,148,136,0.35) 0%, rgba(13,148,136,0.06) 70%);
+      border: 4px solid #0d9488; display: flex; flex-direction: column; align-items: center; justify-content: center;
+      transition: transform 1.2s cubic-bezier(0.4, 0, 0.2, 1), border-color 0.6s ease, box-shadow 0.6s ease;
+      box-shadow: 0 0 25px rgba(13,148,136,0.25);
+    }
+    .breath-inhale {
+      transform: scale(1.35); border-color: #0d9488;
+      box-shadow: 0 0 45px rgba(13,148,136,0.45);
+      background: radial-gradient(circle, rgba(13,148,136,0.5) 0%, rgba(13,148,136,0.1) 75%);
+    }
+    .breath-hold {
+      transform: scale(1.35); border-color: #0891b2;
+      box-shadow: 0 0 45px rgba(8,145,178,0.45);
+      background: radial-gradient(circle, rgba(8,145,178,0.5) 0%, rgba(8,145,178,0.1) 75%);
+    }
+    .breath-exhale {
+      transform: scale(0.9); border-color: #475569;
+      box-shadow: 0 0 15px rgba(71,85,105,0.2);
+      background: radial-gradient(circle, rgba(71,85,105,0.2) 0%, rgba(71,85,105,0.03) 70%);
+    }
+    .breath-rest {
+      transform: scale(0.9); border-color: #94a3b8;
+      box-shadow: 0 0 10px rgba(148,163,184,0.15);
+      background: radial-gradient(circle, rgba(148,163,184,0.15) 0%, rgba(148,163,184,0.02) 70%);
+    }
+
+    /* ICONS */
+    .icon {
+      width: 1.125rem; height: 1.125rem; display: inline-block; stroke-width: 2;
+      stroke: currentColor; fill: none; stroke-linecap: round; stroke-linejoin: round; vertical-align: middle;
+    }
+
+    /* PRINT STYLES FOR CLINICAL SUMMARY */
+    @media print {
+      header, .no-print, button, .tabs-nav { display: none !important; }
+      body { background: #ffffff !important; color: #000000 !important; font-size: 12pt; }
+      .bg-white { background: transparent !important; }
+      .shadow-xs, .shadow-sm, .shadow-md { box-shadow: none !important; }
+      .border { border: 1px solid #cbd5e1 !important; }
+      .print-page-break { break-before: page; }
+    }
+  </style>
+</head>
+<body class="p-0">
+
+  <!-- ============================================== -->
+  <!-- TOP APPLICATION HEADER                         -->
+  <!-- ============================================== -->
+  <header class="bg-white border-b border-slate-200 sticky top-0 z-40 shadow-xs">
+    <div class="max-w-7xl px-4 sm:px-6 py-3 flex items-center justify-between gap-4">
+      
+      <!-- Brand & Offline Badge -->
+      <div class="flex items-center gap-3">
+        <div class="w-10 h-10 rounded-2xl bg-teal-600 flex items-center justify-center text-white shadow-sm shrink-0">
+          <svg class="icon w-5 h-5" viewBox="0 0 24 24"><path d="M22 12h-4l-3 9L9 3l-3 9H2"/></svg>
+        </div>
+        <div>
+          <div class="flex items-center gap-2">
+            <span class="text-lg font-bold text-slate-900">SereneTrack</span>
+            <span class="text-[11px] font-bold bg-teal-50 text-teal-800 border border-teal-200 px-2 py-0.5 rounded-full">
+              Zero-Dependency Offline App
+            </span>
+          </div>
+          <p class="text-xs text-slate-500 hidden sm:block">Predictive Stress & Restorative Sleep Manager</p>
+        </div>
+      </div>
+
+      <!-- Main Navigation Tabs -->
+      <nav class="tabs-nav flex items-center p-1 bg-slate-100 rounded-xl border border-slate-200">
+        <button id="tab-btn-dashboard" onclick="setTab('dashboard')" class="px-3.5 py-1.5 rounded-lg text-xs font-semibold bg-white text-teal-800 shadow-xs flex items-center gap-1.5">
+          <svg class="icon w-3.5 h-3.5 text-teal-600" viewBox="0 0 24 24"><path d="M22 12h-4l-3 9L9 3l-3 9H2"/></svg>
+          <span>Daily Dashboard</span>
+        </button>
+        <button id="tab-btn-trends" onclick="setTab('trends')" class="px-3.5 py-1.5 rounded-lg text-xs font-semibold text-slate-600 hover:text-slate-900 flex items-center gap-1.5">
+          <svg class="icon w-3.5 h-3.5 text-slate-400" viewBox="0 0 24 24"><polyline points="22 7 13.5 15.5 8.5 10.5 2 17"/><polyline points="16 7 22 7 22 13"/></svg>
+          <span>Trends & Routines</span>
+        </button>
+        <button id="tab-btn-settings" onclick="setTab('settings')" class="px-3.5 py-1.5 rounded-lg text-xs font-semibold text-slate-600 hover:text-slate-900 flex items-center gap-1.5">
+          <svg class="icon w-3.5 h-3.5 text-slate-400" viewBox="0 0 24 24"><circle cx="12" cy="12" r="3"/><path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 0 1 0 2.83 2 2 0 0 1-2.83 0l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-2 2 2 2 0 0 1-2-2v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 0 1-2.83 0 2 2 0 0 1 0-2.83l.06-.06a1.65 1.65 0 0 0 .33-1.82 1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1-2-2 2 2 0 0 1 2-2h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 0 1 0-2.83 2 2 0 0 1 2.83 0l.06.06a1.65 1.65 0 0 0 1.82.33H9a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 2-2 2 2 0 0 1 2 2v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 0 1 2.83 0 2 2 0 0 1 0 2.83l-.06.06a1.65 1.65 0 0 0-.33 1.82V9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 2 2 2 2 0 0 1-2 2h-.09a1.65 1.65 0 0 0-1.51 1z"/></svg>
+          <span>Settings & Export</span>
+        </button>
+      </nav>
+
+      <!-- User Avatar / Profile Summary -->
+      <div class="flex items-center gap-2.5">
+        <div id="header-avatar" class="w-8 h-8 rounded-full bg-teal-600 text-white font-bold text-xs flex items-center justify-center overflow-hidden border border-white shadow-xs shrink-0">
+          AM
+        </div>
+        <span id="header-name" class="text-xs font-bold text-slate-800 hidden md:block">Alex Morgan</span>
+      </div>
+
+    </div>
+  </header>
+
+  <!-- OFFLINE PRIVACY BANNER -->
+  <div class="max-w-7xl w-full px-4 sm:px-6 pt-4">
+    <div class="flex flex-col sm:flex-row sm:items-center justify-between p-3 px-4 rounded-xl bg-teal-50 border border-teal-200 text-xs text-teal-950 gap-2">
+      <div class="flex items-center gap-2">
+        <svg class="icon text-teal-600 shrink-0" viewBox="0 0 24 24"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/><path d="m9 12 2 2 4-4"/></svg>
+        <span><strong>100% Offline &amp; Private:</strong> Operating completely within your browser sandbox. Zero data transmission, zero servers, zero cookies.</span>
+      </div>
+      <div class="flex items-center gap-2 shrink-0">
+        <button onclick="window.print()" class="btn-secondary btn-sm">
+          <svg class="icon w-3.5 h-3.5" viewBox="0 0 24 24"><polyline points="6 9 6 2 18 2 18 9"/><path d="M6 18H4a2 2 0 0 1-2-2v-5a2 2 0 0 1 2-2h16a2 2 0 0 1 2 2v5a2 2 0 0 1-2 2h-2"/><rect width="12" height="8" x="6" y="14"/></svg>
+          <span>Print Summary</span>
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <!-- ============================================== -->
+  <!-- MAIN ROUTE / PAGE CONTAINERS                   -->
+  <!-- ============================================== -->
+  <main class="max-w-7xl w-full px-4 sm:px-6 py-6 flex-1">
+    
+    <!-- ============================================================== -->
+    <!-- PAGE 1: DAILY DASHBOARD & AUTONOMIC COCKPIT                    -->
+    <!-- ============================================================== -->
+    <div id="view-dashboard" class="space-y-6">
+      
+      <!-- Date Navigator & Quick Action Buttons -->
+      <div class="bg-white rounded-2xl p-5 border border-slate-200 shadow-xs flex flex-col md:flex-row items-center justify-between gap-4">
+        <div>
+          <div class="flex items-center gap-2">
+            <span class="text-xs font-bold uppercase tracking-wider text-teal-800 bg-teal-100 px-2.5 py-0.5 rounded-md">
+              Today's Protocol
+            </span>
+            <span id="display-date-title" class="text-xs font-medium text-slate-500">Wednesday, Sep 9</span>
+          </div>
+          <h1 class="text-2xl sm:text-3xl font-bold text-slate-900 mt-1">Daily Stress &amp; Restorative Sleep Cockpit</h1>
+          <p class="text-xs text-slate-500">Record working hours, sleep duration, and daily ergonomics to evaluate autonomic strain.</p>
+        </div>
+
+        <!-- Quick Log One-Tap Buttons -->
+        <div class="flex flex-wrap items-center gap-2">
+          <button onclick="quickLog('water')" class="btn-secondary btn-sm" title="Log 1 glass of water">
+            <span>+💧 Water (8oz)</span>
+          </button>
+          <button onclick="quickLog('break')" class="btn-secondary btn-sm" title="Log a 5-minute break">
+            <span>+🧘 Micro-Break</span>
+          </button>
+          <button onclick="quickLog('stretch')" class="btn-secondary btn-sm" title="Log 5 min mobility stretch">
+            <span>+🤸 Stretch (5m)</span>
+          </button>
+          <button onclick="quickLog('walk')" class="btn-secondary btn-sm" title="Log 10 min cadence walk">
+            <span>+🚶 Walk (10m)</span>
+          </button>
+        </div>
+      </div>
+
+      <!-- Grid: Gauge (5 cols) + Sleep Monitor (7 cols) -->
+      <div class="grid grid-cols-1 lg:grid-cols-12 gap-6">
+        
+        <!-- LEFT: Stress Score Circular Radial Gauge -->
+        <div class="lg:col-span-5 bg-white rounded-2xl p-6 border border-slate-200 shadow-xs flex flex-col items-center justify-center text-center">
+          <div class="w-full flex items-center justify-between border-b border-slate-100 pb-2.5 mb-2">
+            <span class="text-xs font-bold uppercase tracking-wider text-slate-500">Autonomic Strain Prediction</span>
+            <span id="gauge-badge" class="text-xs font-bold px-2.5 py-0.5 rounded-full bg-teal-100 text-teal-800">
+              Low Strain
+            </span>
+          </div>
+          
+          <!-- Circular SVG Gauge -->
+          <div class="relative w-48 h-48 my-3 flex items-center justify-center">
+            <svg class="w-full h-full transform -rotate-90" viewBox="0 0 120 120">
+              <circle cx="60" cy="60" r="50" fill="none" stroke="#f1f5f9" stroke-width="10"></circle>
+              <circle id="gauge-circle" cx="60" cy="60" r="50" fill="none" stroke="#0d9488" stroke-width="10" stroke-linecap="round" stroke-dasharray="314.15" stroke-dashoffset="150" style="transition: stroke-dashoffset 0.8s ease, stroke 0.5s ease;"></circle>
+            </svg>
+            <div class="absolute flex flex-col items-center justify-center">
+              <span id="gauge-score" class="text-4xl font-extrabold text-slate-900">42</span>
+              <span class="text-[11px] font-semibold text-slate-500">out of 100</span>
+            </div>
+          </div>
+
+          <p id="gauge-summary" class="text-xs text-slate-600 max-w-xs mb-3">
+            Physiological load is well regulated within safe autonomic recovery margins.
+          </p>
+
+          <!-- Primary Stress Catalysts Identified -->
+          <div class="w-full bg-slate-50 p-3.5 rounded-xl border border-slate-200 text-left text-xs space-y-1.5">
+            <div class="flex items-center justify-between">
+              <span class="font-bold text-slate-800">Primary Stress Catalysts:</span>
+              <span class="text-[10px] text-slate-500">Biometric &amp; Ergonomic</span>
+            </div>
+            <ul id="drivers-list" class="space-y-1 text-slate-600 text-[11px]">
+              <li>• Consistent work pacing maintainable.</li>
+            </ul>
+          </div>
+        </div>
+
+        <!-- RIGHT: Restorative Sleep & Timing Monitor (7 cols) -->
+        <div class="lg:col-span-7 bg-white rounded-2xl p-6 border border-slate-200 shadow-xs space-y-4 flex flex-col justify-between">
+          <div>
+            <div class="flex items-center justify-between border-b border-slate-100 pb-3">
+              <div class="flex items-center gap-2">
+                <svg class="icon text-teal-600" viewBox="0 0 24 24"><path d="M12 3a6 6 0 0 0 9 9 9 9 0 1 1-9-9Z"/></svg>
+                <h2 class="text-base font-bold text-slate-900">Restorative Sleep Timing &amp; Deficit Calculator</h2>
+              </div>
+              <span class="text-xs font-bold text-teal-800 bg-teal-100 px-2.5 py-0.5 rounded-full">
+                Max 8.0h Restorative Ceiling
+              </span>
+            </div>
+
+            <!-- 3 Stat Cards -->
+            <div class="grid grid-cols-1 sm:grid-cols-3 gap-3 my-4">
+              <div class="p-3 bg-slate-50 rounded-xl border border-slate-200">
+                <span class="text-xs text-slate-500 block">Actual Sleep Duration</span>
+                <span id="sleep-actual-display" class="text-xl font-bold text-slate-900">7.2 hrs</span>
+                <span class="text-[11px] text-teal-700 block">Recorded last night</span>
+              </div>
+              <div class="p-3 bg-slate-50 rounded-xl border border-slate-200">
+                <span class="text-xs text-slate-500 block">Restorative Deficit</span>
+                <span id="sleep-deficit-display" class="text-xl font-bold text-amber-600">0.8 hrs</span>
+                <span class="text-[11px] text-slate-500 block">Under 8.0h clinical limit</span>
+              </div>
+              <div class="p-3 bg-slate-50 rounded-xl border border-slate-200">
+                <span class="text-xs text-slate-500 block">Target Bedtime</span>
+                <span id="sleep-bedtime-display" class="text-xl font-bold text-teal-800">22:15</span>
+                <span id="sleep-wake-target-sub" class="text-[11px] text-slate-500 block">For 06:30 wake-up</span>
+              </div>
+            </div>
+
+            <!-- Clinical Sleep Advice Banner -->
+            <div class="p-3.5 bg-teal-50 rounded-xl border border-teal-200 text-xs text-teal-950 flex items-start gap-2.5">
+              <svg class="icon text-teal-700 shrink-0 mt-0.5" viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><line x1="12" y1="16" x2="12" y2="12"/><line x1="12" y1="8" x2="12.01" y2="8"/></svg>
+              <span id="sleep-recommendation-text" class="leading-relaxed">
+                You are 0.8h short of the optimal 8.0h restorative ceiling. Prioritize wind-down tonight at 22:15 to restore full neuro-cellular equilibrium.
+              </span>
+            </div>
+          </div>
+
+          <!-- Sleep Architecture Progress Bar -->
+          <div class="pt-2">
+            <div class="flex justify-between text-xs font-semibold text-slate-700 mb-1">
+              <span>Restorative Sleep Target Achievement</span>
+              <span id="sleep-percent-text">90% of 8.0h</span>
+            </div>
+            <div class="w-full h-3 bg-slate-100 rounded-full overflow-hidden">
+              <div id="sleep-progress-bar" class="h-full bg-teal-600 rounded-full" style="width: 90%; transition: width 0.5s ease;"></div>
+            </div>
+          </div>
+        </div>
+
+      </div>
+
+      <!-- DAILY BIOMETRIC & ERGONOMIC INPUT FORM -->
+      <div class="bg-white rounded-2xl p-6 border border-slate-200 shadow-xs space-y-5">
+        <div class="flex items-center justify-between border-b border-slate-100 pb-3">
+          <div>
+            <h2 class="text-base font-bold text-slate-900">Biometric &amp; Ergonomic Input Form</h2>
+            <p class="text-xs text-slate-500">Live predictions update as you adjust sliders</p>
+          </div>
+          <span class="text-xs font-bold text-teal-700 bg-teal-50 px-2 py-0.5 rounded border border-teal-200">
+            Auto-Sync
+          </span>
+        </div>
+
+        <form id="daily-log-form" onsubmit="handleFormSubmit(event)" class="space-y-5">
+          <!-- Primary 4 Range Sliders -->
+          <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
+            
+            <!-- Work Hours -->
+            <div class="p-3 bg-slate-50 rounded-xl border border-slate-200">
+              <div class="flex justify-between text-xs font-bold text-slate-700 mb-1">
+                <label for="input-work">Working Hours</label>
+                <span id="val-work" class="text-teal-700">8.0 hrs</span>
+              </div>
+              <input type="range" id="input-work" min="0" max="16" step="0.5" value="8" oninput="updateLiveCalculation()">
+              <div class="flex justify-between text-[10px] text-slate-400">
+                <span>0h</span><span>8h standard</span><span>16h</span>
+              </div>
+            </div>
+
+            <!-- Sleep Hours -->
+            <div class="p-3 bg-slate-50 rounded-xl border border-slate-200">
+              <div class="flex justify-between text-xs font-bold text-slate-700 mb-1">
+                <label for="input-sleep">Sleep Duration</label>
+                <span id="val-sleep" class="text-teal-700">7.2 hrs</span>
+              </div>
+              <input type="range" id="input-sleep" min="2" max="12" step="0.1" value="7.2" oninput="updateLiveCalculation()">
+              <div class="flex justify-between text-[10px] text-slate-400">
+                <span>2h</span><span class="text-teal-700 font-bold">8.0h Cap</span><span>12h</span>
+              </div>
+            </div>
+
+            <!-- Sleep Quality -->
+            <div class="p-3 bg-slate-50 rounded-xl border border-slate-200">
+              <div class="flex justify-between text-xs font-bold text-slate-700 mb-1">
+                <label for="input-quality">Sleep Quality</label>
+                <span id="val-quality" class="text-teal-700">4 / 5</span>
+              </div>
+              <input type="range" id="input-quality" min="1" max="5" step="1" value="4" oninput="updateLiveCalculation()">
+              <div class="flex justify-between text-[10px] text-slate-400">
+                <span>1 (Poor)</span><span>3 (Fair)</span><span>5 (Deep)</span>
+              </div>
+            </div>
+
+            <!-- Fatigue Level -->
+            <div class="p-3 bg-slate-50 rounded-xl border border-slate-200">
+              <div class="flex justify-between text-xs font-bold text-slate-700 mb-1">
+                <label for="input-fatigue">Fatigue Index</label>
+                <span id="val-fatigue" class="text-teal-700">4 / 10</span>
+              </div>
+              <input type="range" id="input-fatigue" min="1" max="10" step="1" value="4" oninput="updateLiveCalculation()">
+              <div class="flex justify-between text-[10px] text-slate-400">
+                <span>1 (Energetic)</span><span>5</span><span>10 (Exhausted)</span>
+              </div>
+            </div>
+
+          </div>
+
+          <!-- Secondary Ergonomic Indicators -->
+          <div class="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-5 gap-3">
+            <div>
+              <label class="text-xs font-bold text-slate-700 block mb-1">Screen Time (h)</label>
+              <input type="number" id="input-screen" min="0" max="18" value="7.5" step="0.5" onchange="updateLiveCalculation()">
+            </div>
+            <div>
+              <label class="text-xs font-bold text-slate-700 block mb-1">Mindful Breaks</label>
+              <input type="number" id="input-breaks" min="0" max="20" value="3" onchange="updateLiveCalculation()">
+            </div>
+            <div>
+              <label class="text-xs font-bold text-slate-700 block mb-1">Hydration (cups)</label>
+              <input type="number" id="input-water" min="0" max="20" value="6" onchange="updateLiveCalculation()">
+            </div>
+            <div>
+              <label class="text-xs font-bold text-slate-700 block mb-1">Caffeine (cups)</label>
+              <input type="number" id="input-caffeine" min="0" max="10" value="2" onchange="updateLiveCalculation()">
+            </div>
+            <div>
+              <label class="text-xs font-bold text-slate-700 block mb-1">Movement (mins)</label>
+              <input type="number" id="input-movement" min="0" max="180" value="30" onchange="updateLiveCalculation()">
+            </div>
+          </div>
+
+          <!-- Subjective Mood Selector -->
+          <div>
+            <label class="text-xs font-bold text-slate-700 block mb-2">Subjective Mood &amp; Neuro-State</label>
+            <div id="mood-pill-container" class="flex flex-wrap gap-2">
+              <button type="button" onclick="selectMood('calm')" class="mood-pill px-3.5 py-1.5 rounded-lg border text-xs font-semibold bg-teal-600 text-white border-teal-600 shadow-xs" data-mood="calm">😌 Calm</button>
+              <button type="button" onclick="selectMood('energetic')" class="mood-pill px-3.5 py-1.5 rounded-lg border text-xs font-semibold bg-slate-50 text-slate-700 border-slate-200" data-mood="energetic">⚡ Energetic</button>
+              <button type="button" onclick="selectMood('content')" class="mood-pill px-3.5 py-1.5 rounded-lg border text-xs font-semibold bg-slate-50 text-slate-700 border-slate-200" data-mood="content">🌱 Content</button>
+              <button type="button" onclick="selectMood('neutral')" class="mood-pill px-3.5 py-1.5 rounded-lg border text-xs font-semibold bg-slate-50 text-slate-700 border-slate-200" data-mood="neutral">😐 Neutral</button>
+              <button type="button" onclick="selectMood('anxious')" class="mood-pill px-3.5 py-1.5 rounded-lg border text-xs font-semibold bg-slate-50 text-slate-700 border-slate-200" data-mood="anxious">😰 Anxious</button>
+              <button type="button" onclick="selectMood('exhausted')" class="mood-pill px-3.5 py-1.5 rounded-lg border text-xs font-semibold bg-slate-50 text-slate-700 border-slate-200" data-mood="exhausted">😴 Exhausted</button>
+            </div>
+          </div>
+
+          <!-- Daily Notes Field -->
+          <div>
+            <label class="text-xs font-bold text-slate-700 block mb-1">Daily Reflections &amp; Physical Triggers (Optional)</label>
+            <textarea id="input-notes" rows="2" placeholder="e.g., Heavy deadline afternoon, tight shoulders, took 15m walk after lunch."></textarea>
+          </div>
+
+          <!-- Save Button -->
+          <div class="flex items-center justify-between pt-2 border-t border-slate-100">
+            <span class="text-xs text-slate-500">Saved instantly to offline local browser database</span>
+            <button type="submit" class="btn-primary">
+              <svg class="icon" viewBox="0 0 24 24"><path d="M19 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11l5 5v11a2 2 0 0 1-2 2z"/><polyline points="17 21 17 13 7 13 7 21"/><polyline points="7 3 7 8 15 8"/></svg>
+              <span>Save &amp; Update Today's Log</span>
+            </button>
+          </div>
+        </form>
+      </div>
+
+    </div>
+
+    <!-- ============================================================== -->
+    <!-- PAGE 2: 7-DAY TRENDS & PRESCRIBED MINDFUL STUDIO               -->
+    <!-- ============================================================== -->
+    <div id="view-trends" class="space-y-6 hidden">
+      
+      <!-- Top Title Banner -->
+      <div class="bg-white rounded-2xl p-5 border border-slate-200 shadow-xs">
+        <span class="text-xs font-bold uppercase tracking-wider text-cyan-700 bg-cyan-50 px-2.5 py-0.5 rounded-md border border-cyan-200">
+          Cognitive Analytics &amp; Interventions
+        </span>
+        <h1 class="text-2xl sm:text-3xl font-bold text-slate-900 mt-1">7-Day Stress Trajectory &amp; Mindful Studio</h1>
+        <p class="text-xs text-slate-500">Interactive Bezier curve analytics, stress-matched exercise protocols, and neuro-respiratory pacer.</p>
+      </div>
+
+      <!-- 7-DAY INTERACTIVE SPLINE GRAPH -->
+      <div class="bg-white rounded-2xl p-6 border border-slate-200 shadow-xs space-y-4">
+        <div class="flex flex-col sm:flex-row sm:items-center justify-between border-b border-slate-100 pb-3 gap-2">
+          <div class="flex items-center gap-2">
+            <svg class="icon text-teal-600" viewBox="0 0 24 24"><line x1="18" y1="20" x2="18" y2="10"/><line x1="12" y1="20" x2="12" y2="4"/><line x1="6" y1="20" x2="6" y2="14"/></svg>
+            <h2 class="text-base font-bold text-slate-900">Autonomic Stress Load Trajectory (Past 7 Days)</h2>
+          </div>
+          <div class="flex items-center gap-3 text-xs">
+            <span class="flex items-center gap-1"><span class="w-2.5 h-2.5 rounded-full bg-teal-500 inline-block"></span> Low (&lt;35)</span>
+            <span class="flex items-center gap-1"><span class="w-2.5 h-2.5 rounded-full bg-amber-500 inline-block"></span> Moderate (36-60)</span>
+            <span class="flex items-center gap-1"><span class="w-2.5 h-2.5 rounded-full bg-rose-500 inline-block"></span> Elevated (61+)</span>
+          </div>
+        </div>
+
+        <!-- SVG Interactive Spline Graph -->
+        <div class="w-full overflow-x-auto">
+          <svg id="trend-svg" class="w-full h-56 min-w-[550px]" viewBox="0 0 700 220">
+            <!-- Dynamically populated Bezier path and interactive circles -->
+          </svg>
+        </div>
+
+        <!-- Selected Day Inspection Card (Updates on hover or click) -->
+        <div id="graph-inspector-card" class="p-4 rounded-xl bg-slate-50 border border-slate-200 flex flex-col sm:flex-row items-center justify-between gap-3 text-xs">
+          <div class="flex items-center gap-3">
+            <div class="w-10 h-10 rounded-xl bg-teal-100 text-teal-800 font-extrabold flex items-center justify-center text-sm" id="insp-score">
+              42
+            </div>
+            <div>
+              <span id="insp-date" class="font-bold text-slate-900 block text-sm">Today (Active Log)</span>
+              <span id="insp-details" class="text-slate-600">Sleep: 7.2h (0.8h deficit) • Fatigue: 4/10 • Work: 8.0h</span>
+            </div>
+          </div>
+          <div id="insp-badge" class="px-2.5 py-1 rounded-full bg-teal-100 text-teal-800 font-bold text-xs">
+            Moderate Strain
+          </div>
+        </div>
+
+        <!-- 4 Summary Stat Cards -->
+        <div class="grid grid-cols-2 sm:grid-cols-4 gap-3 pt-1">
+          <div class="p-3 bg-slate-50 rounded-xl border border-slate-200 text-center">
+            <span class="text-xs text-slate-500 block">7-Day Average</span>
+            <span id="trend-avg" class="text-xl font-bold text-slate-900">46</span>
+            <span class="text-[10px] text-slate-400 block">Autonomic load</span>
+          </div>
+          <div class="p-3 bg-slate-50 rounded-xl border border-slate-200 text-center">
+            <span class="text-xs text-slate-500 block">Peak Stress Day</span>
+            <span id="trend-peak" class="text-xl font-bold text-rose-600">62</span>
+            <span class="text-[10px] text-slate-400 block">Max recorded</span>
+          </div>
+          <div class="p-3 bg-slate-50 rounded-xl border border-slate-200 text-center">
+            <span class="text-xs text-slate-500 block">Lowest Stress Day</span>
+            <span id="trend-low" class="text-xl font-bold text-teal-700">32</span>
+            <span class="text-[10px] text-slate-400 block">Best recovery</span>
+          </div>
+          <div class="p-3 bg-slate-50 rounded-xl border border-slate-200 text-center">
+            <span class="text-xs text-slate-500 block">Average Sleep</span>
+            <span id="trend-avg-sleep" class="text-xl font-bold text-teal-800">7.3h</span>
+            <span class="text-[10px] text-slate-400 block">Target 8.0h max</span>
+          </div>
+        </div>
+      </div>
+
+      <!-- TWO INTERVENTION PANELS: EXERCISE ROUTINES + INTERACTIVE PACER -->
+      <div class="grid grid-cols-1 lg:grid-cols-12 gap-6">
+        
+        <!-- EXERCISE ROUTINES (6 cols) -->
+        <div class="lg:col-span-6 bg-white rounded-2xl p-6 border border-slate-200 shadow-xs space-y-4">
+          <div class="flex items-center justify-between border-b border-slate-100 pb-3">
+            <div class="flex items-center gap-2">
+              <svg class="icon text-teal-600" viewBox="0 0 24 24"><path d="M18 20V10"/><path d="M12 20V4"/><path d="M6 20v-6"/></svg>
+              <h2 class="text-base font-bold text-slate-900">Stress-Matched Exercise Protocols</h2>
+            </div>
+            <span class="text-xs font-semibold text-teal-800 bg-teal-100 px-2 py-0.5 rounded">Adaptive Match</span>
+          </div>
+
+          <p class="text-xs text-slate-600">Prescribed protocols to modulate autonomic nervous tone without elevating cortisol spikes.</p>
+
+          <!-- Routine Cards -->
+          <div class="space-y-3">
+            
+            <!-- Routine 1 -->
+            <div class="p-4 rounded-xl bg-slate-50 border border-slate-200 space-y-2">
+              <div class="flex justify-between items-start">
+                <div>
+                  <h3 class="text-sm font-bold text-slate-900">Restorative Yin Yoga &amp; Thoracic Release</h3>
+                  <span class="text-[11px] text-teal-700 font-semibold">Duration: 15 mins • Low Intensity</span>
+                </div>
+                <button onclick="startRoutineTimer('Yin Yoga & Thoracic Release', 15)" class="btn-secondary btn-sm">Start (15m)</button>
+              </div>
+              <p class="text-xs text-slate-600">Prolonged passive floor postures downregulate sympathetic signaling and ease cervical strain.</p>
+            </div>
+
+            <!-- Routine 2 -->
+            <div class="p-4 rounded-xl bg-slate-50 border border-slate-200 space-y-2">
+              <div class="flex justify-between items-start">
+                <div>
+                  <h3 class="text-sm font-bold text-slate-900">Rhythmic Cadence Walk &amp; Optic Flow</h3>
+                  <span class="text-[11px] text-teal-700 font-semibold">Duration: 20 mins • Gentle Cadence</span>
+                </div>
+                <button onclick="startRoutineTimer('Cadence Walk & Optic Flow', 20)" class="btn-secondary btn-sm">Start (20m)</button>
+              </div>
+              <p class="text-xs text-slate-600">Bilateral eye movements during outdoor stride attenuate amygdala reactivity and encourage neural resets.</p>
+            </div>
+
+            <!-- Routine 3 -->
+            <div class="p-4 rounded-xl bg-slate-50 border border-slate-200 space-y-2">
+              <div class="flex justify-between items-start">
+                <div>
+                  <h3 class="text-sm font-bold text-slate-900">Somatic Tremoring &amp; Vagal Reset</h3>
+                  <span class="text-[11px] text-teal-700 font-semibold">Duration: 10 mins • Neurogenic Reset</span>
+                </div>
+                <button onclick="startRoutineTimer('Somatic Tremoring & Vagal Reset', 10)" class="btn-secondary btn-sm">Start (10m)</button>
+              </div>
+              <p class="text-xs text-slate-600">Rhythmic shaking and vagus nerve hums discharge accumulated muscular tension and restore tone.</p>
+            </div>
+
+          </div>
+
+          <!-- Active Stopwatch Display Banner -->
+          <div id="exercise-timer-card" class="p-4 rounded-xl bg-teal-50 border border-teal-200 hidden space-y-2.5">
+            <div class="flex justify-between items-center">
+              <div>
+                <span class="text-[10px] font-bold uppercase tracking-wider text-teal-700 block">Active Protocol</span>
+                <span id="active-routine-name" class="text-xs font-bold text-teal-900">Routine Active</span>
+              </div>
+              <span id="active-timer-display" class="text-2xl font-extrabold text-teal-800">15:00</span>
+            </div>
+            <div class="flex gap-2">
+              <button id="btn-toggle-ex-timer" onclick="toggleExerciseTimer()" class="btn-primary btn-sm flex-1">Pause</button>
+              <button onclick="resetExerciseTimer()" class="btn-secondary btn-sm">Reset</button>
+            </div>
+          </div>
+        </div>
+
+        <!-- NEURO-RESPIRATORY BREATHING STUDIO (6 cols) -->
+        <div class="lg:col-span-6 bg-white rounded-2xl p-6 border border-slate-200 shadow-xs flex flex-col items-center justify-between text-center space-y-4">
+          <div class="w-full flex items-center justify-between border-b border-slate-100 pb-3">
+            <div class="flex items-center gap-2">
+              <svg class="icon text-teal-600" viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><path d="m10 15 5-3-5-3v6Z"/></svg>
+              <h2 class="text-base font-bold text-slate-900">Neuro-Respiratory Breathing Studio</h2>
+            </div>
+            <span class="text-xs font-semibold text-teal-800 bg-teal-100 px-2 py-0.5 rounded">432 Hz Synthesizer</span>
+          </div>
+
+          <!-- Pacer Mode Selectors -->
+          <div class="flex flex-wrap justify-center gap-1.5 p-1 bg-slate-100 rounded-xl w-full">
+            <button onclick="setPacerMode('box')" id="pacer-btn-box" class="px-2.5 py-1 text-xs font-semibold rounded-lg bg-white text-teal-800 shadow-xs">Box (4-4-4-4)</button>
+            <button onclick="setPacerMode('sleep')" id="pacer-btn-sleep" class="px-2.5 py-1 text-xs font-semibold rounded-lg text-slate-600">4-7-8 Sleep</button>
+            <button onclick="setPacerMode('coherent')" id="pacer-btn-coherent" class="px-2.5 py-1 text-xs font-semibold rounded-lg text-slate-600">5-5 Coherent</button>
+            <button onclick="setPacerMode('sigh')" id="pacer-btn-sigh" class="px-2.5 py-1 text-xs font-semibold rounded-lg text-slate-600">Physiological Sigh</button>
+          </div>
+
+          <!-- Expanding / Contracting Animated Circle Visualizer -->
+          <div class="my-4 flex items-center justify-center h-52 w-full">
+            <div id="pacer-circle" class="breath-circle">
+              <span id="pacer-phase" class="text-lg font-bold text-teal-800 uppercase tracking-wide">Ready</span>
+              <span id="pacer-seconds" class="text-4xl font-extrabold text-slate-900 my-0.5">4s</span>
+              <span id="pacer-cycles" class="text-[11px] font-semibold text-slate-500">Cycle 0</span>
+            </div>
+          </div>
+
+          <!-- Pacer Action Controls -->
+          <div class="flex flex-wrap gap-2 justify-center w-full">
+            <button id="pacer-toggle-btn" onclick="togglePacer()" class="btn-primary flex-1 max-w-xs">
+              <svg class="icon" viewBox="0 0 24 24"><polygon points="5 3 19 12 5 21 5 3"/></svg>
+              <span id="pacer-toggle-text">Begin Breathing Session</span>
+            </button>
+            <button onclick="playChime(432)" class="btn-secondary" title="Test 432 Hz bell chime">
+              <svg class="icon" viewBox="0 0 24 24"><polygon points="11 5 6 9 2 9 2 15 6 15 11 19 11 5"/><path d="M15.54 8.46a5 5 0 0 1 0 7.07"/></svg>
+              <span>Test Bell</span>
+            </button>
+          </div>
+        </div>
+
+      </div>
+
+    </div>
+
+    <!-- ============================================================== -->
+    <!-- PAGE 3: SETTINGS, PROFILE & CLINICAL PDF EXPORT                -->
+    <!-- ============================================================== -->
+    <div id="view-settings" class="space-y-6 hidden">
+      
+      <!-- Top Title Banner -->
+      <div class="bg-white rounded-2xl p-5 border border-slate-200 shadow-xs flex flex-col sm:flex-row items-center justify-between gap-4">
+        <div>
+          <span class="text-xs font-bold uppercase tracking-wider text-slate-700 bg-slate-100 px-2.5 py-0.5 rounded-md">
+            Profile &amp; Clinical Portability
+          </span>
+          <h1 class="text-2xl sm:text-3xl font-bold text-slate-900 mt-1">Profile, Reminders &amp; Export</h1>
+          <p class="text-xs text-slate-500">Manage offline profile details, photo avatar, notification alerts, and generate PDF summaries.</p>
+        </div>
+
+        <button onclick="window.print()" class="btn-primary">
+          <svg class="icon" viewBox="0 0 24 24"><polyline points="6 9 6 2 18 2 18 9"/><path d="M6 18H4a2 2 0 0 1-2-2v-5a2 2 0 0 1 2-2h16a2 2 0 0 1 2 2v5a2 2 0 0 1-2 2h-2"/><rect width="12" height="8" x="6" y="14"/></svg>
+          <span>Export Clinical PDF</span>
+        </button>
+      </div>
+
+      <div class="grid grid-cols-1 lg:grid-cols-12 gap-6">
+        
+        <!-- LEFT: User Profile & Reminders (7 cols) -->
+        <div class="lg:col-span-7 space-y-6">
+          
+          <!-- User Profile Card -->
+          <div class="bg-white rounded-2xl p-6 border border-slate-200 shadow-xs space-y-5">
+            <h2 class="text-base font-bold text-slate-900 border-b border-slate-100 pb-3">User Profile Settings</h2>
+            
+            <!-- Avatar Upload & Preview -->
+            <div class="flex flex-col sm:flex-row items-center gap-4 p-4 rounded-xl bg-slate-50 border border-slate-200">
+              <div id="profile-photo-preview" class="w-16 h-16 rounded-full bg-teal-600 text-white font-bold text-xl flex items-center justify-center overflow-hidden border-2 border-white shadow-md shrink-0">
+                AM
+              </div>
+              <div class="space-y-1 text-center sm:text-left">
+                <span class="text-xs font-bold text-slate-800 block">Profile Avatar Image</span>
+                <p class="text-[11px] text-slate-500">Uploaded photo is encoded into local offline storage with zero external transmission.</p>
+                <div class="flex gap-2 justify-center sm:justify-start pt-1">
+                  <button type="button" onclick="document.getElementById('avatar-input').click()" class="btn-secondary btn-sm">Upload Photo</button>
+                  <button type="button" onclick="removeAvatar()" class="btn-secondary btn-sm text-rose-600">Remove</button>
+                  <input type="file" id="avatar-input" accept="image/*" class="hidden" onchange="handleAvatarUpload(event)">
+                </div>
+              </div>
+            </div>
+
+            <!-- Profile Form Fields -->
+            <form onsubmit="handleSaveProfile(event)" class="space-y-4">
+              <div class="grid grid-cols-1 sm:grid-cols-2 gap-3">
+                <div>
+                  <label class="text-xs font-bold text-slate-700 block mb-1">Display Name</label>
+                  <input type="text" id="prof-username" value="Alex Morgan" required>
+                </div>
+                <div>
+                  <label class="text-xs font-bold text-slate-700 flex justify-between items-center mb-1">
+                    <span>Age</span>
+                    <span class="text-[10px] text-teal-700 bg-teal-50 px-1.5 py-0.5 rounded font-semibold border border-teal-100">18–62 yrs limit</span>
+                  </label>
+                  <input type="number" id="prof-age" min="18" max="62" placeholder="e.g. 28" required>
+                  <span id="prof-age-err" class="text-[11px] text-rose-600 font-medium hidden mt-0.5">Age must be between 18 and 62 years.</span>
+                </div>
+                <div class="sm:col-span-2">
+                  <label class="text-xs font-bold text-slate-700 block mb-1">Preferred Wake-Up Time</label>
+                  <input type="time" id="prof-waketime" value="06:30">
+                </div>
+                <div class="sm:col-span-2">
+                  <label class="text-xs font-bold text-slate-700 block mb-1">Target Restorative Sleep</label>
+                  <div class="p-2.5 bg-teal-50 border border-teal-200 rounded-xl flex items-center justify-between text-xs font-bold text-teal-900">
+                    <span>8.0 hours maximum</span>
+                    <span class="text-[10px] bg-teal-200 text-teal-800 px-2 py-0.5 rounded-full">Clinical Limit</span>
+                  </div>
+                </div>
+              </div>
+
+              <div class="flex justify-end pt-2">
+                <button type="submit" class="btn-primary btn-sm">Save Profile Changes</button>
+              </div>
+            </form>
+          </div>
+
+          <!-- Notification & Alert Settings -->
+          <div class="bg-white rounded-2xl p-6 border border-slate-200 shadow-xs space-y-4">
+            <h2 class="text-base font-bold text-slate-900 border-b border-slate-100 pb-3">Wellness Reminder Preferences</h2>
+
+            <div class="flex items-center justify-between p-3.5 rounded-xl bg-slate-50 border border-slate-200">
+              <div>
+                <span class="text-xs font-bold text-slate-800 block">Micro-Break Reminders</span>
+                <span class="text-[11px] text-slate-500">Prompts you every 90 minutes to reset posture and eye focal distance.</span>
+              </div>
+              <div id="toggle-break-reminders" class="toggle-switch active" onclick="toggleNotification('breakReminders')">
+                <div class="toggle-thumb"></div>
+              </div>
+            </div>
+
+            <div class="flex items-center justify-between p-3.5 rounded-xl bg-slate-50 border border-slate-200">
+              <div>
+                <span class="text-xs font-bold text-slate-800 block">Restorative Bedtime Alert</span>
+                <span class="text-[11px] text-slate-500">Alerts you 45 minutes prior to target bedtime to attain the 8.0h ceiling.</span>
+              </div>
+              <div id="toggle-bedtime-alert" class="toggle-switch active" onclick="toggleNotification('bedtimeAlert')">
+                <div class="toggle-thumb"></div>
+              </div>
+            </div>
+
+            <div class="flex items-center justify-between p-3.5 rounded-xl bg-slate-50 border border-slate-200">
+              <div>
+                <span class="text-xs font-bold text-slate-800 block">Harmonic Audio Bell Chimes</span>
+                <span class="text-[11px] text-slate-500">Synthesizes calm 432 Hz sine waves during breathing and timer steps.</span>
+              </div>
+              <div id="toggle-sound" class="toggle-switch active" onclick="toggleNotification('soundEffects')">
+                <div class="toggle-thumb"></div>
+              </div>
+            </div>
+          </div>
+
+        </div>
+
+        <!-- RIGHT: Export, Backup & Privacy (5 cols) -->
+        <div class="lg:col-span-5 space-y-6">
+          
+          <!-- Clinical PDF Export Card -->
+          <div class="bg-white rounded-2xl p-6 border border-teal-200 shadow-xs space-y-3">
+            <div class="flex items-center gap-2 text-teal-800">
+              <svg class="icon w-5 h-5 text-teal-600" viewBox="0 0 24 24"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="16" y1="13" x2="8" y2="13"/><line x1="16" y1="17" x2="8" y2="17"/><polyline points="10 9 9 9 8 9"/></svg>
+              <h2 class="text-base font-bold text-slate-900">Clinical PDF Summary</h2>
+            </div>
+            <p class="text-xs text-slate-600 leading-relaxed">Generates a formatted wellness document including 7-day stress trajectory, restorative sleep deficit calculations (against 8.0h cap), and prescribed protocols ready for physician consultation.</p>
+            <button onclick="window.print()" class="btn-primary w-full">
+              <svg class="icon" viewBox="0 0 24 24"><polyline points="6 9 6 2 18 2 18 9"/><path d="M6 18H4a2 2 0 0 1-2-2v-5a2 2 0 0 1 2-2h16a2 2 0 0 1 2 2v5a2 2 0 0 1-2 2h-2"/><rect width="12" height="8" x="6" y="14"/></svg>
+              <span>Download / Print Clinical PDF</span>
+            </button>
+          </div>
+
+          <!-- JSON Offline Backup & Restore -->
+          <div class="bg-white rounded-2xl p-6 border border-slate-200 shadow-xs space-y-3">
+            <h2 class="text-base font-bold text-slate-900">Data Backup &amp; Restore</h2>
+            <p class="text-xs text-slate-600">Export all your logged days, scores, and settings to a JSON file, or restore from a previous backup.</p>
+            <div class="grid grid-cols-2 gap-2 pt-1">
+              <button onclick="exportJSON()" class="btn-secondary btn-sm">Export JSON</button>
+              <button onclick="document.getElementById('json-restore-input').click()" class="btn-secondary btn-sm">Restore JSON</button>
+              <input type="file" id="json-restore-input" accept=".json" class="hidden" onchange="restoreJSON(event)">
+            </div>
+            <div class="pt-2 border-t border-slate-100">
+              <button onclick="wipeData()" class="btn-secondary btn-sm text-rose-600 w-full hover:bg-rose-50 border-rose-200">
+                Wipe All Local Data
+              </button>
+            </div>
+          </div>
+
+        </div>
+
+      </div>
+
+    </div>
+
+  </main>
+
+  <!-- TOAST NOTIFICATION CONTAINER -->
+  <div id="toast" class="hidden fixed bottom-6 right-6 z-50 bg-slate-900 text-white px-4 py-2.5 rounded-xl shadow-2xl text-xs font-semibold border border-slate-700">
+    Notification text here
+  </div>
+
+  <!-- ============================================== -->
+  <!-- JAVASCRIPT APPLICATION CORE                    -->
+  <!-- ============================================== -->
+  <script>
+    /* -------------------------------------------------------------
+       STATE & LOCALSTORAGE SYNC
+    ------------------------------------------------------------- */
+    const STORAGE_KEY_LOGS = 'serenetrack_logs';
+    const STORAGE_KEY_PROFILE = 'serenetrack_profile';
+    const STORAGE_KEY_NOTIFS = 'serenetrack_notifications';
+
+    let appProfile = {"username":"prax","avatarUrl":"","age":28,"preferredWakeTime":"07:00","targetSleepGoal":8,"joinedDate":"2026-09-01"};
+    let appNotifications = {"breakReminders":true,"breakIntervalMinutes":90,"bedtimeAlert":true,"bedtimeAlertAdvanceMinutes":45,"soundEffects":true};
+    let appLogs = [{"id":"log-2026-09-03","date":"2026-09-03","timestamp":1788452065342,"workingHours":8.5,"sleepHours":6.2,"sleepQuality":3,"fatigueLevel":6,"mood":"neutral","bedtime":"23:30","wakeTime":"07:00","activities":{"screenTimeHours":8,"breaksTaken":2,"physicalActivityMinutes":35,"caffeineCups":3,"waterGlasses":5,"highCognitiveLoad":false,"outdoorTimeMinutes":25},"predictedStressScore":57,"stressTier":"Elevated","stressDrivers":["Overtime work duration (8.5 hrs)","Sleep debt of 1.8h under optimal 8.0h limit","Elevated physiological tiredness (6/10)","High blue light & digital ocular load (8h screen time)"],"sleepAnalysis":{"actualHours":6.2,"targetRestorativeGoal":8,"deficitHours":1.8,"sleepScore":72,"status":"significant_deficit","suggestedBedtimeForTomorrow":"22:45","recommendationText":"Substantial sleep debt detected: 1.8h remaining to hit restorative 8.0h limit. Avoid late caffeine and aim for bedtime by 22:45."},"recommendedTechniques":[{"id":"box-breathing","title":"Box Breathing (4x4)","category":"breathing","duration":"4 min","description":"Navy SEAL grounding pattern that synchronizes autonomic nervous tone and restores mental clarity.","steps":["Inhale through nose for 4 counts.","Hold breath with soft throat for 4 counts.","Exhale gently through mouth for 4 counts.","Hold empty lungs calmly for 4 counts.","Repeat for 6 full boxes."]},{"id":"pmr-scan","title":"Progressive Muscle Decompression","category":"somatic","duration":"6 - 8 min","description":"Systematically release residual tension in jaw, shoulders, and lower lumbar region.","steps":["Squeeze shoulders up to ears for 5 seconds, noticing tension.","Release abruptly and let shoulder blades melt downward on exhale.","Tense fists and forearms tightly for 5s, then release completely.","Notice the warmth and rush of blood flow entering the relaxed muscles."]},{"id":"physio-sigh","title":"Cyclic Physiological Sigh","category":"breathing","duration":"3 - 5 min","description":"The fastest neurobiological method to down-regulate autonomic heart rate and vent accumulated CO2.","steps":["Take two consecutive nasal inhales: one deep inhale, followed immediately by a sharp second top-up sniff.","Release with a slow, unforced, extended audible exhale through open mouth.","Repeat smoothly for 25 to 30 cycles."]}],"suggestedBreaks":[{"id":"eye-20","title":"20-20-20 Ocular Reset","type":"Visual Rest","trigger":"After 45m screen exposure","benefit":"Relaxes ciliary eye muscles and reduces digital headache onset."},{"id":"nervous-reset","title":"Vagus Nerve Reset & Water Pause","type":"Autonomic Calming","trigger":"Immediate recovery interval","benefit":"Suppresses acute cortisol cascade and resets heart rate variability."},{"id":"gentle-walk","title":"5-Minute Postural Stride","type":"Kinesthetic Flush","trigger":"Mid-afternoon dip","benefit":"Pumps venous blood from calves and oxygenates frontal cortex."}]},{"id":"log-2026-09-04","date":"2026-09-04","timestamp":1788538465342,"workingHours":9.5,"sleepHours":5.5,"sleepQuality":2,"fatigueLevel":8,"mood":"anxious","bedtime":"23:30","wakeTime":"07:00","activities":{"screenTimeHours":9.5,"breaksTaken":1,"physicalActivityMinutes":10,"caffeineCups":4,"waterGlasses":4,"highCognitiveLoad":true,"outdoorTimeMinutes":5},"predictedStressScore":98,"stressTier":"High","stressDrivers":["Overtime work duration (9.5 hrs)","Sleep debt of 2.5h under optimal 8.0h limit","Restless or disrupted sleep architecture","Exhaustion biomarker (Fatigue index 8/10)","Sympathetic nervous arousal / anxiety","High blue light & digital ocular load (9.5h screen time)","High stimulant intake (4 caffeine servings)","High-pressure problem solving & context switching"],"sleepAnalysis":{"actualHours":5.5,"targetRestorativeGoal":8,"deficitHours":2.5,"sleepScore":60,"status":"significant_deficit","suggestedBedtimeForTomorrow":"22:45","recommendationText":"Substantial sleep debt detected: 2.5h remaining to hit restorative 8.0h limit. Avoid late caffeine and aim for bedtime by 22:45."},"recommendedTechniques":[{"id":"physio-sigh","title":"Cyclic Physiological Sigh","category":"breathing","duration":"3 - 5 min","description":"The fastest neurobiological method to down-regulate autonomic heart rate and vent accumulated CO2.","steps":["Take two consecutive nasal inhales: one deep inhale, followed immediately by a sharp second top-up sniff.","Release with a slow, unforced, extended audible exhale through open mouth.","Repeat smoothly for 25 to 30 cycles."]},{"id":"sensory-54321","title":"5-4-3-2-1 Sensory Grounding","category":"mental","duration":"3 min","description":"Interrupts acute thought spirals by re-anchoring cognitive attention to immediate surroundings.","steps":["Acknowledge 5 things you can see right now in your room.","Touch 4 physical textures (e.g. cotton, cool desk surface, pen).","Listen for 3 distinct ambient sounds (fan, distant traffic, breath).","Notice 2 scents or clean air sensations.","Identify 1 pleasant taste or take a crisp sip of water."]},{"id":"yoga-nidra-reset","title":"Non-Sleep Deep Rest (NSDR)","category":"somatic","duration":"10 min","description":"Restores striatal dopamine and nervous system stamina when sleep debt is accumulated.","steps":["Recline comfortably with head supported and eyes gently closed.","Mentally scan from crown of head down through fingertips and toes.","Visualize heavy, warm relaxation sinking your body into the chair.","Stay passively conscious without needing to fall asleep."]}],"suggestedBreaks":[{"id":"eye-20","title":"20-20-20 Ocular Reset","type":"Visual Rest","trigger":"After 45m screen exposure","benefit":"Relaxes ciliary eye muscles and reduces digital headache onset."},{"id":"nervous-reset","title":"Vagus Nerve Reset & Water Pause","type":"Autonomic Calming","trigger":"Immediate recovery interval","benefit":"Suppresses acute cortisol cascade and resets heart rate variability."},{"id":"gentle-walk","title":"5-Minute Postural Stride","type":"Kinesthetic Flush","trigger":"Mid-afternoon dip","benefit":"Pumps venous blood from calves and oxygenates frontal cortex."}]},{"id":"log-2026-09-05","date":"2026-09-05","timestamp":1788624865342,"workingHours":10,"sleepHours":5,"sleepQuality":2,"fatigueLevel":9,"mood":"overwhelmed","bedtime":"23:30","wakeTime":"07:00","activities":{"screenTimeHours":10,"breaksTaken":1,"physicalActivityMinutes":35,"caffeineCups":5,"waterGlasses":3,"highCognitiveLoad":true,"outdoorTimeMinutes":25},"predictedStressScore":98,"stressTier":"High","stressDrivers":["Overtime work duration (10 hrs)","Sleep debt of 3h under optimal 8.0h limit","Restless or disrupted sleep architecture","Exhaustion biomarker (Fatigue index 9/10)","Sensory & task overload state","High blue light & digital ocular load (10h screen time)","High stimulant intake (5 caffeine servings)","High-pressure problem solving & context switching"],"sleepAnalysis":{"actualHours":5,"targetRestorativeGoal":8,"deficitHours":3,"sleepScore":56,"status":"significant_deficit","suggestedBedtimeForTomorrow":"22:45","recommendationText":"Substantial sleep debt detected: 3h remaining to hit restorative 8.0h limit. Avoid late caffeine and aim for bedtime by 22:45."},"recommendedTechniques":[{"id":"physio-sigh","title":"Cyclic Physiological Sigh","category":"breathing","duration":"3 - 5 min","description":"The fastest neurobiological method to down-regulate autonomic heart rate and vent accumulated CO2.","steps":["Take two consecutive nasal inhales: one deep inhale, followed immediately by a sharp second top-up sniff.","Release with a slow, unforced, extended audible exhale through open mouth.","Repeat smoothly for 25 to 30 cycles."]},{"id":"sensory-54321","title":"5-4-3-2-1 Sensory Grounding","category":"mental","duration":"3 min","description":"Interrupts acute thought spirals by re-anchoring cognitive attention to immediate surroundings.","steps":["Acknowledge 5 things you can see right now in your room.","Touch 4 physical textures (e.g. cotton, cool desk surface, pen).","Listen for 3 distinct ambient sounds (fan, distant traffic, breath).","Notice 2 scents or clean air sensations.","Identify 1 pleasant taste or take a crisp sip of water."]},{"id":"yoga-nidra-reset","title":"Non-Sleep Deep Rest (NSDR)","category":"somatic","duration":"10 min","description":"Restores striatal dopamine and nervous system stamina when sleep debt is accumulated.","steps":["Recline comfortably with head supported and eyes gently closed.","Mentally scan from crown of head down through fingertips and toes.","Visualize heavy, warm relaxation sinking your body into the chair.","Stay passively conscious without needing to fall asleep."]}],"suggestedBreaks":[{"id":"eye-20","title":"20-20-20 Ocular Reset","type":"Visual Rest","trigger":"After 45m screen exposure","benefit":"Relaxes ciliary eye muscles and reduces digital headache onset."},{"id":"nervous-reset","title":"Vagus Nerve Reset & Water Pause","type":"Autonomic Calming","trigger":"Immediate recovery interval","benefit":"Suppresses acute cortisol cascade and resets heart rate variability."},{"id":"gentle-walk","title":"5-Minute Postural Stride","type":"Kinesthetic Flush","trigger":"Mid-afternoon dip","benefit":"Pumps venous blood from calves and oxygenates frontal cortex."}]},{"id":"log-2026-09-06","date":"2026-09-06","timestamp":1788711265342,"workingHours":7.5,"sleepHours":7.2,"sleepQuality":4,"fatigueLevel":5,"mood":"content","bedtime":"23:30","wakeTime":"07:00","activities":{"screenTimeHours":6.5,"breaksTaken":3,"physicalActivityMinutes":10,"caffeineCups":2,"waterGlasses":6,"highCognitiveLoad":false,"outdoorTimeMinutes":5},"predictedStressScore":17,"stressTier":"Low","stressDrivers":["Elevated physiological tiredness (5/10)"],"sleepAnalysis":{"actualHours":7.2,"targetRestorativeGoal":8,"deficitHours":0.8,"sleepScore":87,"status":"mild_deficit","suggestedBedtimeForTomorrow":"22:45","recommendationText":"You are 0.8h short of the optimal 8.0h restorative ceiling. Prioritize wind-down tonight at 22:45 to restore full equilibrium."},"recommendedTechniques":[{"id":"box-breathing","title":"Box Breathing (4x4)","category":"breathing","duration":"4 min","description":"Navy SEAL grounding pattern that synchronizes autonomic nervous tone and restores mental clarity.","steps":["Inhale through nose for 4 counts.","Hold breath with soft throat for 4 counts.","Exhale gently through mouth for 4 counts.","Hold empty lungs calmly for 4 counts.","Repeat for 6 full boxes."]},{"id":"pmr-scan","title":"Progressive Muscle Decompression","category":"somatic","duration":"6 - 8 min","description":"Systematically release residual tension in jaw, shoulders, and lower lumbar region.","steps":["Squeeze shoulders up to ears for 5 seconds, noticing tension.","Release abruptly and let shoulder blades melt downward on exhale.","Tense fists and forearms tightly for 5s, then release completely.","Notice the warmth and rush of blood flow entering the relaxed muscles."]},{"id":"sensory-54321","title":"5-4-3-2-1 Sensory Grounding","category":"mental","duration":"3 min","description":"Interrupts acute thought spirals by re-anchoring cognitive attention to immediate surroundings.","steps":["Acknowledge 5 things you can see right now in your room.","Touch 4 physical textures (e.g. cotton, cool desk surface, pen).","Listen for 3 distinct ambient sounds (fan, distant traffic, breath).","Notice 2 scents or clean air sensations.","Identify 1 pleasant taste or take a crisp sip of water."]}],"suggestedBreaks":[{"id":"eye-20","title":"20-20-20 Ocular Reset","type":"Visual Rest","trigger":"After 45m screen exposure","benefit":"Relaxes ciliary eye muscles and reduces digital headache onset."},{"id":"mindful-sip","title":"Hydration & Spinal Unfurl","type":"Ergonomic Pause","trigger":"Hourly interval","benefit":"Rehydrates spinal discs and maintains steady alertness."},{"id":"nature-glance","title":"Window Gaze & Deep Stretch","type":"Mental Horizon Shift","trigger":"Task transition","benefit":"Promotes alpha brainwave frequency and prevents tunnel-vision fatigue."}]},{"id":"log-2026-09-07","date":"2026-09-07","timestamp":1788797665342,"workingHours":8,"sleepHours":7.8,"sleepQuality":4,"fatigueLevel":4,"mood":"calm","bedtime":"23:30","wakeTime":"07:00","activities":{"screenTimeHours":6,"breaksTaken":4,"physicalActivityMinutes":35,"caffeineCups":2,"waterGlasses":7,"highCognitiveLoad":false,"outdoorTimeMinutes":25},"predictedStressScore":5,"stressTier":"Low","stressDrivers":["Balanced biorhythm and healthy recovery habits"],"sleepAnalysis":{"actualHours":7.8,"targetRestorativeGoal":8,"deficitHours":0.2,"sleepScore":92,"status":"mild_deficit","suggestedBedtimeForTomorrow":"22:45","recommendationText":"You are 0.2h short of the optimal 8.0h restorative ceiling. Prioritize wind-down tonight at 22:45 to restore full equilibrium."},"recommendedTechniques":[{"id":"box-breathing","title":"Box Breathing (4x4)","category":"breathing","duration":"4 min","description":"Navy SEAL grounding pattern that synchronizes autonomic nervous tone and restores mental clarity.","steps":["Inhale through nose for 4 counts.","Hold breath with soft throat for 4 counts.","Exhale gently through mouth for 4 counts.","Hold empty lungs calmly for 4 counts.","Repeat for 6 full boxes."]},{"id":"pmr-scan","title":"Progressive Muscle Decompression","category":"somatic","duration":"6 - 8 min","description":"Systematically release residual tension in jaw, shoulders, and lower lumbar region.","steps":["Squeeze shoulders up to ears for 5 seconds, noticing tension.","Release abruptly and let shoulder blades melt downward on exhale.","Tense fists and forearms tightly for 5s, then release completely.","Notice the warmth and rush of blood flow entering the relaxed muscles."]},{"id":"sensory-54321","title":"5-4-3-2-1 Sensory Grounding","category":"mental","duration":"3 min","description":"Interrupts acute thought spirals by re-anchoring cognitive attention to immediate surroundings.","steps":["Acknowledge 5 things you can see right now in your room.","Touch 4 physical textures (e.g. cotton, cool desk surface, pen).","Listen for 3 distinct ambient sounds (fan, distant traffic, breath).","Notice 2 scents or clean air sensations.","Identify 1 pleasant taste or take a crisp sip of water."]}],"suggestedBreaks":[{"id":"eye-20","title":"20-20-20 Ocular Reset","type":"Visual Rest","trigger":"After 45m screen exposure","benefit":"Relaxes ciliary eye muscles and reduces digital headache onset."},{"id":"mindful-sip","title":"Hydration & Spinal Unfurl","type":"Ergonomic Pause","trigger":"Hourly interval","benefit":"Rehydrates spinal discs and maintains steady alertness."},{"id":"nature-glance","title":"Window Gaze & Deep Stretch","type":"Mental Horizon Shift","trigger":"Task transition","benefit":"Promotes alpha brainwave frequency and prevents tunnel-vision fatigue."}]},{"id":"log-2026-09-08","date":"2026-09-08","timestamp":1788884065342,"workingHours":8,"sleepHours":6.5,"sleepQuality":3,"fatigueLevel":6,"mood":"irritable","bedtime":"23:30","wakeTime":"07:00","activities":{"screenTimeHours":8,"breaksTaken":2,"physicalActivityMinutes":10,"caffeineCups":3,"waterGlasses":5,"highCognitiveLoad":true,"outdoorTimeMinutes":5},"predictedStressScore":71,"stressTier":"Elevated","stressDrivers":["Elevated physiological tiredness (6/10)","Emotional reactivity from accumulated friction","High blue light & digital ocular load (8h screen time)","High-pressure problem solving & context switching"],"sleepAnalysis":{"actualHours":6.5,"targetRestorativeGoal":8,"deficitHours":1.5,"sleepScore":75,"status":"mild_deficit","suggestedBedtimeForTomorrow":"22:45","recommendationText":"You are 1.5h short of the optimal 8.0h restorative ceiling. Prioritize wind-down tonight at 22:45 to restore full equilibrium."},"recommendedTechniques":[{"id":"box-breathing","title":"Box Breathing (4x4)","category":"breathing","duration":"4 min","description":"Navy SEAL grounding pattern that synchronizes autonomic nervous tone and restores mental clarity.","steps":["Inhale through nose for 4 counts.","Hold breath with soft throat for 4 counts.","Exhale gently through mouth for 4 counts.","Hold empty lungs calmly for 4 counts.","Repeat for 6 full boxes."]},{"id":"pmr-scan","title":"Progressive Muscle Decompression","category":"somatic","duration":"6 - 8 min","description":"Systematically release residual tension in jaw, shoulders, and lower lumbar region.","steps":["Squeeze shoulders up to ears for 5 seconds, noticing tension.","Release abruptly and let shoulder blades melt downward on exhale.","Tense fists and forearms tightly for 5s, then release completely.","Notice the warmth and rush of blood flow entering the relaxed muscles."]},{"id":"physio-sigh","title":"Cyclic Physiological Sigh","category":"breathing","duration":"3 - 5 min","description":"The fastest neurobiological method to down-regulate autonomic heart rate and vent accumulated CO2.","steps":["Take two consecutive nasal inhales: one deep inhale, followed immediately by a sharp second top-up sniff.","Release with a slow, unforced, extended audible exhale through open mouth.","Repeat smoothly for 25 to 30 cycles."]}],"suggestedBreaks":[{"id":"eye-20","title":"20-20-20 Ocular Reset","type":"Visual Rest","trigger":"After 45m screen exposure","benefit":"Relaxes ciliary eye muscles and reduces digital headache onset."},{"id":"nervous-reset","title":"Vagus Nerve Reset & Water Pause","type":"Autonomic Calming","trigger":"Immediate recovery interval","benefit":"Suppresses acute cortisol cascade and resets heart rate variability."},{"id":"gentle-walk","title":"5-Minute Postural Stride","type":"Kinesthetic Flush","trigger":"Mid-afternoon dip","benefit":"Pumps venous blood from calves and oxygenates frontal cortex."}]},{"id":"log-2026-09-09","date":"2026-09-09","timestamp":1788970465342,"workingHours":7.5,"sleepHours":6.8,"sleepQuality":3,"fatigueLevel":5,"mood":"neutral","bedtime":"23:30","wakeTime":"07:00","activities":{"screenTimeHours":7,"breaksTaken":3,"physicalActivityMinutes":35,"caffeineCups":2,"waterGlasses":6,"highCognitiveLoad":false,"outdoorTimeMinutes":25},"predictedStressScore":15,"stressTier":"Low","stressDrivers":["Elevated physiological tiredness (5/10)"],"sleepAnalysis":{"actualHours":6.8,"targetRestorativeGoal":8,"deficitHours":1.2,"sleepScore":78,"status":"mild_deficit","suggestedBedtimeForTomorrow":"22:45","recommendationText":"You are 1.2h short of the optimal 8.0h restorative ceiling. Prioritize wind-down tonight at 22:45 to restore full equilibrium."},"recommendedTechniques":[{"id":"box-breathing","title":"Box Breathing (4x4)","category":"breathing","duration":"4 min","description":"Navy SEAL grounding pattern that synchronizes autonomic nervous tone and restores mental clarity.","steps":["Inhale through nose for 4 counts.","Hold breath with soft throat for 4 counts.","Exhale gently through mouth for 4 counts.","Hold empty lungs calmly for 4 counts.","Repeat for 6 full boxes."]},{"id":"pmr-scan","title":"Progressive Muscle Decompression","category":"somatic","duration":"6 - 8 min","description":"Systematically release residual tension in jaw, shoulders, and lower lumbar region.","steps":["Squeeze shoulders up to ears for 5 seconds, noticing tension.","Release abruptly and let shoulder blades melt downward on exhale.","Tense fists and forearms tightly for 5s, then release completely.","Notice the warmth and rush of blood flow entering the relaxed muscles."]},{"id":"sensory-54321","title":"5-4-3-2-1 Sensory Grounding","category":"mental","duration":"3 min","description":"Interrupts acute thought spirals by re-anchoring cognitive attention to immediate surroundings.","steps":["Acknowledge 5 things you can see right now in your room.","Touch 4 physical textures (e.g. cotton, cool desk surface, pen).","Listen for 3 distinct ambient sounds (fan, distant traffic, breath).","Notice 2 scents or clean air sensations.","Identify 1 pleasant taste or take a crisp sip of water."]}],"suggestedBreaks":[{"id":"eye-20","title":"20-20-20 Ocular Reset","type":"Visual Rest","trigger":"After 45m screen exposure","benefit":"Relaxes ciliary eye muscles and reduces digital headache onset."},{"id":"mindful-sip","title":"Hydration & Spinal Unfurl","type":"Ergonomic Pause","trigger":"Hourly interval","benefit":"Rehydrates spinal discs and maintains steady alertness."},{"id":"nature-glance","title":"Window Gaze & Deep Stretch","type":"Mental Horizon Shift","trigger":"Task transition","benefit":"Promotes alpha brainwave frequency and prevents tunnel-vision fatigue."}]}];
+
+    // Initialize from localStorage if present
+    try {
+      const storedLogs = localStorage.getItem(STORAGE_KEY_LOGS);
+      if (storedLogs) appLogs = JSON.parse(storedLogs);
+      const storedProf = localStorage.getItem(STORAGE_KEY_PROFILE);
+      if (storedProf) { appProfile = JSON.parse(storedProf); delete appProfile.profession; }
+      const storedNotifs = localStorage.getItem(STORAGE_KEY_NOTIFS);
+      if (storedNotifs) appNotifications = JSON.parse(storedNotifs);
+    } catch (e) {
+      console.warn('Local storage sync:', e);
+    }
+
+    // Seed 7 days sample if empty
+    if (!appLogs || appLogs.length === 0) {
+      appLogs = generatePastWeekLogs();
+      try { localStorage.setItem(STORAGE_KEY_LOGS, JSON.stringify(appLogs)); } catch(e){}
+    }
+
+    const todayStr = new Date().toISOString().split('T')[0];
+    let currentLog = appLogs.find(l => l.date === todayStr) || appLogs[appLogs.length - 1];
+
+    /* -------------------------------------------------------------
+       ALGORITHM: STRESS & SLEEP ENGINE (Max 8.0h Cap)
+    ------------------------------------------------------------- */
+    const MAX_RESTORATIVE_SLEEP = 8.0;
+
+    function calculateSleep(actualHours, quality, wakeTimeStr) {
+      const actual = Math.max(0, parseFloat(actualHours) || 0);
+      const target = MAX_RESTORATIVE_SLEEP;
+      const deficit = Math.max(0, parseFloat((target - actual).toFixed(1)));
+
+      const [wH, wM] = (wakeTimeStr || '06:30').split(':').map(Number);
+      const wakeTotalMinutes = (isNaN(wH) ? 6 : wH) * 60 + (isNaN(wM) ? 30 : wM);
+      let bedMinutes = wakeTotalMinutes - 495; // 8h + 15m wind-down
+      if (bedMinutes < 0) bedMinutes += 24 * 60;
+      const bH = Math.floor(bedMinutes / 60);
+      const bM = bedMinutes % 60;
+      const formattedBedtime = String(bH).padStart(2, '0') + ':' + String(bM).padStart(2, '0');
+
+      return {
+        actualHours: actual,
+        target: target,
+        deficit: deficit,
+        suggestedBedtime: formattedBedtime,
+        percent: Math.min(100, Math.round((actual / target) * 100))
+      };
+    }
+
+    function calculateStress(workH, sleepH, quality, fatigue, mood, screenH, breaks, water, caffeine, movement) {
+      let score = 25;
+      const drivers = [];
+
+      if (workH > 10) { score += 26; drivers.push('Extended working schedule (' + workH + 'h)'); }
+      else if (workH > 8) { score += 14; drivers.push('Overtime work duration (' + workH + 'h)'); }
+      else if (workH < 5) { score -= 6; }
+
+      const sleepData = calculateSleep(sleepH, quality, appProfile.preferredWakeTime);
+      if (sleepH < 5) { score += 28; drivers.push('Severe sleep deficit (' + sleepH + 'h vs 8.0h limit)'); }
+      else if (sleepH < 6.5) { score += 16; drivers.push('Sleep deficit (' + sleepData.deficit + 'h below 8.0h ceiling)'); }
+      else if (sleepH >= 7.5) { score -= 12; }
+
+      if (quality <= 2) { score += 12; drivers.push('Fragmented sleep quality rating (' + quality + '/5)'); }
+      else if (quality >= 4) { score -= 8; }
+
+      if (fatigue >= 8) { score += 22; drivers.push('Severe physical fatigue (' + fatigue + '/10)'); }
+      else if (fatigue >= 5) { score += 10; drivers.push('Elevated fatigue index (' + fatigue + '/10)'); }
+      else if (fatigue <= 3) { score -= 6; }
+
+      const moodOffsets = { calm: -14, energetic: -8, content: -10, neutral: 0, anxious: 18, exhausted: 24 };
+      if (moodOffsets[mood] !== undefined) score += moodOffsets[mood];
+      if (['anxious', 'exhausted'].includes(mood)) drivers.push('Heightened nervous system arousal (' + mood + ')');
+
+      if (screenH > 9) { score += 12; drivers.push('Prolonged screen exposure (' + screenH + 'h)'); }
+      if (breaks < 2) { score += 10; drivers.push('Lack of mindful breaks (&lt;2 taken)'); }
+      else if (breaks >= 4) { score -= 8; }
+
+      if (caffeine >= 4) { score += 12; drivers.push('Elevated caffeine consumption (' + caffeine + ' cups)'); }
+      if (water < 4) { score += 8; drivers.push('Suboptimal hydration (&lt;4 glasses)'); }
+      else if (water >= 8) { score -= 6; }
+
+      if (movement >= 30) score -= 10;
+      else if (movement < 10) { score += 8; drivers.push('Sedentary musculoskeletal stagnation'); }
+
+      score = Math.max(5, Math.min(98, Math.round(score)));
+
+      let tier = 'Moderate';
+      if (score <= 35) tier = 'Low';
+      else if (score <= 60) tier = 'Moderate';
+      else if (score <= 79) tier = 'Elevated';
+      else tier = 'High';
+
+      if (drivers.length === 0) drivers.push('Autonomic nervous system in stable equilibrium');
+
+      return { score, tier, drivers, sleepData };
+    }
+
+    function generatePastWeekLogs() {
+      const list = [];
+      const now = new Date();
+      for (let i = 6; i >= 0; i--) {
+        const d = new Date(now);
+        d.setDate(d.getDate() - i);
+        const dStr = d.toISOString().split('T')[0];
+        const work = [7.5, 8.0, 9.0, 8.5, 7.0, 5.0, 7.5][i % 7];
+        const sleep = [7.0, 7.5, 6.2, 6.8, 7.8, 8.0, 7.2][i % 7];
+        const fatigue = [4, 3, 6, 5, 4, 2, 4][i % 7];
+        const mood = ['calm', 'content', 'anxious', 'neutral', 'energetic', 'calm', 'calm'][i % 7];
+        const res = calculateStress(work, sleep, 4, fatigue, mood, 7, 3, 6, 2, 30);
+        list.push({
+          id: 'log-' + dStr,
+          date: dStr,
+          workingHours: work,
+          sleepHours: sleep,
+          sleepQuality: 4,
+          fatigueLevel: fatigue,
+          mood: mood,
+          predictedStressScore: res.score,
+          stressTier: res.tier,
+          stressDrivers: res.drivers,
+          sleepAnalysis: res.sleepData,
+          activities: { screenTimeHours: 7, breaksTaken: 3, waterGlasses: 6, caffeineCups: 2, physicalActivityMinutes: 30 }
+        });
+      }
+      return list;
+    }
+
+    /* -------------------------------------------------------------
+       UI NAVIGATION & TAB SWITCHING
+    ------------------------------------------------------------- */
+    let activeMood = 'calm';
+
+    function setTab(tab) {
+      document.getElementById('view-dashboard').classList.add('hidden');
+      document.getElementById('view-trends').classList.add('hidden');
+      document.getElementById('view-settings').classList.add('hidden');
+      
+      const unselectedClass = 'px-3.5 py-1.5 rounded-lg text-xs font-semibold text-slate-600 hover:text-slate-900 flex items-center gap-1.5';
+      const selectedClass = 'px-3.5 py-1.5 rounded-lg text-xs font-semibold bg-white text-teal-800 shadow-xs flex items-center gap-1.5';
+      
+      document.getElementById('tab-btn-dashboard').className = unselectedClass;
+      document.getElementById('tab-btn-trends').className = unselectedClass;
+      document.getElementById('tab-btn-settings').className = unselectedClass;
+
+      document.getElementById('view-' + tab).classList.remove('hidden');
+      document.getElementById('tab-btn-' + tab).className = selectedClass;
+
+      if (tab === 'trends') renderTrendGraph();
+    }
+
+    function showToast(msg) {
+      const t = document.getElementById('toast');
+      t.innerText = msg;
+      t.classList.remove('hidden');
+      setTimeout(() => t.classList.add('hidden'), 3200);
+    }
+
+    function selectMood(m) {
+      activeMood = m;
+      document.querySelectorAll('.mood-pill').forEach(btn => {
+        if (btn.getAttribute('data-mood') === m) {
+          btn.className = 'mood-pill px-3.5 py-1.5 rounded-lg border text-xs font-semibold bg-teal-600 text-white border-teal-600 shadow-xs';
+        } else {
+          btn.className = 'mood-pill px-3.5 py-1.5 rounded-lg border text-xs font-semibold bg-slate-50 text-slate-700 border-slate-200';
+        }
+      });
+      updateLiveCalculation();
+    }
+
+    function quickLog(type) {
+      if (type === 'water') {
+        const inp = document.getElementById('input-water');
+        inp.value = parseInt(inp.value) + 1;
+        showToast('Logged +1 glass of water (8oz)');
+      } else if (type === 'break') {
+        const inp = document.getElementById('input-breaks');
+        inp.value = parseInt(inp.value) + 1;
+        showToast('Logged +1 mindful break (5m)');
+      } else if (type === 'stretch') {
+        const inp = document.getElementById('input-movement');
+        inp.value = parseInt(inp.value) + 5;
+        showToast('Logged +5 mins mobility stretch');
+      } else if (type === 'walk') {
+        const inp = document.getElementById('input-movement');
+        inp.value = parseInt(inp.value) + 10;
+        showToast('Logged +10 mins cadence walk');
+      }
+      playChime(528);
+      updateLiveCalculation();
+    }
+
+    function updateLiveCalculation() {
+      const workH = parseFloat(document.getElementById('input-work').value);
+      const sleepH = parseFloat(document.getElementById('input-sleep').value);
+      const quality = parseInt(document.getElementById('input-quality').value);
+      const fatigue = parseInt(document.getElementById('input-fatigue').value);
+      const screenH = parseFloat(document.getElementById('input-screen').value) || 0;
+      const breaks = parseInt(document.getElementById('input-breaks').value) || 0;
+      const water = parseInt(document.getElementById('input-water').value) || 0;
+      const caffeine = parseInt(document.getElementById('input-caffeine').value) || 0;
+      const movement = parseInt(document.getElementById('input-movement').value) || 0;
+
+      // Update slider readout labels
+      document.getElementById('val-work').innerText = workH.toFixed(1) + ' hrs';
+      document.getElementById('val-sleep').innerText = sleepH.toFixed(1) + ' hrs';
+      document.getElementById('val-quality').innerText = quality + ' / 5';
+      document.getElementById('val-fatigue').innerText = fatigue + ' / 10';
+
+      const res = calculateStress(workH, sleepH, quality, fatigue, activeMood, screenH, breaks, water, caffeine, movement);
+
+      // Update Gauge
+      document.getElementById('gauge-score').innerText = res.score;
+      document.getElementById('gauge-badge').innerText = res.tier + ' Strain';
+      
+      const circumference = 314.15;
+      const offset = circumference - (res.score / 100) * circumference;
+      const gaugeCircle = document.getElementById('gauge-circle');
+      gaugeCircle.style.strokeDashoffset = offset;
+
+      let color = '#0d9488'; // Low
+      if (res.tier === 'Moderate') color = '#d97706';
+      else if (res.tier === 'Elevated' || res.tier === 'High') color = '#e11d48';
+      gaugeCircle.style.stroke = color;
+
+      // Update Gauge summary & Catalysts
+      document.getElementById('gauge-summary').innerText = res.score <= 35
+        ? 'Autonomic balance is favorable. Parasympathetic tone is dominant.'
+        : res.score <= 60
+        ? 'Moderate strain detected. Ergonomic micro-breaks and timely wind-down advised.'
+        : 'Elevated sympathetic tone. Immediate restorative protocols indicated.';
+
+      const driversEl = document.getElementById('drivers-list');
+      driversEl.innerHTML = '';
+      res.drivers.forEach(d => {
+        const li = document.createElement('li');
+        li.innerText = '• ' + d;
+        driversEl.appendChild(li);
+      });
+
+      // Update Sleep Card
+      document.getElementById('sleep-actual-display').innerText = res.sleepData.actualHours + ' hrs';
+      document.getElementById('sleep-deficit-display').innerText = res.sleepData.deficit + ' hrs';
+      document.getElementById('sleep-bedtime-display').innerText = res.sleepData.suggestedBedtime;
+      document.getElementById('sleep-percent-text').innerText = res.sleepData.percent + '% of 8.0h';
+      document.getElementById('sleep-progress-bar').style.width = res.sleepData.percent + '%';
+      
+      let recText = '';
+      if (res.sleepData.deficit === 0) {
+        recText = 'Optimal restorative window achieved. You attained the clinical 8.0h ceiling for cognitive and cellular renewal.';
+      } else {
+        recText = 'You are ' + res.sleepData.deficit + 'h short of the optimal 8.0h restorative ceiling. Prioritize wind-down tonight at ' + res.sleepData.suggestedBedtime + ' to restore full neuro-cellular equilibrium.';
+      }
+      document.getElementById('sleep-recommendation-text').innerText = recText;
+    }
+
+    function handleFormSubmit(e) {
+      e.preventDefault();
+      const workH = parseFloat(document.getElementById('input-work').value);
+      const sleepH = parseFloat(document.getElementById('input-sleep').value);
+      const quality = parseInt(document.getElementById('input-quality').value);
+      const fatigue = parseInt(document.getElementById('input-fatigue').value);
+      const screenH = parseFloat(document.getElementById('input-screen').value) || 0;
+      const breaks = parseInt(document.getElementById('input-breaks').value) || 0;
+      const water = parseInt(document.getElementById('input-water').value) || 0;
+      const caffeine = parseInt(document.getElementById('input-caffeine').value) || 0;
+      const movement = parseInt(document.getElementById('input-movement').value) || 0;
+
+      const res = calculateStress(workH, sleepH, quality, fatigue, activeMood, screenH, breaks, water, caffeine, movement);
+
+      const log = {
+        id: 'log-' + todayStr,
+        date: todayStr,
+        workingHours: workH,
+        sleepHours: sleepH,
+        sleepQuality: quality,
+        fatigueLevel: fatigue,
+        mood: activeMood,
+        predictedStressScore: res.score,
+        stressTier: res.tier,
+        stressDrivers: res.drivers,
+        sleepAnalysis: res.sleepData,
+        activities: { screenTimeHours: screenH, breaksTaken: breaks, waterGlasses: water, caffeineCups: caffeine, physicalActivityMinutes: movement }
+      };
+
+      const existingIndex = appLogs.findIndex(l => l.date === todayStr);
+      if (existingIndex >= 0) appLogs[existingIndex] = log;
+      else appLogs.push(log);
+
+      try {
+        localStorage.setItem(STORAGE_KEY_LOGS, JSON.stringify(appLogs));
+      } catch (err) {}
+
+      showToast('Daily log saved securely in offline storage!');
+      playChime(528);
+    }
+
+    /* -------------------------------------------------------------
+       TREND GRAPH RENDERER (Cubic Bezier Spline with Hover Inspector)
+    ------------------------------------------------------------- */
+    function renderTrendGraph() {
+      const svg = document.getElementById('trend-svg');
+      svg.innerHTML = '';
+      
+      const logs = [...appLogs].sort((a,b) => a.date.localeCompare(b.date)).slice(-7);
+      if (logs.length === 0) return;
+
+      const width = 700;
+      const height = 220;
+      const padLeft = 45;
+      const padRight = 35;
+      const padTop = 25;
+      const padBottom = 35;
+
+      const plotWidth = width - padLeft - padRight;
+      const plotHeight = height - padTop - padBottom;
+
+      // Threshold lines: 0, 35 (Low), 60 (Moderate), 80 (Elevated), 100
+      [0, 35, 60, 80, 100].forEach(val => {
+        const y = padTop + plotHeight - (val / 100) * plotHeight;
+        const line = document.createElementNS('http://www.w3.org/2000/svg', 'line');
+        line.setAttribute('x1', padLeft);
+        line.setAttribute('y1', y);
+        line.setAttribute('x2', width - padRight);
+        line.setAttribute('y2', y);
+        line.setAttribute('stroke', val === 35 || val === 60 ? '#cbd5e1' : '#f1f5f9');
+        line.setAttribute('stroke-dasharray', val === 35 || val === 60 ? '4 4' : 'none');
+        svg.appendChild(line);
+
+        const txt = document.createElementNS('http://www.w3.org/2000/svg', 'text');
+        txt.setAttribute('x', padLeft - 8);
+        txt.setAttribute('y', y + 3);
+        txt.setAttribute('fill', '#94a3b8');
+        txt.setAttribute('font-size', '10');
+        txt.setAttribute('text-anchor', 'end');
+        txt.textContent = val;
+        svg.appendChild(txt);
+      });
+
+      // Compute Points
+      const points = logs.map((log, idx) => {
+        const x = padLeft + (idx / Math.max(1, logs.length - 1)) * plotWidth;
+        const y = padTop + plotHeight - (log.predictedStressScore / 100) * plotHeight;
+        return { x, y, log, idx };
+      });
+
+      // Construct Smooth Cubic Bezier Spline Path
+      let pathD = '';
+      points.forEach((pt, i) => {
+        if (i === 0) {
+          pathD += 'M ' + pt.x + ' ' + pt.y;
+        } else {
+          const prev = points[i - 1];
+          const cp1x = prev.x + (pt.x - prev.x) / 2;
+          const cp1y = prev.y;
+          const cp2x = prev.x + (pt.x - prev.x) / 2;
+          const cp2y = pt.y;
+          pathD += ' C ' + cp1x + ' ' + cp1y + ', ' + cp2x + ' ' + cp2y + ', ' + pt.x + ' ' + pt.y;
+        }
+      });
+
+      // Draw Gradient Area Under Curve
+      const areaD = pathD + ' L ' + points[points.length - 1].x + ' ' + (padTop + plotHeight) + ' L ' + points[0].x + ' ' + (padTop + plotHeight) + ' Z';
+      const areaPath = document.createElementNS('http://www.w3.org/2000/svg', 'path');
+      areaPath.setAttribute('d', areaD);
+      areaPath.setAttribute('fill', 'rgba(13, 148, 136, 0.12)');
+      svg.appendChild(areaPath);
+
+      // Draw Main Smooth Line
+      const linePath = document.createElementNS('http://www.w3.org/2000/svg', 'path');
+      linePath.setAttribute('d', pathD);
+      linePath.setAttribute('fill', 'none');
+      linePath.setAttribute('stroke', '#0d9488');
+      linePath.setAttribute('stroke-width', '3.5');
+      linePath.setAttribute('stroke-linecap', 'round');
+      linePath.setAttribute('stroke-linejoin', 'round');
+      svg.appendChild(linePath);
+
+      // Draw Interactive Dots
+      points.forEach(pt => {
+        const circle = document.createElementNS('http://www.w3.org/2000/svg', 'circle');
+        circle.setAttribute('cx', pt.x);
+        circle.setAttribute('cy', pt.y);
+        circle.setAttribute('r', '6');
+        circle.setAttribute('fill', pt.log.predictedStressScore <= 35 ? '#0d9488' : pt.log.predictedStressScore <= 60 ? '#d97706' : '#e11d48');
+        circle.setAttribute('stroke', '#ffffff');
+        circle.setAttribute('stroke-width', '2.5');
+        circle.style.cursor = 'pointer';
+        
+        const inspectThisDay = () => {
+          document.getElementById('insp-score').innerText = pt.log.predictedStressScore;
+          document.getElementById('insp-score').style.backgroundColor = pt.log.predictedStressScore <= 35 ? '#ccfbf1' : pt.log.predictedStressScore <= 60 ? '#fef3c7' : '#ffe4e6';
+          document.getElementById('insp-score').style.color = pt.log.predictedStressScore <= 35 ? '#115e59' : pt.log.predictedStressScore <= 60 ? '#92400e' : '#be123c';
+          document.getElementById('insp-date').innerText = 'Date: ' + pt.log.date;
+          document.getElementById('insp-details').innerText = 'Sleep: ' + pt.log.sleepHours + 'h (' + (pt.log.sleepAnalysis ? pt.log.sleepAnalysis.deficit : '0') + 'h deficit) • Fatigue: ' + pt.log.fatigueLevel + '/10 • Work: ' + pt.log.workingHours + 'h';
+          document.getElementById('insp-badge').innerText = pt.log.stressTier + ' Strain';
+          playChime(432);
+        };
+
+        circle.onmouseenter = inspectThisDay;
+        circle.onclick = inspectThisDay;
+        svg.appendChild(circle);
+
+        // Date Label Below
+        const label = document.createElementNS('http://www.w3.org/2000/svg', 'text');
+        label.setAttribute('x', pt.x);
+        label.setAttribute('y', height - 12);
+        label.setAttribute('fill', '#64748b');
+        label.setAttribute('font-size', '10');
+        label.setAttribute('text-anchor', 'middle');
+        label.textContent = pt.log.date.slice(5);
+        svg.appendChild(label);
+      });
+
+      // Calculate 7-Day Stats
+      const scores = logs.map(l => l.predictedStressScore);
+      const avg = Math.round(scores.reduce((a,b)=>a+b, 0) / scores.length);
+      const peak = Math.max(...scores);
+      const low = Math.min(...scores);
+      const avgSleep = (logs.reduce((a,b)=>a+b.sleepHours, 0) / logs.length).toFixed(1);
+
+      document.getElementById('trend-avg').innerText = avg;
+      document.getElementById('trend-peak').innerText = peak;
+      document.getElementById('trend-low').innerText = low;
+      document.getElementById('trend-avg-sleep').innerText = avgSleep + 'h';
+    }
+
+    /* -------------------------------------------------------------
+       AUDIO SYNTHESIS & WEBAUDIO PACER
+    ------------------------------------------------------------- */
+    function playChime(freq = 432) {
+      if (!appNotifications.soundEffects) return;
+      try {
+        const AudioCtx = window.AudioContext || window.webkitAudioContext;
+        const ctx = new AudioCtx();
+        const osc = ctx.createOscillator();
+        const gain = ctx.createGain();
+        osc.type = 'sine';
+        osc.frequency.setValueAtTime(freq, ctx.currentTime);
+        gain.gain.setValueAtTime(0, ctx.currentTime);
+        gain.gain.linearRampToValueAtTime(0.14, ctx.currentTime + 0.08);
+        gain.gain.exponentialRampToValueAtTime(0.0001, ctx.currentTime + 1.4);
+        osc.connect(gain);
+        gain.connect(ctx.destination);
+        osc.start();
+        osc.stop(ctx.currentTime + 1.5);
+      } catch(e) {}
+    }
+
+    let pacerInterval = null;
+    let pacerMode = 'box'; // 'box', 'sleep', 'coherent', 'sigh'
+    let pacerRunning = false;
+    let pacerCycleCount = 0;
+
+    const PACER_PATTERNS = {
+      box: [
+        { name: 'Inhale', duration: 4, cls: 'breath-inhale', freq: 432 },
+        { name: 'Hold', duration: 4, cls: 'breath-hold', freq: 528 },
+        { name: 'Exhale', duration: 4, cls: 'breath-exhale', freq: 396 },
+        { name: 'Rest', duration: 4, cls: 'breath-rest', freq: 432 }
+      ],
+      sleep: [
+        { name: 'Inhale', duration: 4, cls: 'breath-inhale', freq: 432 },
+        { name: 'Hold', duration: 7, cls: 'breath-hold', freq: 528 },
+        { name: 'Exhale', duration: 8, cls: 'breath-exhale', freq: 396 }
+      ],
+      coherent: [
+        { name: 'Inhale', duration: 5, cls: 'breath-inhale', freq: 432 },
+        { name: 'Exhale', duration: 5, cls: 'breath-exhale', freq: 396 }
+      ],
+      sigh: [
+        { name: 'Deep Inhale', duration: 3, cls: 'breath-inhale', freq: 432 },
+        { name: 'Top-Off Inhale', duration: 1, cls: 'breath-hold', freq: 528 },
+        { name: 'Long Exhale', duration: 6, cls: 'breath-exhale', freq: 396 }
+      ]
+    };
+
+    function setPacerMode(m) {
+      if (pacerRunning) togglePacer();
+      pacerMode = m;
+      document.getElementById('pacer-btn-box').className = 'px-2.5 py-1 text-xs font-semibold rounded-lg text-slate-600';
+      document.getElementById('pacer-btn-sleep').className = 'px-2.5 py-1 text-xs font-semibold rounded-lg text-slate-600';
+      document.getElementById('pacer-btn-coherent').className = 'px-2.5 py-1 text-xs font-semibold rounded-lg text-slate-600';
+      document.getElementById('pacer-btn-sigh').className = 'px-2.5 py-1 text-xs font-semibold rounded-lg text-slate-600';
+      document.getElementById('pacer-btn-' + m).className = 'px-2.5 py-1 text-xs font-semibold rounded-lg bg-white text-teal-800 shadow-xs';
+    }
+
+    function togglePacer() {
+      pacerRunning = !pacerRunning;
+      const btnText = document.getElementById('pacer-toggle-text');
+      if (pacerRunning) {
+        btnText.innerText = 'Pause Breathing Session';
+        startPacerLoop();
+      } else {
+        btnText.innerText = 'Resume Breathing Session';
+        clearInterval(pacerInterval);
+      }
+    }
+
+    function startPacerLoop() {
+      const pattern = PACER_PATTERNS[pacerMode];
+      let stepIndex = 0;
+      let secondsLeft = pattern[0].duration;
+
+      function updateUI() {
+        const curStep = pattern[stepIndex];
+        const circle = document.getElementById('pacer-circle');
+        circle.className = 'breath-circle ' + curStep.cls;
+        document.getElementById('pacer-phase').innerText = curStep.name;
+        document.getElementById('pacer-seconds').innerText = secondsLeft + 's';
+        document.getElementById('pacer-cycles').innerText = 'Cycle ' + pacerCycleCount;
+      }
+
+      updateUI();
+      playChime(pattern[0].freq);
+
+      pacerInterval = setInterval(() => {
+        secondsLeft--;
+        if (secondsLeft <= 0) {
+          stepIndex++;
+          if (stepIndex >= pattern.length) {
+            stepIndex = 0;
+            pacerCycleCount++;
+          }
+          secondsLeft = pattern[stepIndex].duration;
+          playChime(pattern[stepIndex].freq);
+        }
+        updateUI();
+      }, 1000);
+    }
+
+    /* -------------------------------------------------------------
+       EXERCISE PROTOCOL TIMER
+    ------------------------------------------------------------- */
+    let exTimerInterval = null;
+    let exTimerSeconds = 0;
+    let exTimerRunning = false;
+
+    function startRoutineTimer(name, mins) {
+      document.getElementById('exercise-timer-card').classList.remove('hidden');
+      document.getElementById('active-routine-name').innerText = name + ' (' + mins + 'm)';
+      exTimerSeconds = mins * 60;
+      exTimerRunning = true;
+      document.getElementById('btn-toggle-ex-timer').innerText = 'Pause';
+      updateTimerDisplay();
+
+      clearInterval(exTimerInterval);
+      exTimerInterval = setInterval(() => {
+        if (exTimerSeconds > 0) {
+          exTimerSeconds--;
+          updateTimerDisplay();
+        } else {
+          clearInterval(exTimerInterval);
+          exTimerRunning = false;
+          playChime(528);
+          showToast('Routine completed! Neuro-muscular tension discharged.');
+        }
+      }, 1000);
+    }
+
+    function updateTimerDisplay() {
+      const m = Math.floor(exTimerSeconds / 60);
+      const s = exTimerSeconds % 60;
+      document.getElementById('active-timer-display').innerText = String(m).padStart(2,'0') + ':' + String(s).padStart(2,'0');
+    }
+
+    function toggleExerciseTimer() {
+      exTimerRunning = !exTimerRunning;
+      document.getElementById('btn-toggle-ex-timer').innerText = exTimerRunning ? 'Pause' : 'Resume';
+      if (!exTimerRunning) clearInterval(exTimerInterval);
+      else {
+        exTimerInterval = setInterval(() => {
+          if (exTimerSeconds > 0) { exTimerSeconds--; updateTimerDisplay(); }
+        }, 1000);
+      }
+    }
+
+    function resetExerciseTimer() {
+      clearInterval(exTimerInterval);
+      exTimerRunning = false;
+      document.getElementById('exercise-timer-card').classList.add('hidden');
+    }
+
+    /* -------------------------------------------------------------
+       PROFILE & AVATAR
+    ------------------------------------------------------------- */
+    function handleSaveProfile(e) {
+      e.preventDefault();
+      const uName = (document.getElementById('prof-username').value || '').trim();
+      if (!uName) return;
+
+      const ageEl = document.getElementById('prof-age');
+      const errEl = document.getElementById('prof-age-err');
+      const ageVal = parseInt(ageEl ? ageEl.value : '', 10);
+      if (isNaN(ageVal) || ageVal < 18 || ageVal > 62) {
+        if (errEl) errEl.classList.remove('hidden');
+        alert('Please enter a valid age between 18 and 62 years.');
+        if (ageEl) ageEl.focus();
+        return;
+      }
+      if (errEl) errEl.classList.add('hidden');
+
+      appProfile.username = uName;
+      appProfile.age = ageVal;
+      appProfile.preferredWakeTime = document.getElementById('prof-waketime').value;
+      
+      try {
+        localStorage.setItem(STORAGE_KEY_PROFILE, JSON.stringify(appProfile));
+      } catch(err){}
+
+      updateHeaderAvatar();
+      updateLiveCalculation();
+      showToast('Profile preferences updated in offline storage.');
+      playChime(528);
+    }
+
+    function handleAvatarUpload(e) {
+      const file = e.target.files[0];
+      if (!file) return;
+      const reader = new FileReader();
+      reader.onload = (evt) => {
+        appProfile.avatarUrl = evt.target.result;
+        try { localStorage.setItem(STORAGE_KEY_PROFILE, JSON.stringify(appProfile)); } catch(err){}
+        updateHeaderAvatar();
+        showToast('Profile avatar photo updated.');
+        playChime(528);
+      };
+      reader.readAsDataURL(file);
+    }
+
+    function removeAvatar() {
+      appProfile.avatarUrl = '';
+      try { localStorage.setItem(STORAGE_KEY_PROFILE, JSON.stringify(appProfile)); } catch(err){}
+      updateHeaderAvatar();
+      showToast('Profile photo removed.');
+    }
+
+    function updateHeaderAvatar() {
+      const el = document.getElementById('header-avatar');
+      const prev = document.getElementById('profile-photo-preview');
+      const nameEl = document.getElementById('header-name');
+      if (nameEl) nameEl.innerText = appProfile.username || 'Alex Morgan';
+
+      if (appProfile.avatarUrl) {
+        el.innerHTML = '<img src="' + appProfile.avatarUrl + '" style="width:100%;height:100%;object-fit:cover;">';
+        prev.innerHTML = '<img src="' + appProfile.avatarUrl + '" style="width:100%;height:100%;object-fit:cover;">';
+      } else {
+        const initials = (appProfile.username || 'AM').slice(0, 2).toUpperCase();
+        el.innerText = initials;
+        prev.innerText = initials;
+      }
+      
+      const wakeSub = document.getElementById('sleep-wake-target-sub');
+      if (wakeSub) wakeSub.innerText = 'For ' + (appProfile.preferredWakeTime || '06:30') + ' wake-up';
+
+      if (document.getElementById('prof-username')) document.getElementById('prof-username').value = appProfile.username || 'Alex Morgan';
+      if (document.getElementById('prof-age')) document.getElementById('prof-age').value = appProfile.age || 28;
+      if (document.getElementById('prof-waketime')) document.getElementById('prof-waketime').value = appProfile.preferredWakeTime || '06:30';
+    }
+
+    function toggleNotification(key) {
+      appNotifications[key] = !appNotifications[key];
+      try { localStorage.setItem(STORAGE_KEY_NOTIFS, JSON.stringify(appNotifications)); } catch(err){}
+      
+      const toggleEl = document.getElementById('toggle-' + (key === 'breakReminders' ? 'break-reminders' : key === 'bedtimeAlert' ? 'bedtime-alert' : 'sound'));
+      if (appNotifications[key]) toggleEl.classList.add('active');
+      else toggleEl.classList.remove('active');
+
+      showToast('Reminder preference updated.');
+      playChime(432);
+    }
+
+    /* -------------------------------------------------------------
+       BACKUP & RESTORE
+    ------------------------------------------------------------- */
+    function exportJSON() {
+      const data = {
+        profile: appProfile,
+        notifications: appNotifications,
+        logs: appLogs,
+        exportedAt: new Date().toISOString()
+      };
+      const blob = new Blob([JSON.stringify(data, null, 2)], { type: 'application/json' });
+      const url = URL.createObjectURL(blob);
+      const a = document.createElement('a');
+      a.href = url;
+      a.download = 'serenetrack-backup-' + todayStr + '.json';
+      a.click();
+      URL.revokeObjectURL(url);
+      showToast('Backup JSON exported.');
+      playChime(528);
+    }
+
+    function restoreJSON(e) {
+      const file = e.target.files[0];
+      if (!file) return;
+      const reader = new FileReader();
+      reader.onload = (evt) => {
+        try {
+          const parsed = JSON.parse(evt.target.result);
+          if (parsed.logs) {
+            appLogs = parsed.logs;
+            localStorage.setItem(STORAGE_KEY_LOGS, JSON.stringify(appLogs));
+          }
+          if (parsed.profile) {
+            appProfile = parsed.profile;
+            localStorage.setItem(STORAGE_KEY_PROFILE, JSON.stringify(appProfile));
+          }
+          showToast('Backup successfully restored!');
+          setTimeout(() => location.reload(), 700);
+        } catch(err) {
+          alert('Invalid backup JSON format.');
+        }
+      };
+      reader.readAsText(file);
+    }
+
+    function wipeData() {
+      if (confirm('Are you sure you want to clear all local logs and profile preferences?')) {
+        localStorage.clear();
+        location.reload();
+      }
+    }
+
+    // INITIAL APP BOOTSTRAP
+    updateHeaderAvatar();
+    updateLiveCalculation();
+  </script>
+
+</body>
+</html>

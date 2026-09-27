@@ -1,0 +1,1516 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+  <title>SereneTrack - Predictive Stress & Restorative Sleep Manager</title>
+  <link rel="stylesheet" href="/css/styles.css">
+</head>
+<body class="p-0">
+
+  <!-- ============================================== -->
+  <!-- TOP APP HEADER & HACKATHON CONTROLS           -->
+  <!-- ============================================== -->
+  <header class="bg-white border-b border-slate-200 sticky top-0 z-40 shadow-xs">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 py-2.5 flex flex-wrap items-center justify-between gap-3">
+      
+      <!-- Brand & Sync Status -->
+      <div class="flex items-center gap-3">
+        <div class="w-9 h-9 rounded-xl bg-teal-600 flex items-center justify-center text-white font-bold shadow-xs shrink-0">
+          <svg class="icon w-5 h-5 text-white" viewBox="0 0 24 24"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>
+        </div>
+        <div>
+          <div class="flex items-center gap-2">
+            <span class="text-base font-extrabold text-slate-900 tracking-tight" data-i18n="appTitle">SereneTrack</span>
+            <span id="sync-status-badge" class="sync-badge online" title="Checking server connectivity...">
+              <span class="sync-dot"></span><span data-i18n="serverSynced">Server Synced</span>
+            </span>
+          </div>
+          <p class="text-[11px] text-slate-500 hidden sm:block" data-i18n="appSubtitle">Predictive Stress &amp; Restorative Sleep Manager</p>
+        </div>
+      </div>
+
+      <!-- Navigation Tabs -->
+      <nav class="tabs-nav flex items-center p-1 bg-slate-100 rounded-xl border border-slate-200 order-3 md:order-2 overflow-x-auto">
+        <button id="tab-btn-forces" onclick="setTab('forces')" class="px-3 py-1.5 rounded-lg text-xs font-bold bg-slate-900 text-amber-400 shadow-xs flex items-center gap-1.5 whitespace-nowrap">
+          <svg class="icon w-3.5 h-3.5 text-amber-400" viewBox="0 0 24 24"><path d="M12 2l8 4v6c0 5.5-3.8 10.7-8 12-4.2-1.3-8-6.5-8-12V6l8-4z"/></svg>
+          <span data-i18n="tabForces">🎖️ Uniformed Forces (CRPF / MHA)</span>
+        </button>
+        <button id="tab-btn-dashboard" onclick="setTab('dashboard')" class="px-3 py-1.5 rounded-lg text-xs font-semibold bg-white text-teal-800 shadow-xs flex items-center gap-1.5">
+          <svg class="icon w-3.5 h-3.5 text-teal-600" viewBox="0 0 24 24"><path d="M22 12h-4l-3 9L9 3l-3 9H2"/></svg>
+          <span data-i18n="tabDashboard">Daily Dashboard</span>
+        </button>
+        <button id="tab-btn-trends" onclick="setTab('trends')" class="px-3 py-1.5 rounded-lg text-xs font-semibold text-slate-600 hover:text-slate-900 flex items-center gap-1.5">
+          <svg class="icon w-3.5 h-3.5 text-slate-400" viewBox="0 0 24 24"><polyline points="22 7 13.5 15.5 8.5 10.5 2 17"/><polyline points="16 7 22 7 22 13"/></svg>
+          <span data-i18n="tabTrends">Trends &amp; Studio</span>
+        </button>
+        <button id="tab-btn-vault" onclick="setTab('vault')" class="px-3 py-1.5 rounded-lg text-xs font-semibold text-slate-600 hover:text-slate-900 flex items-center gap-1.5">
+          <svg class="icon w-3.5 h-3.5 text-slate-400" viewBox="0 0 24 24"><rect width="18" height="18" x="3" y="3" rx="2"/><path d="M7 7h10"/><path d="M7 12h10"/><path d="M7 17h10"/></svg>
+          <span data-i18n="tabVault">CBT-I Worry Vault</span>
+        </button>
+        <button id="tab-btn-settings" onclick="setTab('settings')" class="px-3 py-1.5 rounded-lg text-xs font-semibold text-slate-600 hover:text-slate-900 flex items-center gap-1.5">
+          <svg class="icon w-3.5 h-3.5 text-slate-400" viewBox="0 0 24 24"><circle cx="12" cy="12" r="3"/><path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 0 1 0 2.83 2 2 0 0 1-2.83 0l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-2 2 2 2 0 0 1-2-2v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 0 1-2.83 0 2 2 0 0 1 0-2.83l.06-.06a1.65 1.65 0 0 0 .33-1.82 1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1-2-2 2 2 0 0 1 2-2h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 0 1 0-2.83 2 2 0 0 1 2.83 0l.06.06a1.65 1.65 0 0 0 1.82.33H9a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 2-2 2 2 0 0 1 2 2v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 0 1 2.83 0 2 2 0 0 1 0 2.83l-.06.06a1.65 1.65 0 0 0-.33 1.82V9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 2 2 2 2 0 0 1-2 2h-.09a1.65 1.65 0 0 0-1.51 1z"/></svg>
+          <span data-i18n="tabSettings">Settings</span>
+        </button>
+      </nav>
+
+      <!-- SIH Controls: Demo Switcher + Bilingual + Profile -->
+      <div class="flex items-center gap-2 order-2 md:order-3">
+        
+        <!-- 1-Click Judge Demo Switcher Dropdown -->
+        <div class="relative inline-block text-left">
+          <select id="judge-demo-selector" onchange="if(this.value) loadJudgeDemoPersona(this.value)" class="text-[11px] font-bold py-1 px-2.5 rounded-lg bg-amber-50 text-amber-900 border border-amber-300 shadow-xs cursor-pointer">
+            <option value="">🎤 SIH Pitch Demo</option>
+            <optgroup label="🎖️ PS #26186 CRPF Forces Scenarios">
+              <option value="forces_cobra">🔴 Sukma CoBRA LWE Patrol (Strain 99, Critical Alert)</option>
+              <option value="forces_kashmir">🟠 110 Bn Srinagar Night Sentry (Strain 75, High Stress)</option>
+              <option value="forces_raf">🟡 103 RAF Riot Standby (Strain 68, Rapid Mobilization)</option>
+              <option value="forces_peace">🟢 50 Bn Static Peace Garrison (Strain 12, Restored)</option>
+            </optgroup>
+            <optgroup label="👤 Individual Stress Personas">
+              <option value="student">🎓 Persona A: NEET/JEE Student (Crisis Strain 94)</option>
+              <option value="tech">💻 Persona B: Overworked IT Dev (Strain 78)</option>
+              <option value="restored">🌿 Persona C: Restored Youth (Strain 18)</option>
+            </optgroup>
+          </select>
+        </div>
+
+        <!-- Bilingual Toggle -->
+        <div class="flex items-center bg-slate-100 p-0.5 rounded-lg border border-slate-200">
+          <button id="lang-btn-en" onclick="setLanguage('en')" class="px-2 py-0.5 rounded text-xs font-bold bg-teal-600 text-white shadow-xs">EN</button>
+          <button id="lang-btn-hi" onclick="setLanguage('hi')" class="px-2 py-0.5 rounded text-xs font-semibold text-slate-600 hover:text-slate-900">हिंदी</button>
+        </div>
+
+        <!-- User Avatar -->
+        <div id="header-avatar" class="w-8 h-8 rounded-full bg-teal-600 text-white font-bold text-xs flex items-center justify-center overflow-hidden border border-white shadow-xs shrink-0">
+          AM
+        </div>
+      </div>
+
+    </div>
+  </header>
+
+  <!-- ============================================== -->
+  <!-- PILLAR 2: TELE-MANAS NATIONAL CRISIS BANNER    -->
+  <!-- ============================================== -->
+  <div id="telemanas-crisis-banner" class="hidden max-w-7xl w-full px-4 sm:px-6 pt-4">
+    <div class="crisis-banner p-4 rounded-2xl flex flex-col md:flex-row items-center justify-between gap-3 text-xs text-rose-950">
+      <div class="flex items-center gap-3">
+        <div class="w-10 h-10 rounded-xl bg-rose-600 text-white flex items-center justify-center font-bold text-lg shrink-0">
+          🇮🇳
+        </div>
+        <div>
+          <span class="font-extrabold text-sm text-rose-900 block" data-i18n="telemanasTitle">
+            Tele-MANAS &amp; National Mental Health Crisis Support (MoHFW, Govt. of India)
+          </span>
+          <p class="text-rose-800 text-[11px]" data-i18n="telemanasDesc">
+            Elevated acute autonomic load detected. You are not alone—confidential, toll-free 24x7 psychological support is available.
+          </p>
+        </div>
+      </div>
+      <div class="flex flex-wrap items-center gap-2 shrink-0">
+        <a href="tel:14416" class="btn-primary btn-sm bg-rose-600 hover:bg-rose-700 text-white font-bold shadow-sm">
+          <span>📞 Tele-MANAS (14416)</span>
+        </a>
+        <a href="tel:18005990019" class="btn-secondary btn-sm border-rose-300 text-rose-900 font-bold bg-white">
+          <span>KIRAN (1800-599-0019)</span>
+        </a>
+        <button onclick="setTab('trends'); setPacerMode('sigh'); togglePacer();" class="btn-secondary btn-sm bg-rose-100 border-rose-300 text-rose-950 font-bold">
+          <span>🧘 Guided Vagal Reset (2m)</span>
+        </button>
+      </div>
+    </div>
+  </div>
+  <!-- ============================================== -->
+  <!-- MHA / CRPF PS #26186 TOP ANNOUNCEMENT BANNER   -->
+  <!-- ============================================== -->
+  <div class="max-w-7xl w-full px-4 sm:px-6 pt-3">
+    <div class="bg-gradient-to-r from-slate-900 via-slate-800 to-teal-950 text-white p-3.5 px-4 rounded-2xl shadow-sm border border-slate-700/80 flex flex-col md:flex-row items-start md:items-center justify-between gap-3 text-xs">
+      <div class="flex items-center gap-3">
+        <div class="w-10 h-10 rounded-xl bg-amber-400/20 border border-amber-400/40 flex items-center justify-center font-bold text-lg shrink-0">
+          🇮🇳
+        </div>
+        <div>
+          <div class="flex items-center gap-2 flex-wrap">
+            <span class="font-extrabold text-sm text-amber-300">Ministry of Home Affairs (MHA) | CRPF Police II Division</span>
+            <span class="px-2 py-0.5 rounded text-[10px] font-black bg-amber-400 text-slate-950 tracking-wider">PROBLEM STATEMENT #26186</span>
+          </div>
+          <p class="text-slate-300 text-[11px] mt-0.5">
+            AI-Based Predictive Personnel Stress and Welfare Monitoring System for Uniformed Forces (CAPFs / CRPF / Armed Forces)
+          </p>
+        </div>
+      </div>
+      <div class="flex items-center gap-2 shrink-0">
+        <button onclick="setTab('forces')" class="px-3.5 py-1.5 rounded-xl bg-amber-400 hover:bg-amber-300 text-slate-950 font-black text-xs shadow-xs transition-all flex items-center gap-1.5 cursor-pointer">
+          <svg class="icon w-3.5 h-3.5 text-slate-950" viewBox="0 0 24 24"><path d="M12 2l8 4v6c0 5.5-3.8 10.7-8 12-4.2-1.3-8-6.5-8-12V6l8-4z"/></svg>
+          <span>🎖️ Open Forces Welfare Portal</span>
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <!-- OFFLINE & PRIVACY BANNER -->
+  <div class="max-w-7xl w-full px-4 sm:px-6 pt-3">
+    <div class="flex flex-col sm:flex-row sm:items-center justify-between p-3 px-4 rounded-xl bg-teal-50 border border-teal-200 text-xs text-teal-950 gap-2">
+      <div class="flex items-center gap-2">
+        <svg class="icon text-teal-600 shrink-0" viewBox="0 0 24 24"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/><path d="m9 12 2 2 4-4"/></svg>
+        <span><strong data-i18n="bannerTitle">Autonomous &amp; Secure Architecture:</strong> <span data-i18n="bannerDesc">Running on Node.js backend with persistent SQLite database and instant offline-first fallback.</span></span>
+      </div>
+      <div class="flex items-center gap-2 shrink-0">
+        <button onclick="window.print()" class="btn-secondary btn-sm">
+          <svg class="icon w-3.5 h-3.5" viewBox="0 0 24 24"><polyline points="6 9 6 2 18 2 18 9"/><path d="M6 18H4a2 2 0 0 1-2-2v-5a2 2 0 0 1 2-2h16a2 2 0 0 1 2 2v5a2 2 0 0 1-2 2h-2"/><rect width="12" height="8" x="6" y="14"/></svg>
+          <span data-i18n="printSummary">Print Summary</span>
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <!-- MAIN ROUTE / PAGE CONTAINERS -->
+  <main class="max-w-7xl w-full px-4 sm:px-6 py-5 flex-1">
+    
+    <!-- ============================================================== -->
+    <!-- PAGE 1: DAILY DASHBOARD & AUTONOMIC COCKPIT                    -->
+    <!-- ============================================================== -->
+    <div id="view-dashboard" class="space-y-5">
+
+      <!-- PILLAR 3: SIMULATED IOT SMART WEARABLE TELEMETRY BAR -->
+      <div class="bg-white rounded-2xl p-4 border border-slate-200 shadow-xs flex flex-col md:flex-row items-center justify-between gap-4">
+        <div class="flex items-center gap-3">
+          <div class="w-10 h-10 rounded-xl bg-slate-900 text-teal-400 flex items-center justify-center font-bold text-lg shrink-0">
+            <span id="wearable-pulse-icon" class="heart-pulse">❤️</span>
+          </div>
+          <div>
+            <div class="flex items-center gap-2">
+              <span class="text-xs font-extrabold uppercase tracking-wider text-slate-800" data-i18n="wearableTitle">Live IoT Smart Wearable Telemetry</span>
+              <span id="wearable-conn-badge" class="sync-badge online">
+                <span class="sync-dot"></span><span>BLE Paired • Live PPG Telemetry</span>
+              </span>
+            </div>
+            <p class="text-[11px] text-slate-500">Continuous photoplethysmography (PPG) heart rate variability &amp; sleep stage architecture.</p>
+          </div>
+        </div>
+
+        <!-- Telemetry Stats -->
+        <div class="flex flex-wrap items-center gap-4 text-xs">
+          <!-- Pulse -->
+          <div class="px-3 py-1.5 rounded-xl bg-slate-50 border border-slate-200">
+            <span class="text-[10px] text-slate-500 block uppercase font-bold" data-i18n="pulseRate">Pulse Rate</span>
+            <span id="wearable-bpm" class="text-base font-extrabold text-slate-900">68 bpm</span>
+          </div>
+          <!-- HRV -->
+          <div class="px-3 py-1.5 rounded-xl bg-slate-50 border border-slate-200">
+            <span class="text-[10px] text-slate-500 block uppercase font-bold" data-i18n="hrvIndex">Heart Rate Variability</span>
+            <span id="wearable-hrv" class="text-base font-extrabold text-teal-700">58 ms</span>
+            <span id="wearable-hrv-status" class="text-[10px] block font-semibold text-emerald-700">High Parasympathetic Reserve</span>
+          </div>
+          <!-- Sleep Architecture -->
+          <div class="px-3 py-1.5 rounded-xl bg-slate-50 border border-slate-200 min-w-[200px]">
+            <div class="flex justify-between text-[10px] font-bold text-slate-600 mb-1">
+              <span id="wearable-deep-text">Deep N3: 22%</span>
+              <span id="wearable-rem-text">REM: 24%</span>
+              <span id="wearable-light-text">Light: 54%</span>
+            </div>
+            <div class="w-full h-2.5 bg-slate-200 rounded-full flex overflow-hidden">
+              <div id="wearable-deep-bar" class="h-full bg-indigo-600" style="width: 22%;"></div>
+              <div id="wearable-rem-bar" class="h-full bg-cyan-500" style="width: 24%;"></div>
+              <div id="wearable-light-bar" class="h-full bg-teal-400" style="width: 54%;"></div>
+            </div>
+          </div>
+          <!-- Wearable Toggle -->
+          <button id="btn-toggle-wearable" onclick="toggleWearableConnection()" class="btn-secondary btn-sm">
+            <svg class="icon w-3.5 h-3.5" viewBox="0 0 24 24"><path d="M5 12.55a11 11 0 0 1 14.08 0"/><path d="M1.42 9a16 16 0 0 1 21.16 0"/><line x1="1" y1="1" x2="23" y2="23"/></svg>
+            <span>Disconnect Wearable</span>
+          </button>
+        </div>
+      </div>
+      
+      <!-- Date Navigator & Quick Action Buttons -->
+      <div class="bg-white rounded-2xl p-5 border border-slate-200 shadow-xs flex flex-col md:flex-row items-center justify-between gap-4">
+        <div>
+          <div class="flex items-center gap-2">
+            <span class="text-xs font-bold uppercase tracking-wider text-teal-800 bg-teal-100 px-2.5 py-0.5 rounded-md" data-i18n="todayProtocol">
+              Today's Protocol
+            </span>
+            <span id="display-date-title" class="text-xs font-medium text-slate-500">Live Active Cockpit</span>
+          </div>
+          <h1 class="text-2xl sm:text-3xl font-bold text-slate-900 mt-1" data-i18n="activeCockpit">Daily Stress &amp; Restorative Sleep Cockpit</h1>
+          <p class="text-xs text-slate-500" data-i18n="cockpitDesc">Record working hours, sleep duration, and daily ergonomics to evaluate autonomic strain.</p>
+        </div>
+
+        <!-- Quick Log One-Tap Buttons -->
+        <div class="flex flex-wrap items-center gap-2">
+          <button onclick="quickLog('water')" class="btn-secondary btn-sm" title="Log 1 glass of water">
+            <span>+💧 Water (8oz)</span>
+          </button>
+          <button onclick="quickLog('break')" class="btn-secondary btn-sm" title="Log a 5-minute break">
+            <span>+🧘 Micro-Break</span>
+          </button>
+          <button onclick="toggleSunlightTimer()" class="btn-secondary btn-sm" title="Start morning 10m sunlight exposure">
+            <span>+☀️ Sunlight (10m)</span>
+          </button>
+          <button onclick="quickLog('stretch')" class="btn-secondary btn-sm" title="Log 5 min mobility stretch">
+            <span>+🤸 Stretch (5m)</span>
+          </button>
+          <button onclick="quickLog('walk')" class="btn-secondary btn-sm" title="Log 10 min cadence walk">
+            <span>+🚶 Walk (10m)</span>
+          </button>
+        </div>
+      </div>
+
+      <!-- Grid: Gauge (5 cols) + Sleep Monitor (7 cols) -->
+      <div class="grid grid-cols-1 lg:grid-cols-12 gap-5">
+        
+        <!-- LEFT: Stress Score Circular Radial Gauge -->
+        <div class="lg:col-span-5 bg-white rounded-2xl p-6 border border-slate-200 shadow-xs flex flex-col items-center justify-center text-center">
+          <div class="w-full flex items-center justify-between border-b border-slate-100 pb-2.5 mb-2">
+            <span class="text-xs font-bold uppercase tracking-wider text-slate-500" data-i18n="autonomicStrain">Autonomic Strain Prediction</span>
+            <span id="gauge-badge" class="text-xs font-bold px-2.5 py-0.5 rounded-full bg-teal-100 text-teal-800">
+              Low Strain
+            </span>
+          </div>
+          
+          <!-- Circular SVG Gauge -->
+          <div class="relative w-48 h-48 my-2 flex items-center justify-center">
+            <svg class="w-full h-full transform -rotate-90" viewBox="0 0 120 120">
+              <circle cx="60" cy="60" r="50" fill="none" stroke="#f1f5f9" stroke-width="10"></circle>
+              <circle id="gauge-circle" cx="60" cy="60" r="50" fill="none" stroke="#0d9488" stroke-width="10" stroke-linecap="round" stroke-dasharray="314.15" stroke-dashoffset="150" style="transition: stroke-dashoffset 0.8s ease, stroke 0.5s ease;"></circle>
+            </svg>
+            <div class="absolute flex flex-col items-center justify-center">
+              <span id="gauge-score" class="text-4xl font-extrabold text-slate-900">42</span>
+              <span class="text-[11px] font-semibold text-slate-500" data-i18n="outOf100">out of 100</span>
+            </div>
+          </div>
+
+          <p id="gauge-summary" class="text-xs text-slate-600 max-w-xs mb-3">
+            Physiological load is well regulated within safe autonomic recovery margins.
+          </p>
+
+          <!-- Primary Stress Catalysts Identified -->
+          <div class="w-full bg-slate-50 p-3.5 rounded-xl border border-slate-200 text-left text-xs space-y-1.5">
+            <div class="flex items-center justify-between">
+              <span class="font-bold text-slate-800" data-i18n="driversTitle">Primary Stress Catalysts:</span>
+              <span class="text-[10px] text-slate-500">Biometric &amp; Ergonomic</span>
+            </div>
+            <ul id="drivers-list" class="space-y-1 text-slate-600 text-[11px]">
+              <li>• Consistent work pacing maintainable.</li>
+            </ul>
+          </div>
+        </div>
+
+        <!-- RIGHT: Restorative Sleep & Timing Monitor (7 cols) -->
+        <div class="lg:col-span-7 bg-white rounded-2xl p-6 border border-slate-200 shadow-xs space-y-4 flex flex-col justify-between">
+          <div>
+            <div class="flex items-center justify-between border-b border-slate-100 pb-3">
+              <div class="flex items-center gap-2">
+                <svg class="icon text-teal-600" viewBox="0 0 24 24"><path d="M12 3a6 6 0 0 0 9 9 9 9 0 1 1-9-9Z"/></svg>
+                <h2 class="text-base font-bold text-slate-900" data-i18n="sleepCalculatorTitle">Restorative Sleep Timing &amp; Deficit Calculator</h2>
+              </div>
+              <span class="text-xs font-bold text-teal-800 bg-teal-100 px-2.5 py-0.5 rounded-full" data-i18n="clinicalCeiling">
+                Max 8.0h Restorative Ceiling
+              </span>
+            </div>
+
+            <!-- 3 Stat Cards -->
+            <div class="grid grid-cols-1 sm:grid-cols-3 gap-3 my-3">
+              <div class="p-3 bg-slate-50 rounded-xl border border-slate-200">
+                <span class="text-xs text-slate-500 block" data-i18n="actualSleep">Actual Sleep Duration</span>
+                <span id="sleep-actual-display" class="text-xl font-bold text-slate-900">7.2 hrs</span>
+                <span class="text-[11px] text-teal-700 block" data-i18n="recordedLastNight">Recorded last night</span>
+              </div>
+              <div class="p-3 bg-slate-50 rounded-xl border border-slate-200">
+                <span class="text-xs text-slate-500 block" data-i18n="restorativeDeficit">Restorative Deficit</span>
+                <span id="sleep-deficit-display" class="text-xl font-bold text-amber-600">0.8 hrs</span>
+                <span class="text-[11px] text-slate-500 block" data-i18n="underLimit">Under 8.0h clinical limit</span>
+              </div>
+              <div class="p-3 bg-slate-50 rounded-xl border border-slate-200">
+                <span class="text-xs text-slate-500 block" data-i18n="targetBedtime">Target Bedtime</span>
+                <span id="sleep-bedtime-display" class="text-xl font-bold text-teal-800">22:15</span>
+                <span id="sleep-wake-target-sub" class="text-[11px] text-slate-500 block">For 06:30 wake-up</span>
+              </div>
+            </div>
+
+            <!-- Clinical Sleep Advice Banner -->
+            <div class="p-3.5 bg-teal-50 rounded-xl border border-teal-200 text-xs text-teal-950 flex items-start gap-2.5">
+              <svg class="icon text-teal-700 shrink-0 mt-0.5" viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><line x1="12" y1="16" x2="12" y2="12"/><line x1="12" y1="8" x2="12.01" y2="8"/></svg>
+              <span id="sleep-recommendation-text" class="leading-relaxed">
+                You are 0.8h short of the optimal 8.0h restorative ceiling. Prioritize wind-down tonight at 22:15 to restore full neuro-cellular equilibrium.
+              </span>
+            </div>
+          </div>
+
+          <!-- Sleep Architecture Progress Bar -->
+          <div class="pt-1">
+            <div class="flex justify-between text-xs font-semibold text-slate-700 mb-1">
+              <span data-i18n="targetAchievement">Restorative Sleep Target Achievement</span>
+              <span id="sleep-percent-text">90% of 8.0h</span>
+            </div>
+            <div class="w-full h-3 bg-slate-100 rounded-full overflow-hidden">
+              <div id="sleep-progress-bar" class="h-full bg-teal-600 rounded-full" style="width: 90%; transition: width 0.5s ease;"></div>
+            </div>
+          </div>
+        </div>
+
+      </div>
+
+      <!-- PILLAR 5: CIRCADIAN RHYTHM & CAFFEINE METABOLIC CLEARANCE HORIZON -->
+      <div class="bg-white rounded-2xl p-5 border border-slate-200 shadow-xs space-y-4">
+        <div class="flex flex-col sm:flex-row sm:items-center justify-between border-b border-slate-100 pb-3 gap-2">
+          <div class="flex items-center gap-2">
+            <div class="w-8 h-8 rounded-lg bg-amber-50 border border-amber-200 flex items-center justify-center text-amber-700 font-bold">
+              ☕
+            </div>
+            <div>
+              <h2 class="text-base font-bold text-slate-900" data-i18n="caffeineTimelineTitle">Circadian Caffeine Metabolic Decay Curve</h2>
+              <p class="text-xs text-slate-500" data-i18n="caffeineDesc">Visualizes 5.5-hour metabolic clearance. Adenosine receptor blockade timeline.</p>
+            </div>
+          </div>
+
+          <!-- Morning Sunlight Lux Timer -->
+          <div class="flex items-center gap-2 bg-amber-50 p-2 rounded-xl border border-amber-200 text-xs">
+            <span class="text-amber-800 font-bold">☀️ Morning Lux:</span>
+            <span id="sun-timer-display" class="font-extrabold text-amber-950 text-sm">10:00</span>
+            <button id="btn-toggle-sun-timer" onclick="toggleSunlightTimer()" class="btn-primary btn-xs bg-amber-600 hover:bg-amber-700">Start (10m)</button>
+            <button onclick="resetSunlightTimer()" class="btn-secondary btn-xs">Reset</button>
+          </div>
+        </div>
+
+        <div class="grid grid-cols-1 sm:grid-cols-3 gap-3">
+          <div class="p-3 bg-slate-50 rounded-xl border border-slate-200">
+            <span class="text-[11px] text-slate-500 block">Total Ingested Stimulant</span>
+            <span id="caffeine-total-mg" class="text-xl font-bold text-slate-900">190 mg</span>
+            <span class="text-[10px] text-slate-400 block">Based on logged coffee cups</span>
+          </div>
+          <div class="p-3 bg-slate-50 rounded-xl border border-slate-200">
+            <span class="text-[11px] text-slate-500 block" data-i18n="adenosineClearance">Sleep Readiness Horizon</span>
+            <span id="caffeine-clearance-horizon" class="text-xl font-bold text-teal-800">22:30</span>
+            <span id="caffeine-hours-remaining" class="text-[10px] text-teal-600 block">~4.5 hrs post-intake</span>
+          </div>
+          <div class="p-3 bg-slate-50 rounded-xl border border-slate-200 flex flex-col justify-between">
+            <div class="flex justify-between text-[11px] font-bold text-slate-600 mb-1">
+              <span>Adenosine Receptor Load</span>
+            </div>
+            <div class="w-full h-3 bg-slate-200 rounded-full overflow-hidden">
+              <div id="caffeine-decay-bar" class="h-full bg-amber-500 rounded-full" style="width: 60%; transition: width 0.5s ease;"></div>
+            </div>
+            <span id="caffeine-advice-note" class="text-[10px] text-slate-500 block mt-1">Caffeine clearance aligns with bedtime wind-down.</span>
+          </div>
+        </div>
+      </div>
+
+      <!-- DAILY BIOMETRIC & ERGONOMIC INPUT FORM -->
+      <div class="bg-white rounded-2xl p-6 border border-slate-200 shadow-xs space-y-5">
+        <div class="flex items-center justify-between border-b border-slate-100 pb-3">
+          <div>
+            <h2 class="text-base font-bold text-slate-900" data-i18n="biometricFormTitle">Biometric &amp; Ergonomic Input Form</h2>
+            <p class="text-xs text-slate-500" data-i18n="biometricFormDesc">Live predictions update as you adjust sliders</p>
+          </div>
+          <span class="text-xs font-bold text-teal-700 bg-teal-50 px-2 py-0.5 rounded border border-teal-200">
+            Auto-Sync
+          </span>
+        </div>
+
+        <form id="daily-log-form" onsubmit="handleFormSubmit(event)" class="space-y-5">
+          <!-- Primary 4 Range Sliders -->
+          <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
+            
+            <!-- Work Hours -->
+            <div class="p-3 bg-slate-50 rounded-xl border border-slate-200">
+              <div class="flex justify-between text-xs font-bold text-slate-700 mb-1">
+                <label for="input-work" data-i18n="workHours">Working Hours</label>
+                <span id="val-work" class="text-teal-700">8.0 hrs</span>
+              </div>
+              <input type="range" id="input-work" min="0" max="16" step="0.5" value="8" oninput="updateLiveCalculation()">
+              <div class="flex justify-between text-[10px] text-slate-400">
+                <span>0h</span><span>8h standard</span><span>16h</span>
+              </div>
+            </div>
+
+            <!-- Sleep Hours -->
+            <div class="p-3 bg-slate-50 rounded-xl border border-slate-200">
+              <div class="flex justify-between text-xs font-bold text-slate-700 mb-1">
+                <label for="input-sleep" data-i18n="sleepHours">Sleep Duration</label>
+                <span id="val-sleep" class="text-teal-700">7.2 hrs</span>
+              </div>
+              <input type="range" id="input-sleep" min="2" max="12" step="0.1" value="7.2" oninput="updateLiveCalculation()">
+              <div class="flex justify-between text-[10px] text-slate-400">
+                <span>2h</span><span class="text-teal-700 font-bold">8.0h Cap</span><span>12h</span>
+              </div>
+            </div>
+
+            <!-- Sleep Quality -->
+            <div class="p-3 bg-slate-50 rounded-xl border border-slate-200">
+              <div class="flex justify-between text-xs font-bold text-slate-700 mb-1">
+                <label for="input-quality" data-i18n="sleepQuality">Sleep Quality</label>
+                <span id="val-quality" class="text-teal-700">4 / 5</span>
+              </div>
+              <input type="range" id="input-quality" min="1" max="5" step="1" value="4" oninput="updateLiveCalculation()">
+              <div class="flex justify-between text-[10px] text-slate-400">
+                <span>1 (Poor)</span><span>3 (Fair)</span><span>5 (Deep)</span>
+              </div>
+            </div>
+
+            <!-- Fatigue Level -->
+            <div class="p-3 bg-slate-50 rounded-xl border border-slate-200">
+              <div class="flex justify-between text-xs font-bold text-slate-700 mb-1">
+                <label for="input-fatigue" data-i18n="fatigueIndex">Fatigue Index</label>
+                <span id="val-fatigue" class="text-teal-700">4 / 10</span>
+              </div>
+              <input type="range" id="input-fatigue" min="1" max="10" step="1" value="4" oninput="updateLiveCalculation()">
+              <div class="flex justify-between text-[10px] text-slate-400">
+                <span>1 (Energetic)</span><span>5</span><span>10 (Exhausted)</span>
+              </div>
+            </div>
+
+          </div>
+
+          <!-- Secondary Ergonomic Indicators -->
+          <div class="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-5 gap-3">
+            <div>
+              <label class="text-xs font-bold text-slate-700 block mb-1" data-i18n="screenTime">Screen Time (h)</label>
+              <input type="number" id="input-screen" min="0" max="18" value="7.5" step="0.5" onchange="updateLiveCalculation()">
+            </div>
+            <div>
+              <label class="text-xs font-bold text-slate-700 block mb-1" data-i18n="mindfulBreaks">Mindful Breaks</label>
+              <input type="number" id="input-breaks" min="0" max="20" value="3" onchange="updateLiveCalculation()">
+            </div>
+            <div>
+              <label class="text-xs font-bold text-slate-700 block mb-1" data-i18n="hydration">Hydration (cups)</label>
+              <input type="number" id="input-water" min="0" max="20" value="6" onchange="updateLiveCalculation()">
+            </div>
+            <div>
+              <label class="text-xs font-bold text-slate-700 block mb-1" data-i18n="caffeine">Caffeine (cups)</label>
+              <input type="number" id="input-caffeine" min="0" max="10" value="2" onchange="updateLiveCalculation()">
+            </div>
+            <div>
+              <label class="text-xs font-bold text-slate-700 block mb-1" data-i18n="movement">Movement (mins)</label>
+              <input type="number" id="input-movement" min="0" max="180" value="30" onchange="updateLiveCalculation()">
+            </div>
+          </div>
+
+          <!-- Subjective Mood Selector -->
+          <div>
+            <label class="text-xs font-bold text-slate-700 block mb-2" data-i18n="subjectiveMood">Subjective Mood &amp; Neuro-State</label>
+            <div id="mood-pill-container" class="flex flex-wrap gap-2">
+              <button type="button" onclick="selectMood('calm')" class="mood-pill px-3.5 py-1.5 rounded-lg border text-xs font-semibold bg-teal-600 text-white border-teal-600 shadow-xs" data-mood="calm" data-i18n="moodCalm">😌 Calm</button>
+              <button type="button" onclick="selectMood('energetic')" class="mood-pill px-3.5 py-1.5 rounded-lg border text-xs font-semibold bg-slate-50 text-slate-700 border-slate-200" data-mood="energetic" data-i18n="moodEnergetic">⚡ Energetic</button>
+              <button type="button" onclick="selectMood('content')" class="mood-pill px-3.5 py-1.5 rounded-lg border text-xs font-semibold bg-slate-50 text-slate-700 border-slate-200" data-mood="content" data-i18n="moodContent">🌱 Content</button>
+              <button type="button" onclick="selectMood('neutral')" class="mood-pill px-3.5 py-1.5 rounded-lg border text-xs font-semibold bg-slate-50 text-slate-700 border-slate-200" data-mood="neutral" data-i18n="moodNeutral">😐 Neutral</button>
+              <button type="button" onclick="selectMood('anxious')" class="mood-pill px-3.5 py-1.5 rounded-lg border text-xs font-semibold bg-slate-50 text-slate-700 border-slate-200" data-mood="anxious" data-i18n="moodAnxious">😰 Anxious</button>
+              <button type="button" onclick="selectMood('exhausted')" class="mood-pill px-3.5 py-1.5 rounded-lg border text-xs font-semibold bg-slate-50 text-slate-700 border-slate-200" data-mood="exhausted" data-i18n="moodExhausted">😴 Exhausted</button>
+            </div>
+          </div>
+
+          <!-- Daily Notes Field -->
+          <div>
+            <label class="text-xs font-bold text-slate-700 block mb-1" data-i18n="reflectionsNotes">Daily Reflections &amp; Physical Triggers (Optional)</label>
+            <textarea id="input-notes" rows="2" placeholder="e.g., Heavy mock exam afternoon, tight shoulders, took 15m walk after lunch."></textarea>
+          </div>
+
+          <!-- Save Button -->
+          <div class="flex items-center justify-between pt-2 border-t border-slate-100">
+            <span class="text-xs text-slate-500" data-i18n="savedInstantly">Saved instantly to persistent database &amp; local storage</span>
+            <button type="submit" class="btn-primary">
+              <svg class="icon" viewBox="0 0 24 24"><path d="M19 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11l5 5v11a2 2 0 0 1-2 2z"/><polyline points="17 21 17 13 7 13 7 21"/><polyline points="7 3 7 8 15 8"/></svg>
+              <span data-i18n="saveLog">Save &amp; Update Today's Log</span>
+            </button>
+          </div>
+        </form>
+      </div>
+
+    </div>
+
+    <!-- ============================================================== -->
+    <!-- PAGE 2: 7-DAY TRENDS & PRESCRIBED MINDFUL STUDIO               -->
+    <!-- ============================================================== -->
+    <div id="view-trends" class="space-y-6 hidden">
+      
+      <!-- Top Title Banner -->
+      <div class="bg-white rounded-2xl p-5 border border-slate-200 shadow-xs">
+        <span class="text-xs font-bold uppercase tracking-wider text-cyan-700 bg-cyan-50 px-2.5 py-0.5 rounded-md border border-cyan-200">
+          Cognitive Analytics &amp; Interventions
+        </span>
+        <h1 class="text-2xl sm:text-3xl font-bold text-slate-900 mt-1">7-Day Stress Trajectory &amp; Mindful Studio</h1>
+        <p class="text-xs text-slate-500">Interactive Bezier curve analytics, stress-matched exercise protocols, neuro-respiratory pacer, and procedural soundscapes.</p>
+      </div>
+
+      <!-- 7-DAY INTERACTIVE SPLINE GRAPH -->
+      <div class="bg-white rounded-2xl p-6 border border-slate-200 shadow-xs space-y-4">
+        <div class="flex flex-col sm:flex-row sm:items-center justify-between border-b border-slate-100 pb-3 gap-2">
+          <div class="flex items-center gap-2">
+            <svg class="icon text-teal-600" viewBox="0 0 24 24"><line x1="18" y1="20" x2="18" y2="10"/><line x1="12" y1="20" x2="12" y2="4"/><line x1="6" y1="20" x2="6" y2="14"/></svg>
+            <h2 class="text-base font-bold text-slate-900">Autonomic Stress Load Trajectory (Past 7 Days)</h2>
+          </div>
+          <div class="flex items-center gap-3 text-xs">
+            <span class="flex items-center gap-1"><span class="w-2.5 h-2.5 rounded-full bg-teal-500 inline-block"></span> Low (&lt;35)</span>
+            <span class="flex items-center gap-1"><span class="w-2.5 h-2.5 rounded-full bg-amber-500 inline-block"></span> Moderate (36-60)</span>
+            <span class="flex items-center gap-1"><span class="w-2.5 h-2.5 rounded-full bg-rose-500 inline-block"></span> Elevated (61+)</span>
+          </div>
+        </div>
+
+        <!-- SVG Interactive Spline Graph -->
+        <div class="w-full overflow-x-auto">
+          <svg id="trend-svg" class="w-full h-56 min-w-[550px]" viewBox="0 0 700 220">
+            <!-- Dynamically populated Bezier path and interactive circles -->
+          </svg>
+        </div>
+
+        <!-- Selected Day Inspection Card (Updates on hover or click) -->
+        <div id="graph-inspector-card" class="p-4 rounded-xl bg-slate-50 border border-slate-200 flex flex-col sm:flex-row items-center justify-between gap-3 text-xs">
+          <div class="flex items-center gap-3">
+            <div class="w-10 h-10 rounded-xl bg-teal-100 text-teal-800 font-extrabold flex items-center justify-center text-sm" id="insp-score">
+              42
+            </div>
+            <div>
+              <span id="insp-date" class="font-bold text-slate-900 block text-sm">Today (Active Log)</span>
+              <span id="insp-details" class="text-slate-600">Sleep: 7.2h (0.8h deficit) • Fatigue: 4/10 • Work: 8.0h</span>
+            </div>
+          </div>
+          <div id="insp-badge" class="px-2.5 py-1 rounded-full bg-teal-100 text-teal-800 font-bold text-xs">
+            Moderate Strain
+          </div>
+        </div>
+
+        <!-- 4 Summary Stat Cards -->
+        <div class="grid grid-cols-2 sm:grid-cols-4 gap-3 pt-1">
+          <div class="p-3 bg-slate-50 rounded-xl border border-slate-200 text-center">
+            <span class="text-xs text-slate-500 block">7-Day Average</span>
+            <span id="trend-avg" class="text-xl font-bold text-slate-900">46</span>
+            <span class="text-[10px] text-slate-400 block">Autonomic load</span>
+          </div>
+          <div class="p-3 bg-slate-50 rounded-xl border border-slate-200 text-center">
+            <span class="text-xs text-slate-500 block">Peak Stress Day</span>
+            <span id="trend-peak" class="text-xl font-bold text-rose-600">62</span>
+            <span class="text-[10px] text-slate-400 block">Max recorded</span>
+          </div>
+          <div class="p-3 bg-slate-50 rounded-xl border border-slate-200 text-center">
+            <span class="text-xs text-slate-500 block">Lowest Stress Day</span>
+            <span id="trend-low" class="text-xl font-bold text-teal-700">32</span>
+            <span class="text-[10px] text-slate-400 block">Best recovery</span>
+          </div>
+          <div class="p-3 bg-slate-50 rounded-xl border border-slate-200 text-center">
+            <span class="text-xs text-slate-500 block">Average Sleep</span>
+            <span id="trend-avg-sleep" class="text-xl font-bold text-teal-800">7.3h</span>
+            <span class="text-[10px] text-slate-400 block">Target 8.0h max</span>
+          </div>
+        </div>
+      </div>
+
+      <!-- PROCEDURAL ACOUSTIC SANCTUARY & BINAURAL BEATS -->
+      <div class="bg-white rounded-2xl p-6 border border-teal-200 shadow-xs space-y-5">
+        <div class="flex flex-col sm:flex-row sm:items-center justify-between border-b border-slate-100 pb-3 gap-2">
+          <div class="flex items-center gap-2.5">
+            <div class="w-8 h-8 rounded-lg bg-teal-50 border border-teal-200 flex items-center justify-center text-teal-700">
+              <svg class="icon w-4 h-4" viewBox="0 0 24 24"><path d="M3 18v-6a9 9 0 0 1 18 0v6"/><path d="M21 19a2 2 0 0 1-2 2h-1a2 2 0 0 1-2-2v-3a2 2 0 0 1 2-2h3zM3 19a2 2 0 0 0 2 2h1a2 2 0 0 0 2-2v-3a2 2 0 0 0-2-2H3z"/></svg>
+            </div>
+            <div>
+              <div class="flex items-center gap-2">
+                <h2 class="text-base font-bold text-slate-900">Acoustic Sanctuary &amp; Binaural Beats</h2>
+                <span class="text-[10px] font-bold text-teal-800 bg-teal-100 px-2 py-0.5 rounded-full border border-teal-200">WebAudio Real-Time</span>
+              </div>
+              <p class="text-xs text-slate-500">Procedurally synthesized brainwave frequencies (stereo headphones recommended) &amp; calming ambient noise.</p>
+            </div>
+          </div>
+
+          <!-- Animated Audio Waveform Bars -->
+          <div class="flex items-center gap-4">
+            <div id="sanctuary-visualizer" class="audio-waves-container">
+              <div class="audio-bar"></div>
+              <div class="audio-bar"></div>
+              <div class="audio-bar"></div>
+              <div class="audio-bar"></div>
+              <div class="audio-bar"></div>
+            </div>
+            <!-- Volume Slider -->
+            <div class="flex items-center gap-1.5 text-xs text-slate-500">
+              <svg class="icon w-3.5 h-3.5" viewBox="0 0 24 24"><polygon points="11 5 6 9 2 9 2 15 6 15 11 19 11 5"/><path d="M15.54 8.46a5 5 0 0 1 0 7.07"/></svg>
+              <input type="range" min="0" max="1" step="0.05" value="0.5" oninput="setMasterVolume(this.value)" class="w-20" style="margin: 0;">
+            </div>
+          </div>
+        </div>
+
+        <div class="grid grid-cols-1 lg:grid-cols-2 gap-4">
+          
+          <!-- LEFT: Binaural Beats Modes -->
+          <div class="p-4 rounded-xl bg-slate-50 border border-slate-200 space-y-3">
+            <div class="flex justify-between items-center">
+              <span class="text-xs font-bold text-slate-800">Binaural Frequency Mode</span>
+              <span id="binaural-active-badge" class="text-[11px] font-bold text-teal-800 bg-teal-100 px-2 py-0.5 rounded">Theta (6.0 Hz)</span>
+            </div>
+            <p id="binaural-active-subtitle" class="text-xs text-slate-500 min-h-[32px]">Autonomic Calming, Vagal Reset &amp; Meditation</p>
+            
+            <div class="flex flex-wrap gap-2">
+              <button id="binaural-btn-delta" onclick="setBinauralMode('delta')" class="px-2.5 py-1 text-xs font-semibold rounded-lg bg-slate-100 text-slate-700 hover:bg-slate-200">
+                Delta (2.5 Hz Sleep)
+              </button>
+              <button id="binaural-btn-theta" onclick="setBinauralMode('theta')" class="px-2.5 py-1 text-xs font-semibold rounded-lg bg-teal-600 text-white shadow-xs">
+                Theta (6.0 Hz Calming)
+              </button>
+              <button id="binaural-btn-alpha" onclick="setBinauralMode('alpha')" class="px-2.5 py-1 text-xs font-semibold rounded-lg bg-slate-100 text-slate-700 hover:bg-slate-200">
+                Alpha (10.0 Hz Focus)
+              </button>
+            </div>
+
+            <div class="pt-1">
+              <button id="btn-toggle-binaural" onclick="toggleBinauralBeats()" class="btn-primary btn-sm w-full">
+                <svg class="icon w-3.5 h-3.5" viewBox="0 0 24 24"><polygon points="5 3 19 12 5 21 5 3"/></svg>
+                <span>Play Binaural Beats</span>
+              </button>
+            </div>
+          </div>
+
+          <!-- RIGHT: Procedural Ambient Soundscapes -->
+          <div class="p-4 rounded-xl bg-slate-50 border border-slate-200 space-y-3">
+            <div class="flex justify-between items-center">
+              <span class="text-xs font-bold text-slate-800">Synthesized Ambient Texture</span>
+              <span class="text-[11px] font-bold text-cyan-800 bg-cyan-100 px-2 py-0.5 rounded">Zero-Data Procedural</span>
+            </div>
+            <p class="text-xs text-slate-500 min-h-[32px]">Algorithmic pink/brownian noise shaping continuous restorative sound environments.</p>
+
+            <div class="flex flex-wrap gap-2">
+              <button id="ambient-btn-rain" onclick="setAmbientMode('rain')" class="px-2.5 py-1 text-xs font-semibold rounded-lg bg-cyan-600 text-white shadow-xs">
+                🌧️ Gentle Rain
+              </button>
+              <button id="ambient-btn-ocean" onclick="setAmbientMode('ocean')" class="px-2.5 py-1 text-xs font-semibold rounded-lg bg-slate-100 text-slate-700 hover:bg-slate-200">
+                🌊 Ocean Surf Swell
+              </button>
+            </div>
+
+            <div class="pt-1">
+              <button id="btn-toggle-ambient" onclick="toggleAmbientSoundscape()" class="btn-secondary btn-sm w-full">
+                <svg class="icon w-3.5 h-3.5" viewBox="0 0 24 24"><polygon points="5 3 19 12 5 21 5 3"/></svg>
+                <span>Play Ambient Sound</span>
+              </button>
+            </div>
+          </div>
+
+        </div>
+      </div>
+
+      <!-- TWO INTERVENTION PANELS: EXERCISE ROUTINES + INTERACTIVE PACER -->
+      <div class="grid grid-cols-1 lg:grid-cols-12 gap-6">
+        
+        <!-- EXERCISE ROUTINES (6 cols) -->
+        <div class="lg:col-span-6 bg-white rounded-2xl p-6 border border-slate-200 shadow-xs space-y-4">
+          <div class="flex items-center justify-between border-b border-slate-100 pb-3">
+            <div class="flex items-center gap-2">
+              <svg class="icon text-teal-600" viewBox="0 0 24 24"><path d="M18 20V10"/><path d="M12 20V4"/><path d="M6 20v-6"/></svg>
+              <h2 class="text-base font-bold text-slate-900">Stress-Matched Exercise Protocols</h2>
+            </div>
+            <span class="text-xs font-semibold text-teal-800 bg-teal-100 px-2 py-0.5 rounded">Adaptive Match</span>
+          </div>
+
+          <p class="text-xs text-slate-600">Prescribed protocols to modulate autonomic nervous tone without elevating cortisol spikes.</p>
+
+          <!-- Routine Cards -->
+          <div class="space-y-3">
+            
+            <!-- Routine 1 -->
+            <div class="p-4 rounded-xl bg-slate-50 border border-slate-200 space-y-2">
+              <div class="flex justify-between items-start">
+                <div>
+                  <h3 class="text-sm font-bold text-slate-900">Restorative Yin Yoga &amp; Thoracic Release</h3>
+                  <span class="text-[11px] text-teal-700 font-semibold">Duration: 15 mins • Low Intensity</span>
+                </div>
+                <button onclick="startRoutineTimer('Yin Yoga & Thoracic Release', 15)" class="btn-secondary btn-sm">Start (15m)</button>
+              </div>
+              <p class="text-xs text-slate-600">Prolonged passive floor postures downregulate sympathetic signaling and ease cervical strain.</p>
+            </div>
+
+            <!-- Routine 2 -->
+            <div class="p-4 rounded-xl bg-slate-50 border border-slate-200 space-y-2">
+              <div class="flex justify-between items-start">
+                <div>
+                  <h3 class="text-sm font-bold text-slate-900">Rhythmic Cadence Walk &amp; Optic Flow</h3>
+                  <span class="text-[11px] text-teal-700 font-semibold">Duration: 20 mins • Gentle Cadence</span>
+                </div>
+                <button onclick="startRoutineTimer('Cadence Walk & Optic Flow', 20)" class="btn-secondary btn-sm">Start (20m)</button>
+              </div>
+              <p class="text-xs text-slate-600">Bilateral eye movements during outdoor stride attenuate amygdala reactivity and encourage neural resets.</p>
+            </div>
+
+            <!-- Routine 3 -->
+            <div class="p-4 rounded-xl bg-slate-50 border border-slate-200 space-y-2">
+              <div class="flex justify-between items-start">
+                <div>
+                  <h3 class="text-sm font-bold text-slate-900">Somatic Tremoring &amp; Vagal Reset</h3>
+                  <span class="text-[11px] text-teal-700 font-semibold">Duration: 10 mins • Neurogenic Reset</span>
+                </div>
+                <button onclick="startRoutineTimer('Somatic Tremoring & Vagal Reset', 10)" class="btn-secondary btn-sm">Start (10m)</button>
+              </div>
+              <p class="text-xs text-slate-600">Rhythmic shaking and vagus nerve hums discharge accumulated muscular tension and restore tone.</p>
+            </div>
+
+          </div>
+
+          <!-- Active Stopwatch Display Banner -->
+          <div id="exercise-timer-card" class="p-4 rounded-xl bg-teal-50 border border-teal-200 hidden space-y-2.5">
+            <div class="flex justify-between items-center">
+              <div>
+                <span class="text-[10px] font-bold uppercase tracking-wider text-teal-700 block">Active Protocol</span>
+                <span id="active-routine-name" class="text-xs font-bold text-teal-900">Routine Active</span>
+              </div>
+              <span id="active-timer-display" class="text-2xl font-extrabold text-teal-800">15:00</span>
+            </div>
+            <div class="flex gap-2">
+              <button id="btn-toggle-ex-timer" onclick="toggleExerciseTimer()" class="btn-primary btn-sm flex-1">Pause</button>
+              <button onclick="resetExerciseTimer()" class="btn-secondary btn-sm">Reset</button>
+            </div>
+          </div>
+        </div>
+
+        <!-- NEURO-RESPIRATORY BREATHING STUDIO (6 cols) -->
+        <div class="lg:col-span-6 bg-white rounded-2xl p-6 border border-slate-200 shadow-xs flex flex-col items-center justify-between text-center space-y-4">
+          <div class="w-full flex items-center justify-between border-b border-slate-100 pb-3">
+            <div class="flex items-center gap-2">
+              <svg class="icon text-teal-600" viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><path d="m10 15 5-3-5-3v6Z"/></svg>
+              <h2 class="text-base font-bold text-slate-900">Neuro-Respiratory Breathing Studio</h2>
+            </div>
+            <span class="text-xs font-semibold text-teal-800 bg-teal-100 px-2 py-0.5 rounded">432 Hz Bell Pacer</span>
+          </div>
+
+          <!-- Pacer Mode Selectors -->
+          <div class="flex flex-wrap justify-center gap-1.5 p-1 bg-slate-100 rounded-xl w-full">
+            <button onclick="setPacerMode('box')" id="pacer-btn-box" class="px-2.5 py-1 text-xs font-semibold rounded-lg bg-white text-teal-800 shadow-xs">Box (4-4-4-4)</button>
+            <button onclick="setPacerMode('sleep')" id="pacer-btn-sleep" class="px-2.5 py-1 text-xs font-semibold rounded-lg text-slate-600">4-7-8 Sleep</button>
+            <button onclick="setPacerMode('coherent')" id="pacer-btn-coherent" class="px-2.5 py-1 text-xs font-semibold rounded-lg text-slate-600">5-5 Coherent</button>
+            <button onclick="setPacerMode('sigh')" id="pacer-btn-sigh" class="px-2.5 py-1 text-xs font-semibold rounded-lg text-slate-600">Physiological Sigh</button>
+          </div>
+
+          <!-- Expanding / Contracting Animated Circle Visualizer -->
+          <div class="my-4 flex items-center justify-center h-52 w-full">
+            <div id="pacer-circle" class="breath-circle">
+              <span id="pacer-phase" class="text-lg font-bold text-teal-800 uppercase tracking-wide">Ready</span>
+              <span id="pacer-seconds" class="text-4xl font-extrabold text-slate-900 my-0.5">4s</span>
+              <span id="pacer-cycles" class="text-[11px] font-semibold text-slate-500">Cycle 0</span>
+            </div>
+          </div>
+
+          <!-- Pacer Action Controls -->
+          <div class="flex flex-wrap gap-2 justify-center w-full">
+            <button id="pacer-toggle-btn" onclick="togglePacer()" class="btn-primary flex-1 max-w-xs">
+              <svg class="icon" viewBox="0 0 24 24"><polygon points="5 3 19 12 5 21 5 3"/></svg>
+              <span id="pacer-toggle-text">Begin Breathing Session</span>
+            </button>
+            <button onclick="playChime(432)" class="btn-secondary" title="Test 432 Hz bell chime">
+              <svg class="icon" viewBox="0 0 24 24"><polygon points="11 5 6 9 2 9 2 15 6 15 11 19 11 5"/><path d="M15.54 8.46a5 5 0 0 1 0 7.07"/></svg>
+              <span>Test Bell</span>
+            </button>
+          </div>
+        </div>
+
+      </div>
+
+    </div>
+
+    <!-- ============================================================== -->
+    <!-- PILLAR 4: CBT-I BEDTIME WORRY VAULT (FULL TAB)                -->
+    <!-- ============================================================== -->
+    <div id="view-vault" class="space-y-6 hidden">
+      <div class="bg-white rounded-2xl p-5 border border-slate-200 shadow-xs">
+        <span class="text-xs font-bold uppercase tracking-wider text-purple-700 bg-purple-50 px-2.5 py-0.5 rounded-md border border-purple-200">
+          Cognitive Behavioral Therapy for Insomnia (CBT-I)
+        </span>
+        <h1 class="text-2xl sm:text-3xl font-bold text-slate-900 mt-1" data-i18n="vaultTitle">Bedtime Worry Vault (CBT-I)</h1>
+        <p class="text-xs text-slate-500" data-i18n="vaultDesc">Offload intrusive thoughts, identify cognitive distortions, and lock worries away until morning.</p>
+      </div>
+
+      <div class="grid grid-cols-1 lg:grid-cols-12 gap-6">
+        <!-- LEFT: Thought Input & Reframing Console (7 cols) -->
+        <div class="lg:col-span-7 bg-white rounded-2xl p-6 border border-slate-200 shadow-xs space-y-4">
+          <div class="flex items-center gap-2 border-b border-slate-100 pb-3">
+            <span class="text-lg">🧠</span>
+            <h2 class="text-base font-bold text-slate-900">Pre-Sleep Cognitive Unwinder</h2>
+          </div>
+
+          <p class="text-xs text-slate-600">
+            Pre-sleep cognitive arousal is the primary driver of sleep-onset insomnia. Writing down mental loops unburdens working memory.
+          </p>
+
+          <div>
+            <label class="text-xs font-bold text-slate-700 block mb-1">What thought is currently keeping you awake?</label>
+            <textarea id="worry-input" rows="3" placeholder="e.g. If I don't finish this project by tomorrow morning, my career will be completely ruined and I'll disappoint everyone."></textarea>
+          </div>
+
+          <div class="flex gap-2">
+            <button onclick="handleAnalyzeThought()" class="btn-primary btn-sm flex-1">
+              <span>🔍 Analyze &amp; Reframe Thought</span>
+            </button>
+          </div>
+
+          <!-- Dynamic Analysis & Reframe Box -->
+          <div id="worry-analysis-result" class="hidden p-4 rounded-xl bg-purple-50 border border-purple-200 space-y-3">
+            <div class="flex justify-between items-center">
+              <span class="text-xs font-bold text-purple-950">Detected Cognitive Distortion:</span>
+              <span id="worry-distortion-badge" class="px-2.5 py-0.5 rounded-full text-xs font-bold bg-rose-100 text-rose-800">Catastrophizing</span>
+            </div>
+            <p id="worry-distortion-desc" class="text-xs text-purple-900">Magnifying a difficult situation into an irreversible catastrophe.</p>
+            
+            <div class="p-3 rounded-lg bg-white border border-purple-200 text-xs text-slate-800 space-y-1">
+              <span class="text-[10px] font-bold uppercase tracking-wider text-teal-700 block">Prescribed Clinical Reframe:</span>
+              <p id="worry-reframe-text" class="italic font-medium leading-relaxed">
+                "Even if challenges arise tomorrow, I have the capability and resilience to navigate them step-by-step."
+              </p>
+            </div>
+
+            <button onclick="handleLockWorry()" class="btn-primary btn-sm w-full bg-purple-700 hover:bg-purple-800 shadow-sm">
+              <span>🔒 Lock in Vault Until 08:00 AM</span>
+            </button>
+          </div>
+        </div>
+
+        <!-- RIGHT: Locked Vault History (5 cols) -->
+        <div class="lg:col-span-5 bg-white rounded-2xl p-6 border border-slate-200 shadow-xs space-y-4">
+          <div class="flex items-center justify-between border-b border-slate-100 pb-3">
+            <div class="flex items-center gap-2">
+              <span class="text-lg">🔒</span>
+              <h2 class="text-base font-bold text-slate-900">Locked Vault Storage</h2>
+            </div>
+            <span class="text-[10px] font-bold text-purple-800 bg-purple-100 px-2 py-0.5 rounded-full">Secure Local Vault</span>
+          </div>
+
+          <p class="text-xs text-slate-500">Thoughts locked here are dismissed from mental processing until your morning waking horizon.</p>
+
+          <div id="worry-locked-list" class="space-y-2.5 max-h-[360px] overflow-y-auto">
+            <!-- Dynamically populated locked entries -->
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- ============================================================== -->
+    <!-- PAGE 4: SETTINGS, PROFILE & CLINICAL PDF EXPORT                -->
+    <!-- ============================================================== -->
+    <div id="view-settings" class="space-y-6 hidden">
+      
+      <!-- Top Title Banner -->
+      <div class="bg-white rounded-2xl p-5 border border-slate-200 shadow-xs flex flex-col sm:flex-row items-center justify-between gap-4">
+        <div>
+          <span class="text-xs font-bold uppercase tracking-wider text-slate-700 bg-slate-100 px-2.5 py-0.5 rounded-md">
+            Profile &amp; Clinical Portability
+          </span>
+          <h1 class="text-2xl sm:text-3xl font-bold text-slate-900 mt-1">Profile, Reminders &amp; Export</h1>
+          <p class="text-xs text-slate-500">Manage profile details, avatar photo, notification alerts, and generate clinical PDF summaries.</p>
+        </div>
+
+        <button onclick="window.print()" class="btn-primary">
+          <svg class="icon" viewBox="0 0 24 24"><polyline points="6 9 6 2 18 2 18 9"/><path d="M6 18H4a2 2 0 0 1-2-2v-5a2 2 0 0 1 2-2h16a2 2 0 0 1 2 2v5a2 2 0 0 1-2 2h-2"/><rect width="12" height="8" x="6" y="14"/></svg>
+          <span>Export Clinical PDF</span>
+        </button>
+      </div>
+
+      <div class="grid grid-cols-1 lg:grid-cols-12 gap-6">
+        
+        <!-- LEFT: User Profile & Reminders (7 cols) -->
+        <div class="lg:col-span-7 space-y-6">
+          
+          <!-- User Profile Card -->
+          <div class="bg-white rounded-2xl p-6 border border-slate-200 shadow-xs space-y-5">
+            <h2 class="text-base font-bold text-slate-900 border-b border-slate-100 pb-3">User Profile Settings</h2>
+            
+            <!-- Avatar Upload & Preview -->
+            <div class="flex flex-col sm:flex-row items-center gap-4 p-4 rounded-xl bg-slate-50 border border-slate-200">
+              <div id="profile-photo-preview" class="w-16 h-16 rounded-full bg-teal-600 text-white font-bold text-xl flex items-center justify-center overflow-hidden border-2 border-white shadow-md shrink-0">
+                AM
+              </div>
+              <div class="space-y-1 text-center sm:text-left">
+                <span class="text-xs font-bold text-slate-800 block">Profile Avatar Image</span>
+                <p class="text-[11px] text-slate-500">Uploaded photo is encoded into local offline storage &amp; server database.</p>
+                <div class="flex gap-2 justify-center sm:justify-start pt-1">
+                  <button type="button" onclick="document.getElementById('avatar-input').click()" class="btn-secondary btn-sm">Upload Photo</button>
+                  <button type="button" onclick="removeAvatar()" class="btn-secondary btn-sm text-rose-600">Remove</button>
+                  <input type="file" id="avatar-input" accept="image/*" class="hidden" onchange="handleAvatarUpload(event)">
+                </div>
+              </div>
+            </div>
+
+            <!-- Profile Form Fields -->
+            <form onsubmit="handleSaveProfile(event)" class="space-y-4">
+              <div class="grid grid-cols-1 sm:grid-cols-2 gap-3">
+                <div>
+                  <label class="text-xs font-bold text-slate-700 block mb-1">Display Name</label>
+                  <input type="text" id="prof-username" value="Alex Morgan" required>
+                </div>
+                <div>
+                  <label class="text-xs font-bold text-slate-700 flex justify-between items-center mb-1">
+                    <span>Age</span>
+                    <span class="text-[10px] text-teal-700 bg-teal-50 px-1.5 py-0.5 rounded font-semibold border border-teal-100">18–62 yrs limit</span>
+                  </label>
+                  <input type="number" id="prof-age" min="18" max="62" placeholder="e.g. 28" required>
+                  <span id="prof-age-err" class="text-[11px] text-rose-600 font-medium hidden mt-0.5">Age must be between 18 and 62 years.</span>
+                </div>
+                <div class="sm:col-span-2">
+                  <label class="text-xs font-bold text-slate-700 block mb-1">Preferred Wake-Up Time</label>
+                  <input type="time" id="prof-waketime" value="06:30">
+                </div>
+                <div class="sm:col-span-2">
+                  <label class="text-xs font-bold text-slate-700 block mb-1">Target Restorative Sleep</label>
+                  <div class="p-2.5 bg-teal-50 border border-teal-200 rounded-xl flex items-center justify-between text-xs font-bold text-teal-900">
+                    <span>8.0 hours maximum</span>
+                    <span class="text-[10px] bg-teal-200 text-teal-800 px-2 py-0.5 rounded-full">Clinical Limit</span>
+                  </div>
+                </div>
+              </div>
+
+              <div class="flex justify-end pt-2">
+                <button type="submit" class="btn-primary btn-sm">Save Profile Changes</button>
+              </div>
+            </form>
+          </div>
+
+          <!-- Notification & Alert Settings -->
+          <div class="bg-white rounded-2xl p-6 border border-slate-200 shadow-xs space-y-4">
+            <h2 class="text-base font-bold text-slate-900 border-b border-slate-100 pb-3">Wellness Reminder Preferences</h2>
+
+            <div class="flex items-center justify-between p-3.5 rounded-xl bg-slate-50 border border-slate-200">
+              <div>
+                <span class="text-xs font-bold text-slate-800 block">Micro-Break Reminders</span>
+                <span class="text-[11px] text-slate-500">Prompts you every 90 minutes to reset posture and eye focal distance.</span>
+              </div>
+              <div id="toggle-break-reminders" class="toggle-switch active" onclick="toggleNotification('breakReminders')">
+                <div class="toggle-thumb"></div>
+              </div>
+            </div>
+
+            <div class="flex items-center justify-between p-3.5 rounded-xl bg-slate-50 border border-slate-200">
+              <div>
+                <span class="text-xs font-bold text-slate-800 block">Restorative Bedtime Alert</span>
+                <span class="text-[11px] text-slate-500">Alerts you 45 minutes prior to target bedtime to attain the 8.0h ceiling.</span>
+              </div>
+              <div id="toggle-bedtime-alert" class="toggle-switch active" onclick="toggleNotification('bedtimeAlert')">
+                <div class="toggle-thumb"></div>
+              </div>
+            </div>
+
+            <div class="flex items-center justify-between p-3.5 rounded-xl bg-slate-50 border border-slate-200">
+              <div>
+                <span class="text-xs font-bold text-slate-800 block">Harmonic Audio Bell Chimes</span>
+                <span class="text-[11px] text-slate-500">Synthesizes calm 432 Hz sine waves during breathing and timer steps.</span>
+              </div>
+              <div id="toggle-sound" class="toggle-switch active" onclick="toggleNotification('soundEffects')">
+                <div class="toggle-thumb"></div>
+              </div>
+            </div>
+          </div>
+
+        </div>
+
+        <!-- RIGHT: Export, Backup & Privacy (5 cols) -->
+        <div class="lg:col-span-5 space-y-6">
+          
+          <!-- Clinical PDF Export Card -->
+          <div class="bg-white rounded-2xl p-6 border border-teal-200 shadow-xs space-y-3">
+            <div class="flex items-center gap-2 text-teal-800">
+              <svg class="icon w-5 h-5 text-teal-600" viewBox="0 0 24 24"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="16" y1="13" x2="8" y2="13"/><line x1="16" y1="17" x2="8" y2="17"/><polyline points="10 9 9 9 8 9"/></svg>
+              <h2 class="text-base font-bold text-slate-900">Clinical PDF Summary</h2>
+            </div>
+            <p class="text-xs text-slate-600 leading-relaxed">Generates a formatted wellness document including 7-day stress trajectory, restorative sleep deficit calculations (against 8.0h cap), and prescribed protocols ready for physician consultation.</p>
+            <button onclick="window.print()" class="btn-primary w-full">
+              <svg class="icon" viewBox="0 0 24 24"><polyline points="6 9 6 2 18 2 18 9"/><path d="M6 18H4a2 2 0 0 1-2-2v-5a2 2 0 0 1 2-2h16a2 2 0 0 1 2 2v5a2 2 0 0 1-2 2h-2"/><rect width="12" height="8" x="6" y="14"/></svg>
+              <span>Download / Print Clinical PDF</span>
+            </button>
+          </div>
+
+          <!-- JSON Offline Backup & Restore -->
+          <div class="bg-white rounded-2xl p-6 border border-slate-200 shadow-xs space-y-3">
+            <h2 class="text-base font-bold text-slate-900">Database Backup &amp; Portability</h2>
+            <p class="text-xs text-slate-600">Export all your logged days, scores, and settings directly from the server database, or restore from a JSON backup.</p>
+            <div class="grid grid-cols-2 gap-2 pt-1">
+              <button onclick="exportJSON()" class="btn-secondary btn-sm">Export JSON</button>
+              <button onclick="document.getElementById('json-restore-input').click()" class="btn-secondary btn-sm">Restore JSON</button>
+              <input type="file" id="json-restore-input" accept=".json" class="hidden" onchange="restoreJSON(event)">
+            </div>
+            <div class="pt-2 border-t border-slate-100">
+              <button onclick="wipeData()" class="btn-secondary btn-sm text-rose-600 w-full hover:bg-rose-50 border-rose-200">
+                Wipe All Data
+              </button>
+            </div>
+          </div>
+
+        </div>
+
+      </div>
+
+    </div>
+
+    <!-- ============================================================== -->
+    <!-- PAGE 5: UNIFORMED FORCES STRESS & WELFARE MONITORING (PS 26186) -->
+    <!-- ============================================================== -->
+    <div id="view-forces" class="space-y-6 hidden">
+      
+      <!-- Top Operational Control Header -->
+      <div class="bg-white rounded-2xl p-5 border border-slate-200 shadow-xs space-y-4">
+        <div class="flex flex-col lg:flex-row lg:items-center justify-between gap-4 border-b border-slate-100 pb-4">
+          <div class="flex items-center gap-3">
+            <div class="w-12 h-12 rounded-2xl bg-slate-900 border border-amber-400/40 text-amber-400 flex items-center justify-center font-black text-xl shadow-xs shrink-0">
+              🛡️
+            </div>
+            <div>
+              <div class="flex items-center gap-2 flex-wrap">
+                <h1 class="text-base sm:text-lg font-extrabold text-slate-900 tracking-tight">
+                  Uniformed Forces Stress &amp; Welfare Monitoring Cockpit
+                </h1>
+                <span class="px-2 py-0.5 rounded text-[10px] font-black bg-amber-400 text-slate-950 uppercase tracking-wider">
+                  MHA • CRPF PS #26186
+                </span>
+              </div>
+              <p class="text-xs text-slate-500 mt-0.5">
+                AI-Driven Predictive Analytics, Proactive Welfare Interventions &amp; Privacy-Preserving Behavioral Monitoring
+              </p>
+            </div>
+          </div>
+
+          <!-- Privacy Indicator & Dataset Export -->
+          <div class="flex flex-wrap items-center gap-2">
+            <div id="forces-privacy-status" class="text-[11px] px-3 py-1 rounded-full bg-emerald-50 text-emerald-900 border border-emerald-300 flex items-center gap-1.5">
+              <span class="w-2 h-2 rounded-full bg-emerald-500 animate-pulse"></span>
+              <span class="font-bold">Commander Privacy Shield:</span> De-identified Tokens Active (Zero Stigmatization Guarantee)
+            </div>
+            <button onclick="downloadAnonymizedDataset()" class="btn-secondary btn-sm flex items-center gap-1.5 text-xs text-slate-700 bg-slate-50 hover:bg-slate-100">
+              <svg class="icon w-3.5 h-3.5 text-slate-600" viewBox="0 0 24 24"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>
+              <span>Export Anonymized Dataset</span>
+            </button>
+          </div>
+        </div>
+
+        <!-- Role-Based Navigation & Formation Filter -->
+        <div class="flex flex-col md:flex-row md:items-center justify-between gap-3 pt-1">
+          <!-- Role Switcher (RBAC) -->
+          <div class="flex items-center gap-1.5 bg-slate-100 p-1 rounded-xl border border-slate-200">
+            <span class="text-[11px] font-bold text-slate-500 px-2 hidden sm:inline">Role (RBAC):</span>
+            <button id="role-btn-commander" onclick="setForcesRole('commander')" class="px-3 py-1.5 rounded-lg text-xs font-bold bg-slate-900 text-white shadow-xs flex items-center gap-1.5">
+              <span>🎖️ Commandant / CO View</span>
+            </button>
+            <button id="role-btn-welfare_officer" onclick="setForcesRole('welfare_officer')" class="px-3 py-1.5 rounded-lg text-xs font-medium text-slate-600 hover:text-slate-900 flex items-center gap-1.5">
+              <span>🩺 Welfare &amp; Medical Officer</span>
+            </button>
+            <button id="role-btn-personnel" onclick="setForcesRole('personnel')" class="px-3 py-1.5 rounded-lg text-xs font-medium text-slate-600 hover:text-slate-900 flex items-center gap-1.5">
+              <span>🪖 Field Jawan Mobile App</span>
+            </button>
+          </div>
+
+          <!-- Formation Filter Dropdown -->
+          <div class="flex items-center gap-2">
+            <label class="text-xs font-semibold text-slate-600 shrink-0">Formation:</label>
+            <select id="forces-battalion-filter" onchange="setForcesBattalionFilter(this.value)" class="text-xs py-1.5 px-3 rounded-xl border border-slate-200 bg-white text-slate-800 font-semibold shadow-xs">
+              <option value="">All Formations (Force-Wide Aggregate)</option>
+              <option value="204 CoBRA Battalion">204 CoBRA Battalion (Sukma LWE)</option>
+              <option value="110 Bn CRPF">110 Bn CRPF (Srinagar Valley CI Ops)</option>
+              <option value="103 RAF Battalion">103 RAF Battalion (Public Order)</option>
+              <option value="50 Bn CRPF">50 Bn CRPF (Static Peace Garrison)</option>
+            </select>
+          </div>
+        </div>
+
+        <!-- 1-Click SIH Judge Theater Simulator Bar -->
+        <div class="bg-amber-50/70 border border-amber-200 p-3 rounded-xl flex flex-col md:flex-row md:items-center justify-between gap-2.5">
+          <div class="flex items-center gap-2">
+            <span class="text-xs font-black text-amber-950 uppercase tracking-wider flex items-center gap-1">
+              <span>⚡ 1-Click Judge Simulation Theaters:</span>
+            </span>
+          </div>
+          <div class="flex flex-wrap items-center gap-2">
+            <button onclick="loadJudgeSimulationTheater('sukma_cobra_crisis')" class="px-2.5 py-1 rounded-lg text-[11px] font-bold bg-rose-600 hover:bg-rose-700 text-white shadow-xs">
+              🔴 Sukma CoBRA Ambush (Strain 99)
+            </button>
+            <button onclick="loadJudgeSimulationTheater('srinagar_ci_ops')" class="px-2.5 py-1 rounded-lg text-[11px] font-bold bg-amber-600 hover:bg-amber-700 text-white shadow-xs">
+              🟠 Srinagar CI Ops (Strain 75)
+            </button>
+            <button onclick="loadJudgeSimulationTheater('raf_riot_order')" class="px-2.5 py-1 rounded-lg text-[11px] font-bold bg-sky-700 hover:bg-sky-800 text-white shadow-xs">
+              🟡 RAF Rapid Riot Order (Strain 68)
+            </button>
+            <button onclick="loadJudgeSimulationTheater('peace_station_delhi')" class="px-2.5 py-1 rounded-lg text-[11px] font-bold bg-emerald-700 hover:bg-emerald-800 text-white shadow-xs">
+              🟢 Peace Garrison (Strain 12)
+            </button>
+          </div>
+        </div>
+      </div>
+
+      <!-- ============================================================== -->
+      <!-- SUB-VIEW 1: COMMANDANT / COMMANDER DASHBOARD                    -->
+      <!-- ============================================================== -->
+      <div id="forces-view-commander" class="space-y-6">
+        
+        <!-- Battalion Top KPI Cards -->
+        <div class="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-6 gap-3">
+          <!-- Readiness -->
+          <div class="bg-white rounded-2xl p-4 border border-slate-200 shadow-xs text-center">
+            <span class="text-[11px] text-slate-500 font-bold uppercase block">Force Readiness</span>
+            <div id="forces-readiness-val" class="text-2xl font-black text-teal-700 mt-1">78%</div>
+            <span class="text-[10px] text-emerald-600 font-semibold block mt-0.5">Combat Operational</span>
+          </div>
+          <!-- Average Strain -->
+          <div class="bg-white rounded-2xl p-4 border border-slate-200 shadow-xs text-center">
+            <span class="text-[11px] text-slate-500 font-bold uppercase block">Avg Autonomic Strain</span>
+            <div id="forces-avg-strain" class="text-2xl font-black text-amber-600 mt-1">68/100</div>
+            <span class="text-[10px] text-amber-700 font-semibold block mt-0.5">Elevated Fatigue</span>
+          </div>
+          <!-- Total Personnel -->
+          <div class="bg-white rounded-2xl p-4 border border-slate-200 shadow-xs text-center">
+            <span class="text-[11px] text-slate-500 font-bold uppercase block">Personnel Monitored</span>
+            <div id="forces-total-jawans" class="text-2xl font-black text-slate-900 mt-1">12</div>
+            <span class="text-[10px] text-slate-400 block mt-0.5">Active Roster</span>
+          </div>
+          <!-- At-Risk -->
+          <div class="bg-white rounded-2xl p-4 border border-slate-200 shadow-xs text-center">
+            <span class="text-[11px] text-slate-500 font-bold uppercase block">At-Risk Personnel</span>
+            <div id="forces-at-risk-count" class="text-2xl font-black text-rose-600 mt-1">5 (42%)</div>
+            <span class="text-[10px] text-rose-700 font-semibold block mt-0.5">Requires Welfare R&amp;R</span>
+          </div>
+          <!-- Leave Backlog -->
+          <div class="bg-white rounded-2xl p-4 border border-slate-200 shadow-xs text-center">
+            <span class="text-[11px] text-slate-500 font-bold uppercase block">Leave Backlog (&gt;180d)</span>
+            <div id="forces-leave-backlog" class="text-2xl font-black text-rose-700 mt-1">4 (33%)</div>
+            <span class="text-[10px] text-slate-500 block mt-0.5">Home Visit Overdue</span>
+          </div>
+          <!-- Shift Overtime -->
+          <div class="bg-white rounded-2xl p-4 border border-slate-200 shadow-xs text-center">
+            <span class="text-[11px] text-slate-500 font-bold uppercase block">Shift Overtime (&gt;11h)</span>
+            <div id="forces-shift-overtime" class="text-2xl font-black text-amber-700 mt-1">5 (42%)</div>
+            <span class="text-[10px] text-slate-500 block mt-0.5">Night Sentry Load</span>
+          </div>
+        </div>
+
+        <!-- Company Stress & Operational Readiness Heatmap -->
+        <div class="bg-white rounded-2xl p-5 border border-slate-200 shadow-xs space-y-3">
+          <div class="flex items-center justify-between">
+            <div>
+              <h2 class="text-sm font-extrabold text-slate-900 flex items-center gap-2">
+                <span>🗺️ Formation &amp; Company Stress Heatmap</span>
+              </h2>
+              <p class="text-xs text-slate-500 mt-0.5">
+                Aggregated operational strain and fatigue distribution across units (Anonymized under Differential Privacy)
+              </p>
+            </div>
+            <span class="text-[10px] text-slate-400 font-mono">Live Sync</span>
+          </div>
+          
+          <div id="forces-company-heatmap" class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-3 pt-1">
+            <!-- Populated dynamically -->
+          </div>
+        </div>
+
+        <!-- De-Identified Personnel Roster (Non-Punitive Charter) -->
+        <div class="bg-white rounded-2xl p-5 border border-slate-200 shadow-xs space-y-3">
+          <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-2 border-b border-slate-100 pb-3">
+            <div>
+              <h2 class="text-sm font-extrabold text-slate-900 flex items-center gap-2">
+                <span>📋 De-Identified Personnel Readiness &amp; Welfare Roster</span>
+              </h2>
+              <p class="text-xs text-slate-500 mt-0.5">
+                Individual names redacted into secure tokens to protect against stigmatization and ensure non-punitive welfare support.
+              </p>
+            </div>
+            <span class="text-[11px] font-bold px-2.5 py-1 rounded-full bg-emerald-50 text-emerald-800 border border-emerald-200">
+              ✓ Non-Punitive Charter Compliant
+            </span>
+          </div>
+
+          <div class="overflow-x-auto">
+            <table class="w-full text-left">
+              <thead>
+                <tr class="text-[11px] font-black text-slate-400 uppercase tracking-wider border-b border-slate-100">
+                  <th class="py-2 px-3">Jawan Token / Rank</th>
+                  <th class="py-2 px-3">Battalion &amp; Coy</th>
+                  <th class="py-2 px-3">Deployment Area</th>
+                  <th class="py-2 px-3 text-center">Days Away</th>
+                  <th class="py-2 px-3 text-center">Duty Shifts</th>
+                  <th class="py-2 px-3 text-center">Stress Tier</th>
+                  <th class="py-2 px-3">Explainable AI (XAI) Catalysts</th>
+                </tr>
+              </thead>
+              <tbody id="forces-personnel-table-body">
+                <!-- Dynamically rendered -->
+              </tbody>
+            </table>
+          </div>
+        </div>
+
+      </div>
+
+      <!-- ============================================================== -->
+      <!-- SUB-VIEW 2: WELFARE & MEDICAL OFFICER PORTAL                   -->
+      <!-- ============================================================== -->
+      <div id="forces-view-welfare" class="space-y-6 hidden">
+        
+        <!-- Automated Alerts Feed -->
+        <div class="bg-white rounded-2xl p-5 border border-slate-200 shadow-xs space-y-3">
+          <div class="flex items-center justify-between">
+            <div class="flex items-center gap-2">
+              <span class="w-3 h-3 rounded-full bg-rose-600 animate-ping"></span>
+              <h2 class="text-sm font-extrabold text-slate-900">
+                🚨 Automated Early-Warning Welfare Alerts Feed
+              </h2>
+            </div>
+            <span class="text-[11px] text-rose-700 font-bold">Authorized Medical Access</span>
+          </div>
+          <p class="text-xs text-slate-500">
+            Automated alerts triggered when personnel exceed critical thresholds for acute fatigue, leave deprivation, or severe autonomic strain.
+          </p>
+          <div id="forces-alerts-container" class="space-y-2 pt-1">
+            <!-- Dynamically populated -->
+          </div>
+        </div>
+
+        <!-- Clinical Triage Matrix -->
+        <div class="bg-white rounded-2xl p-5 border border-slate-200 shadow-xs space-y-4">
+          <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-2 border-b border-slate-100 pb-3">
+            <div>
+              <h2 class="text-sm font-extrabold text-slate-900 flex items-center gap-2">
+                <span>🩺 Priority Welfare &amp; Psychological Triage Matrix</span>
+              </h2>
+              <p class="text-xs text-slate-500 mt-0.5">
+                De-anonymized personnel view for Unit Medical Officers and Welfare Subedars to initiate confidential compassionate interventions.
+              </p>
+            </div>
+            <div class="flex items-center gap-2">
+              <a href="tel:14416" class="btn-primary btn-sm bg-rose-600 hover:bg-rose-700 text-white font-bold text-xs">
+                <span>📞 Hotline Tele-MANAS (14416)</span>
+              </a>
+            </div>
+          </div>
+
+          <div id="welfare-triage-container" class="space-y-3">
+            <!-- Dynamically populated -->
+          </div>
+        </div>
+
+        <!-- Proactive Interventions Tracking -->
+        <div class="bg-white rounded-2xl p-5 border border-slate-200 shadow-xs space-y-3">
+          <h2 class="text-sm font-extrabold text-slate-900">
+            📝 Active Welfare Interventions Tracking Queue
+          </h2>
+          <p class="text-xs text-slate-500">
+            Log of approved non-punitive actions: compassionate leave, mandatory R&amp;R cycles, duty rotations, and peer-buddy pairing.
+          </p>
+          <div id="forces-interventions-container" class="grid grid-cols-1 md:grid-cols-2 gap-3 pt-1">
+            <!-- Dynamically populated -->
+          </div>
+        </div>
+
+      </div>
+
+      <!-- ============================================================== -->
+      <!-- SUB-VIEW 3: FIELD JAWAN MOBILE WELLNESS PORTAL                 -->
+      <!-- ============================================================== -->
+      <div id="forces-view-jawan" class="space-y-6 hidden">
+        
+        <!-- Mobile Simulation Card Container -->
+        <div class="max-w-md mx-auto bg-slate-900 text-white rounded-3xl p-5 shadow-2xl border-4 border-slate-800 space-y-5">
+          
+          <!-- Mobile Status Bar -->
+          <div class="flex items-center justify-between text-[11px] text-slate-400 border-b border-slate-800 pb-3">
+            <span class="font-mono">CRPF-M-PORTAL</span>
+            <span class="text-emerald-400 font-bold flex items-center gap-1">
+              <span class="w-1.5 h-1.5 rounded-full bg-emerald-400"></span>
+              Secure &amp; Encrypted
+            </span>
+          </div>
+
+          <!-- Personnel Selector for Demonstration & Triage -->
+          <div class="flex items-center justify-between text-xs pb-1 border-b border-slate-800">
+            <span class="text-slate-400 font-semibold text-[11px]">Select Active Personnel:</span>
+            <select id="jawan-personnel-selector" onchange="window.switchJawanPersonnel ? window.switchJawanPersonnel(this.value) : null" class="py-1 px-2.5 rounded-lg bg-slate-800 border border-slate-700 text-amber-300 font-bold text-xs cursor-pointer">
+              <!-- Dynamically populated -->
+            </select>
+          </div>
+
+          <!-- Jawan Profile Header -->
+          <div class="flex items-center gap-3">
+            <div class="w-12 h-12 rounded-2xl bg-amber-400 text-slate-950 font-black flex items-center justify-center text-lg shrink-0">
+              🪖
+            </div>
+            <div>
+              <div id="jawan-profile-name" class="font-extrabold text-sm text-white">Ct. Rajesh Kumar Singh</div>
+              <div id="jawan-profile-info" class="text-xs text-slate-400">Constable (GD) • 204 CoBRA • Sukma</div>
+            </div>
+          </div>
+
+          <!-- Live Autonomic Strain Widget -->
+          <div class="p-3.5 rounded-2xl bg-slate-800/80 border border-slate-700 flex items-center justify-between">
+            <div>
+              <span class="text-[10px] text-slate-400 font-bold uppercase block">Current Calculated Strain</span>
+              <span id="jawan-current-strain" class="text-xl font-black text-rose-400">99/100</span>
+            </div>
+            <span id="jawan-strain-tier" class="px-2.5 py-1 rounded-full text-[10px] font-bold bg-rose-500/20 text-rose-300 border border-rose-500/30">
+              Critical Strain
+            </span>
+          </div>
+
+          <!-- 60-Second Daily Tactical Field Check-In Form -->
+          <form onsubmit="submitJawanAssessment(event)" class="space-y-3.5 bg-slate-800/50 p-4 rounded-2xl border border-slate-700/80 text-xs">
+            <div class="flex items-center justify-between border-b border-slate-700 pb-2">
+              <span class="font-extrabold text-amber-300">📝 60-Second Field Wellness Check-in</span>
+              <span class="text-[10px] text-slate-400">Confidential</span>
+            </div>
+
+            <!-- PSS-10 Perceived Stress -->
+            <div>
+              <div class="flex justify-between text-[11px] mb-1">
+                <label class="text-slate-300 font-semibold">Perceived Stress (PSS-10 Scale: 0-40)</label>
+                <span id="jawan-pss-val" class="font-bold text-amber-400">28</span>
+              </div>
+              <input type="range" id="jawan-input-pss" min="0" max="40" value="28" oninput="document.getElementById('jawan-pss-val').innerText = this.value" class="w-full accent-amber-400 cursor-pointer">
+            </div>
+
+            <!-- Operational Fatigue -->
+            <div>
+              <div class="flex justify-between text-[11px] mb-1">
+                <label class="text-slate-300 font-semibold">Physical Fatigue Index (1-10)</label>
+                <span id="jawan-fatigue-val" class="font-bold text-amber-400">8</span>
+              </div>
+              <input type="range" id="jawan-input-fatigue" min="1" max="10" value="8" oninput="document.getElementById('jawan-fatigue-val').innerText = this.value" class="w-full accent-amber-400 cursor-pointer">
+            </div>
+
+            <!-- Sleep Hours -->
+            <div>
+              <div class="flex justify-between text-[11px] mb-1">
+                <label class="text-slate-300 font-semibold">Sleep in Bunk Last Night (hours)</label>
+                <span id="jawan-sleep-val" class="font-bold text-amber-400">4.5h</span>
+              </div>
+              <input type="range" id="jawan-input-sleep" min="2.0" max="10.0" step="0.5" value="4.5" oninput="document.getElementById('jawan-sleep-val').innerText = this.value + 'h'" class="w-full accent-amber-400 cursor-pointer">
+            </div>
+
+            <!-- Mood -->
+            <div>
+              <label class="text-[11px] text-slate-300 font-semibold block mb-1">Today's Subjective State</label>
+              <select id="jawan-input-mood" class="w-full py-1.5 px-2 rounded-lg bg-slate-900 border border-slate-700 text-white text-xs">
+                <option value="calm">😌 Calm &amp; Grounded</option>
+                <option value="alert">⚡ Alert &amp; Ready</option>
+                <option value="neutral">😐 Neutral</option>
+                <option value="anxious">😰 Anxious / On Edge</option>
+                <option value="exhausted" selected>😴 Severely Exhausted</option>
+                <option value="distressed">💔 Emotionally Distressed</option>
+              </select>
+            </div>
+
+            <!-- Family Contact -->
+            <div>
+              <label class="text-[11px] text-slate-300 font-semibold block mb-1">Communication with Family</label>
+              <select id="jawan-input-family" class="w-full py-1.5 px-2 rounded-lg bg-slate-900 border border-slate-700 text-white text-xs">
+                <option value="daily">📞 Spoke to Family Today</option>
+                <option value="regular">💬 Regular Weekly Contact</option>
+                <option value="rarely" selected>📵 Rarely / Disconnected (>10 days)</option>
+                <option value="isolated">🚫 Severe Isolation (No Network / Outpost)</option>
+              </select>
+            </div>
+
+            <!-- Notes -->
+            <div>
+              <label class="text-[11px] text-slate-300 font-semibold block mb-1">Confidential Diary / Strain Notes</label>
+              <textarea id="jawan-input-notes" rows="2" placeholder="Private reflections (Encrypted; strictly protected from commanders)..." class="w-full p-2 rounded-lg bg-slate-900 border border-slate-700 text-white text-xs placeholder:text-slate-500"></textarea>
+            </div>
+
+            <button type="submit" class="w-full py-2.5 rounded-xl bg-teal-500 hover:bg-teal-400 text-slate-950 font-black text-xs shadow-md transition-all cursor-pointer">
+              ✓ Save Confidential Assessment
+            </button>
+          </form>
+
+          <!-- 1-Click SOS Welfare Assistance -->
+          <div class="p-3.5 rounded-2xl bg-rose-950/60 border border-rose-500/40 space-y-2">
+            <span class="text-xs font-black text-rose-300 block">🆘 Confidential Welfare Support Request</span>
+            <p class="text-[11px] text-rose-200/80 leading-relaxed">
+              If feeling overwhelmed, click below to alert your Unit Medical Officer / Welfare Subedar for a private, off-the-record conversation.
+            </p>
+            <button onclick="sendJawanWelfareSOS()" class="w-full py-2 rounded-xl bg-rose-600 hover:bg-rose-500 text-white font-black text-xs shadow-md cursor-pointer transition-all">
+              Request Confidential Welfare Check-in
+            </button>
+          </div>
+
+          <!-- Tactical Calm & Breathing Tools -->
+          <div class="p-3.5 rounded-2xl bg-slate-800/80 border border-slate-700 space-y-2">
+            <span class="text-xs font-extrabold text-slate-200 block">🧘 Tactical Nervous System Recovery</span>
+            <div class="grid grid-cols-2 gap-2 text-center text-[11px]">
+              <button onclick="setTab('trends'); setPacerMode('box'); togglePacer();" class="p-2 rounded-xl bg-slate-700/80 hover:bg-slate-700 text-slate-200 font-bold border border-slate-600">
+                Box Breathing (4-4-4-4)
+              </button>
+              <button onclick="setTab('trends'); setPacerMode('sigh'); togglePacer();" class="p-2 rounded-xl bg-slate-700/80 hover:bg-slate-700 text-slate-200 font-bold border border-slate-600">
+                Cyclic Sigh (Vagus Reset)
+              </button>
+            </div>
+            <a href="tel:14416" class="block w-full text-center py-2 rounded-xl bg-slate-700 hover:bg-slate-600 text-amber-300 font-bold text-xs border border-amber-400/30">
+              📞 Direct 24x7 Tele-MANAS (14416)
+            </a>
+          </div>
+
+        </div>
+
+      </div>
+
+    </div>
+
+  </main>
+
+  <!-- ============================================== -->
+  <!-- PILLAR 1: SERENEAI COPILOT FLOATING DRAWER     -->
+  <!-- ============================================== -->
+  <!-- Floating Action Button -->
+  <button id="btn-open-copilot" onclick="toggleCopilotDrawer()" class="copilot-fab">
+    <span class="text-base">🤖</span>
+    <span>Ask SereneAI</span>
+  </button>
+
+  <!-- Drawer Backdrop -->
+  <div id="copilot-backdrop" onclick="toggleCopilotDrawer()" class="hidden fixed inset-0 bg-slate-900/40 backdrop-blur-xs z-50" style="position: fixed; top: 0; left: 0; right: 0; bottom: 0;"></div>
+
+  <!-- Slide-out Drawer Panel -->
+  <aside id="copilot-drawer" class="translate-x-full fixed top-0 right-0 h-full w-full sm:w-[440px] bg-slate-50 z-50 shadow-2xl flex flex-col border-l border-slate-200">
+    <!-- Drawer Header -->
+    <div class="p-4 bg-white border-b border-slate-200 flex items-center justify-between">
+      <div class="flex items-center gap-2.5">
+        <div class="w-8 h-8 rounded-xl bg-teal-600 text-white flex items-center justify-center font-bold text-sm">
+          🤖
+        </div>
+        <div>
+          <h3 class="text-sm font-bold text-slate-900">SereneAI Neuro-Restorative Copilot</h3>
+          <span class="text-[10px] text-teal-700 bg-teal-50 px-2 py-0.5 rounded font-semibold border border-teal-100">Clinical Diagnostic Assistant</span>
+        </div>
+      </div>
+      <button onclick="toggleCopilotDrawer()" class="text-slate-400 hover:text-slate-700 p-1">
+        <svg class="icon w-5 h-5" viewBox="0 0 24 24"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>
+      </button>
+    </div>
+
+    <!-- Suggested Quick Question Chips -->
+    <div class="p-3 bg-teal-50 border-b border-teal-100 flex flex-wrap gap-1.5 text-xs">
+      <span class="text-[10px] text-teal-800 font-bold w-full mb-0.5">Quick Clinical Inquiries:</span>
+      <button onclick="sendCopilotMessage('Explain my autonomic strain score and fatigue root causes today')" class="px-2 py-1 bg-white text-teal-900 border border-teal-200 rounded-lg text-[11px] font-semibold hover:bg-teal-100">
+        📊 Why is my strain score high?
+      </button>
+      <button onclick="sendCopilotMessage('Give me a 10-minute bedtime wind-down routine to fall asleep faster')" class="px-2 py-1 bg-white text-teal-900 border border-teal-200 rounded-lg text-[11px] font-semibold hover:bg-teal-100">
+        🌙 10m Bedtime Wind-Down
+      </button>
+      <button onclick="sendCopilotMessage('How does my caffeine consumption delay deep slow-wave N3 sleep?')" class="px-2 py-1 bg-white text-teal-900 border border-teal-200 rounded-lg text-[11px] font-semibold hover:bg-teal-100">
+        ☕ Caffeine &amp; Deep N3 Sleep
+      </button>
+    </div>
+
+    <!-- Messages Chat Stream -->
+    <div id="copilot-messages" class="flex-1 p-4 overflow-y-auto space-y-3">
+      <!-- Welcome message -->
+      <div class="flex justify-start my-1">
+        <div class="bg-white text-slate-800 border border-slate-200 rounded-2xl rounded-tl-xs p-3.5 text-xs max-w-[90%] shadow-xs space-y-1.5 leading-relaxed">
+          <strong class="text-sm text-slate-900 block border-b pb-1 mb-1">Namaste, I am SereneAI 🌿</strong>
+          <p>I analyze your real-time autonomic strain, sleep debt against the clinical 8.0h ceiling, and wearable biometrics. How can I assist your neuro-recovery today?</p>
+        </div>
+      </div>
+    </div>
+
+    <!-- Input Form -->
+    <div class="p-3 bg-white border-t border-slate-200 flex gap-2">
+      <input type="text" id="copilot-input" placeholder="Ask about sleep debt, HRV, or wind-down..." onkeydown="if(event.key === 'Enter') sendCopilotMessage()" class="text-xs">
+      <button onclick="sendCopilotMessage()" class="btn-primary btn-sm px-4">
+        <span>Send</span>
+      </button>
+    </div>
+  </aside>
+
+  <!-- TOAST NOTIFICATION CONTAINER -->
+  <div id="toast" class="hidden fixed bottom-6 right-6 z-50 bg-slate-900 text-white px-4 py-2.5 rounded-xl shadow-2xl text-xs font-semibold border border-slate-700">
+    Notification text here
+  </div>
+
+  <!-- JAVASCRIPT APPLICATION MODULE -->
+  <script type="module" src="/js/app.js"></script>
+
+</body>
+</html>

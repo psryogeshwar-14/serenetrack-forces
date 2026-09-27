@@ -1,0 +1,746 @@
+{
+  "app": "SereneTrack",
+  "version": "1.0.0",
+  "exportDate": "2026-09-21T15:18:25.829Z",
+  "profile": {
+    "username": "prax",
+    "avatarUrl": "",
+    "profession": "Product Designer",
+    "preferredWakeTime": "07:00",
+    "targetSleepGoal": 8,
+    "joinedDate": "2026-09-01"
+  },
+  "notifications": {
+    "breakReminders": true,
+    "breakIntervalMinutes": 90,
+    "bedtimeAlert": true,
+    "bedtimeAlertAdvanceMinutes": 45,
+    "soundEffects": true
+  },
+  "privacy": {
+    "offlineModeOnly": true,
+    "autoSaveLocal": true,
+    "allowLocalExport": true
+  },
+  "logs": [
+    {
+      "id": "log-2026-09-03",
+      "date": "2026-09-03",
+      "timestamp": 1788452065342,
+      "workingHours": 8.5,
+      "sleepHours": 6.2,
+      "sleepQuality": 3,
+      "fatigueLevel": 6,
+      "mood": "neutral",
+      "bedtime": "23:30",
+      "wakeTime": "07:00",
+      "activities": {
+        "screenTimeHours": 8,
+        "breaksTaken": 2,
+        "physicalActivityMinutes": 35,
+        "caffeineCups": 3,
+        "waterGlasses": 5,
+        "highCognitiveLoad": false,
+        "outdoorTimeMinutes": 25
+      },
+      "predictedStressScore": 57,
+      "stressTier": "Elevated",
+      "stressDrivers": [
+        "Overtime work duration (8.5 hrs)",
+        "Sleep debt of 1.8h under optimal 8.0h limit",
+        "Elevated physiological tiredness (6/10)",
+        "High blue light & digital ocular load (8h screen time)"
+      ],
+      "sleepAnalysis": {
+        "actualHours": 6.2,
+        "targetRestorativeGoal": 8,
+        "deficitHours": 1.8,
+        "sleepScore": 72,
+        "status": "significant_deficit",
+        "suggestedBedtimeForTomorrow": "22:45",
+        "recommendationText": "Substantial sleep debt detected: 1.8h remaining to hit restorative 8.0h limit. Avoid late caffeine and aim for bedtime by 22:45."
+      },
+      "recommendedTechniques": [
+        {
+          "id": "box-breathing",
+          "title": "Box Breathing (4x4)",
+          "category": "breathing",
+          "duration": "4 min",
+          "description": "Navy SEAL grounding pattern that synchronizes autonomic nervous tone and restores mental clarity.",
+          "steps": [
+            "Inhale through nose for 4 counts.",
+            "Hold breath with soft throat for 4 counts.",
+            "Exhale gently through mouth for 4 counts.",
+            "Hold empty lungs calmly for 4 counts.",
+            "Repeat for 6 full boxes."
+          ]
+        },
+        {
+          "id": "pmr-scan",
+          "title": "Progressive Muscle Decompression",
+          "category": "somatic",
+          "duration": "6 - 8 min",
+          "description": "Systematically release residual tension in jaw, shoulders, and lower lumbar region.",
+          "steps": [
+            "Squeeze shoulders up to ears for 5 seconds, noticing tension.",
+            "Release abruptly and let shoulder blades melt downward on exhale.",
+            "Tense fists and forearms tightly for 5s, then release completely.",
+            "Notice the warmth and rush of blood flow entering the relaxed muscles."
+          ]
+        },
+        {
+          "id": "physio-sigh",
+          "title": "Cyclic Physiological Sigh",
+          "category": "breathing",
+          "duration": "3 - 5 min",
+          "description": "The fastest neurobiological method to down-regulate autonomic heart rate and vent accumulated CO2.",
+          "steps": [
+            "Take two consecutive nasal inhales: one deep inhale, followed immediately by a sharp second top-up sniff.",
+            "Release with a slow, unforced, extended audible exhale through open mouth.",
+            "Repeat smoothly for 25 to 30 cycles."
+          ]
+        }
+      ],
+      "suggestedBreaks": [
+        {
+          "id": "eye-20",
+          "title": "20-20-20 Ocular Reset",
+          "type": "Visual Rest",
+          "trigger": "After 45m screen exposure",
+          "benefit": "Relaxes ciliary eye muscles and reduces digital headache onset."
+        },
+        {
+          "id": "nervous-reset",
+          "title": "Vagus Nerve Reset & Water Pause",
+          "type": "Autonomic Calming",
+          "trigger": "Immediate recovery interval",
+          "benefit": "Suppresses acute cortisol cascade and resets heart rate variability."
+        },
+        {
+          "id": "gentle-walk",
+          "title": "5-Minute Postural Stride",
+          "type": "Kinesthetic Flush",
+          "trigger": "Mid-afternoon dip",
+          "benefit": "Pumps venous blood from calves and oxygenates frontal cortex."
+        }
+      ]
+    },
+    {
+      "id": "log-2026-09-04",
+      "date": "2026-09-04",
+      "timestamp": 1788538465342,
+      "workingHours": 9.5,
+      "sleepHours": 5.5,
+      "sleepQuality": 2,
+      "fatigueLevel": 8,
+      "mood": "anxious",
+      "bedtime": "23:30",
+      "wakeTime": "07:00",
+      "activities": {
+        "screenTimeHours": 9.5,
+        "breaksTaken": 1,
+        "physicalActivityMinutes": 10,
+        "caffeineCups": 4,
+        "waterGlasses": 4,
+        "highCognitiveLoad": true,
+        "outdoorTimeMinutes": 5
+      },
+      "predictedStressScore": 98,
+      "stressTier": "High",
+      "stressDrivers": [
+        "Overtime work duration (9.5 hrs)",
+        "Sleep debt of 2.5h under optimal 8.0h limit",
+        "Restless or disrupted sleep architecture",
+        "Exhaustion biomarker (Fatigue index 8/10)",
+        "Sympathetic nervous arousal / anxiety",
+        "High blue light & digital ocular load (9.5h screen time)",
+        "High stimulant intake (4 caffeine servings)",
+        "High-pressure problem solving & context switching"
+      ],
+      "sleepAnalysis": {
+        "actualHours": 5.5,
+        "targetRestorativeGoal": 8,
+        "deficitHours": 2.5,
+        "sleepScore": 60,
+        "status": "significant_deficit",
+        "suggestedBedtimeForTomorrow": "22:45",
+        "recommendationText": "Substantial sleep debt detected: 2.5h remaining to hit restorative 8.0h limit. Avoid late caffeine and aim for bedtime by 22:45."
+      },
+      "recommendedTechniques": [
+        {
+          "id": "physio-sigh",
+          "title": "Cyclic Physiological Sigh",
+          "category": "breathing",
+          "duration": "3 - 5 min",
+          "description": "The fastest neurobiological method to down-regulate autonomic heart rate and vent accumulated CO2.",
+          "steps": [
+            "Take two consecutive nasal inhales: one deep inhale, followed immediately by a sharp second top-up sniff.",
+            "Release with a slow, unforced, extended audible exhale through open mouth.",
+            "Repeat smoothly for 25 to 30 cycles."
+          ]
+        },
+        {
+          "id": "sensory-54321",
+          "title": "5-4-3-2-1 Sensory Grounding",
+          "category": "mental",
+          "duration": "3 min",
+          "description": "Interrupts acute thought spirals by re-anchoring cognitive attention to immediate surroundings.",
+          "steps": [
+            "Acknowledge 5 things you can see right now in your room.",
+            "Touch 4 physical textures (e.g. cotton, cool desk surface, pen).",
+            "Listen for 3 distinct ambient sounds (fan, distant traffic, breath).",
+            "Notice 2 scents or clean air sensations.",
+            "Identify 1 pleasant taste or take a crisp sip of water."
+          ]
+        },
+        {
+          "id": "yoga-nidra-reset",
+          "title": "Non-Sleep Deep Rest (NSDR)",
+          "category": "somatic",
+          "duration": "10 min",
+          "description": "Restores striatal dopamine and nervous system stamina when sleep debt is accumulated.",
+          "steps": [
+            "Recline comfortably with head supported and eyes gently closed.",
+            "Mentally scan from crown of head down through fingertips and toes.",
+            "Visualize heavy, warm relaxation sinking your body into the chair.",
+            "Stay passively conscious without needing to fall asleep."
+          ]
+        }
+      ],
+      "suggestedBreaks": [
+        {
+          "id": "eye-20",
+          "title": "20-20-20 Ocular Reset",
+          "type": "Visual Rest",
+          "trigger": "After 45m screen exposure",
+          "benefit": "Relaxes ciliary eye muscles and reduces digital headache onset."
+        },
+        {
+          "id": "nervous-reset",
+          "title": "Vagus Nerve Reset & Water Pause",
+          "type": "Autonomic Calming",
+          "trigger": "Immediate recovery interval",
+          "benefit": "Suppresses acute cortisol cascade and resets heart rate variability."
+        },
+        {
+          "id": "gentle-walk",
+          "title": "5-Minute Postural Stride",
+          "type": "Kinesthetic Flush",
+          "trigger": "Mid-afternoon dip",
+          "benefit": "Pumps venous blood from calves and oxygenates frontal cortex."
+        }
+      ]
+    },
+    {
+      "id": "log-2026-09-05",
+      "date": "2026-09-05",
+      "timestamp": 1788624865342,
+      "workingHours": 10,
+      "sleepHours": 5,
+      "sleepQuality": 2,
+      "fatigueLevel": 9,
+      "mood": "overwhelmed",
+      "bedtime": "23:30",
+      "wakeTime": "07:00",
+      "activities": {
+        "screenTimeHours": 10,
+        "breaksTaken": 1,
+        "physicalActivityMinutes": 35,
+        "caffeineCups": 5,
+        "waterGlasses": 3,
+        "highCognitiveLoad": true,
+        "outdoorTimeMinutes": 25
+      },
+      "predictedStressScore": 98,
+      "stressTier": "High",
+      "stressDrivers": [
+        "Overtime work duration (10 hrs)",
+        "Sleep debt of 3h under optimal 8.0h limit",
+        "Restless or disrupted sleep architecture",
+        "Exhaustion biomarker (Fatigue index 9/10)",
+        "Sensory & task overload state",
+        "High blue light & digital ocular load (10h screen time)",
+        "High stimulant intake (5 caffeine servings)",
+        "High-pressure problem solving & context switching"
+      ],
+      "sleepAnalysis": {
+        "actualHours": 5,
+        "targetRestorativeGoal": 8,
+        "deficitHours": 3,
+        "sleepScore": 56,
+        "status": "significant_deficit",
+        "suggestedBedtimeForTomorrow": "22:45",
+        "recommendationText": "Substantial sleep debt detected: 3h remaining to hit restorative 8.0h limit. Avoid late caffeine and aim for bedtime by 22:45."
+      },
+      "recommendedTechniques": [
+        {
+          "id": "physio-sigh",
+          "title": "Cyclic Physiological Sigh",
+          "category": "breathing",
+          "duration": "3 - 5 min",
+          "description": "The fastest neurobiological method to down-regulate autonomic heart rate and vent accumulated CO2.",
+          "steps": [
+            "Take two consecutive nasal inhales: one deep inhale, followed immediately by a sharp second top-up sniff.",
+            "Release with a slow, unforced, extended audible exhale through open mouth.",
+            "Repeat smoothly for 25 to 30 cycles."
+          ]
+        },
+        {
+          "id": "sensory-54321",
+          "title": "5-4-3-2-1 Sensory Grounding",
+          "category": "mental",
+          "duration": "3 min",
+          "description": "Interrupts acute thought spirals by re-anchoring cognitive attention to immediate surroundings.",
+          "steps": [
+            "Acknowledge 5 things you can see right now in your room.",
+            "Touch 4 physical textures (e.g. cotton, cool desk surface, pen).",
+            "Listen for 3 distinct ambient sounds (fan, distant traffic, breath).",
+            "Notice 2 scents or clean air sensations.",
+            "Identify 1 pleasant taste or take a crisp sip of water."
+          ]
+        },
+        {
+          "id": "yoga-nidra-reset",
+          "title": "Non-Sleep Deep Rest (NSDR)",
+          "category": "somatic",
+          "duration": "10 min",
+          "description": "Restores striatal dopamine and nervous system stamina when sleep debt is accumulated.",
+          "steps": [
+            "Recline comfortably with head supported and eyes gently closed.",
+            "Mentally scan from crown of head down through fingertips and toes.",
+            "Visualize heavy, warm relaxation sinking your body into the chair.",
+            "Stay passively conscious without needing to fall asleep."
+          ]
+        }
+      ],
+      "suggestedBreaks": [
+        {
+          "id": "eye-20",
+          "title": "20-20-20 Ocular Reset",
+          "type": "Visual Rest",
+          "trigger": "After 45m screen exposure",
+          "benefit": "Relaxes ciliary eye muscles and reduces digital headache onset."
+        },
+        {
+          "id": "nervous-reset",
+          "title": "Vagus Nerve Reset & Water Pause",
+          "type": "Autonomic Calming",
+          "trigger": "Immediate recovery interval",
+          "benefit": "Suppresses acute cortisol cascade and resets heart rate variability."
+        },
+        {
+          "id": "gentle-walk",
+          "title": "5-Minute Postural Stride",
+          "type": "Kinesthetic Flush",
+          "trigger": "Mid-afternoon dip",
+          "benefit": "Pumps venous blood from calves and oxygenates frontal cortex."
+        }
+      ]
+    },
+    {
+      "id": "log-2026-09-06",
+      "date": "2026-09-06",
+      "timestamp": 1788711265342,
+      "workingHours": 7.5,
+      "sleepHours": 7.2,
+      "sleepQuality": 4,
+      "fatigueLevel": 5,
+      "mood": "content",
+      "bedtime": "23:30",
+      "wakeTime": "07:00",
+      "activities": {
+        "screenTimeHours": 6.5,
+        "breaksTaken": 3,
+        "physicalActivityMinutes": 10,
+        "caffeineCups": 2,
+        "waterGlasses": 6,
+        "highCognitiveLoad": false,
+        "outdoorTimeMinutes": 5
+      },
+      "predictedStressScore": 17,
+      "stressTier": "Low",
+      "stressDrivers": [
+        "Elevated physiological tiredness (5/10)"
+      ],
+      "sleepAnalysis": {
+        "actualHours": 7.2,
+        "targetRestorativeGoal": 8,
+        "deficitHours": 0.8,
+        "sleepScore": 87,
+        "status": "mild_deficit",
+        "suggestedBedtimeForTomorrow": "22:45",
+        "recommendationText": "You are 0.8h short of the optimal 8.0h restorative ceiling. Prioritize wind-down tonight at 22:45 to restore full equilibrium."
+      },
+      "recommendedTechniques": [
+        {
+          "id": "box-breathing",
+          "title": "Box Breathing (4x4)",
+          "category": "breathing",
+          "duration": "4 min",
+          "description": "Navy SEAL grounding pattern that synchronizes autonomic nervous tone and restores mental clarity.",
+          "steps": [
+            "Inhale through nose for 4 counts.",
+            "Hold breath with soft throat for 4 counts.",
+            "Exhale gently through mouth for 4 counts.",
+            "Hold empty lungs calmly for 4 counts.",
+            "Repeat for 6 full boxes."
+          ]
+        },
+        {
+          "id": "pmr-scan",
+          "title": "Progressive Muscle Decompression",
+          "category": "somatic",
+          "duration": "6 - 8 min",
+          "description": "Systematically release residual tension in jaw, shoulders, and lower lumbar region.",
+          "steps": [
+            "Squeeze shoulders up to ears for 5 seconds, noticing tension.",
+            "Release abruptly and let shoulder blades melt downward on exhale.",
+            "Tense fists and forearms tightly for 5s, then release completely.",
+            "Notice the warmth and rush of blood flow entering the relaxed muscles."
+          ]
+        },
+        {
+          "id": "sensory-54321",
+          "title": "5-4-3-2-1 Sensory Grounding",
+          "category": "mental",
+          "duration": "3 min",
+          "description": "Interrupts acute thought spirals by re-anchoring cognitive attention to immediate surroundings.",
+          "steps": [
+            "Acknowledge 5 things you can see right now in your room.",
+            "Touch 4 physical textures (e.g. cotton, cool desk surface, pen).",
+            "Listen for 3 distinct ambient sounds (fan, distant traffic, breath).",
+            "Notice 2 scents or clean air sensations.",
+            "Identify 1 pleasant taste or take a crisp sip of water."
+          ]
+        }
+      ],
+      "suggestedBreaks": [
+        {
+          "id": "eye-20",
+          "title": "20-20-20 Ocular Reset",
+          "type": "Visual Rest",
+          "trigger": "After 45m screen exposure",
+          "benefit": "Relaxes ciliary eye muscles and reduces digital headache onset."
+        },
+        {
+          "id": "mindful-sip",
+          "title": "Hydration & Spinal Unfurl",
+          "type": "Ergonomic Pause",
+          "trigger": "Hourly interval",
+          "benefit": "Rehydrates spinal discs and maintains steady alertness."
+        },
+        {
+          "id": "nature-glance",
+          "title": "Window Gaze & Deep Stretch",
+          "type": "Mental Horizon Shift",
+          "trigger": "Task transition",
+          "benefit": "Promotes alpha brainwave frequency and prevents tunnel-vision fatigue."
+        }
+      ]
+    },
+    {
+      "id": "log-2026-09-07",
+      "date": "2026-09-07",
+      "timestamp": 1788797665342,
+      "workingHours": 8,
+      "sleepHours": 7.8,
+      "sleepQuality": 4,
+      "fatigueLevel": 4,
+      "mood": "calm",
+      "bedtime": "23:30",
+      "wakeTime": "07:00",
+      "activities": {
+        "screenTimeHours": 6,
+        "breaksTaken": 4,
+        "physicalActivityMinutes": 35,
+        "caffeineCups": 2,
+        "waterGlasses": 7,
+        "highCognitiveLoad": false,
+        "outdoorTimeMinutes": 25
+      },
+      "predictedStressScore": 5,
+      "stressTier": "Low",
+      "stressDrivers": [
+        "Balanced biorhythm and healthy recovery habits"
+      ],
+      "sleepAnalysis": {
+        "actualHours": 7.8,
+        "targetRestorativeGoal": 8,
+        "deficitHours": 0.2,
+        "sleepScore": 92,
+        "status": "mild_deficit",
+        "suggestedBedtimeForTomorrow": "22:45",
+        "recommendationText": "You are 0.2h short of the optimal 8.0h restorative ceiling. Prioritize wind-down tonight at 22:45 to restore full equilibrium."
+      },
+      "recommendedTechniques": [
+        {
+          "id": "box-breathing",
+          "title": "Box Breathing (4x4)",
+          "category": "breathing",
+          "duration": "4 min",
+          "description": "Navy SEAL grounding pattern that synchronizes autonomic nervous tone and restores mental clarity.",
+          "steps": [
+            "Inhale through nose for 4 counts.",
+            "Hold breath with soft throat for 4 counts.",
+            "Exhale gently through mouth for 4 counts.",
+            "Hold empty lungs calmly for 4 counts.",
+            "Repeat for 6 full boxes."
+          ]
+        },
+        {
+          "id": "pmr-scan",
+          "title": "Progressive Muscle Decompression",
+          "category": "somatic",
+          "duration": "6 - 8 min",
+          "description": "Systematically release residual tension in jaw, shoulders, and lower lumbar region.",
+          "steps": [
+            "Squeeze shoulders up to ears for 5 seconds, noticing tension.",
+            "Release abruptly and let shoulder blades melt downward on exhale.",
+            "Tense fists and forearms tightly for 5s, then release completely.",
+            "Notice the warmth and rush of blood flow entering the relaxed muscles."
+          ]
+        },
+        {
+          "id": "sensory-54321",
+          "title": "5-4-3-2-1 Sensory Grounding",
+          "category": "mental",
+          "duration": "3 min",
+          "description": "Interrupts acute thought spirals by re-anchoring cognitive attention to immediate surroundings.",
+          "steps": [
+            "Acknowledge 5 things you can see right now in your room.",
+            "Touch 4 physical textures (e.g. cotton, cool desk surface, pen).",
+            "Listen for 3 distinct ambient sounds (fan, distant traffic, breath).",
+            "Notice 2 scents or clean air sensations.",
+            "Identify 1 pleasant taste or take a crisp sip of water."
+          ]
+        }
+      ],
+      "suggestedBreaks": [
+        {
+          "id": "eye-20",
+          "title": "20-20-20 Ocular Reset",
+          "type": "Visual Rest",
+          "trigger": "After 45m screen exposure",
+          "benefit": "Relaxes ciliary eye muscles and reduces digital headache onset."
+        },
+        {
+          "id": "mindful-sip",
+          "title": "Hydration & Spinal Unfurl",
+          "type": "Ergonomic Pause",
+          "trigger": "Hourly interval",
+          "benefit": "Rehydrates spinal discs and maintains steady alertness."
+        },
+        {
+          "id": "nature-glance",
+          "title": "Window Gaze & Deep Stretch",
+          "type": "Mental Horizon Shift",
+          "trigger": "Task transition",
+          "benefit": "Promotes alpha brainwave frequency and prevents tunnel-vision fatigue."
+        }
+      ]
+    },
+    {
+      "id": "log-2026-09-08",
+      "date": "2026-09-08",
+      "timestamp": 1788884065342,
+      "workingHours": 8,
+      "sleepHours": 6.5,
+      "sleepQuality": 3,
+      "fatigueLevel": 6,
+      "mood": "irritable",
+      "bedtime": "23:30",
+      "wakeTime": "07:00",
+      "activities": {
+        "screenTimeHours": 8,
+        "breaksTaken": 2,
+        "physicalActivityMinutes": 10,
+        "caffeineCups": 3,
+        "waterGlasses": 5,
+        "highCognitiveLoad": true,
+        "outdoorTimeMinutes": 5
+      },
+      "predictedStressScore": 71,
+      "stressTier": "Elevated",
+      "stressDrivers": [
+        "Elevated physiological tiredness (6/10)",
+        "Emotional reactivity from accumulated friction",
+        "High blue light & digital ocular load (8h screen time)",
+        "High-pressure problem solving & context switching"
+      ],
+      "sleepAnalysis": {
+        "actualHours": 6.5,
+        "targetRestorativeGoal": 8,
+        "deficitHours": 1.5,
+        "sleepScore": 75,
+        "status": "mild_deficit",
+        "suggestedBedtimeForTomorrow": "22:45",
+        "recommendationText": "You are 1.5h short of the optimal 8.0h restorative ceiling. Prioritize wind-down tonight at 22:45 to restore full equilibrium."
+      },
+      "recommendedTechniques": [
+        {
+          "id": "box-breathing",
+          "title": "Box Breathing (4x4)",
+          "category": "breathing",
+          "duration": "4 min",
+          "description": "Navy SEAL grounding pattern that synchronizes autonomic nervous tone and restores mental clarity.",
+          "steps": [
+            "Inhale through nose for 4 counts.",
+            "Hold breath with soft throat for 4 counts.",
+            "Exhale gently through mouth for 4 counts.",
+            "Hold empty lungs calmly for 4 counts.",
+            "Repeat for 6 full boxes."
+          ]
+        },
+        {
+          "id": "pmr-scan",
+          "title": "Progressive Muscle Decompression",
+          "category": "somatic",
+          "duration": "6 - 8 min",
+          "description": "Systematically release residual tension in jaw, shoulders, and lower lumbar region.",
+          "steps": [
+            "Squeeze shoulders up to ears for 5 seconds, noticing tension.",
+            "Release abruptly and let shoulder blades melt downward on exhale.",
+            "Tense fists and forearms tightly for 5s, then release completely.",
+            "Notice the warmth and rush of blood flow entering the relaxed muscles."
+          ]
+        },
+        {
+          "id": "physio-sigh",
+          "title": "Cyclic Physiological Sigh",
+          "category": "breathing",
+          "duration": "3 - 5 min",
+          "description": "The fastest neurobiological method to down-regulate autonomic heart rate and vent accumulated CO2.",
+          "steps": [
+            "Take two consecutive nasal inhales: one deep inhale, followed immediately by a sharp second top-up sniff.",
+            "Release with a slow, unforced, extended audible exhale through open mouth.",
+            "Repeat smoothly for 25 to 30 cycles."
+          ]
+        }
+      ],
+      "suggestedBreaks": [
+        {
+          "id": "eye-20",
+          "title": "20-20-20 Ocular Reset",
+          "type": "Visual Rest",
+          "trigger": "After 45m screen exposure",
+          "benefit": "Relaxes ciliary eye muscles and reduces digital headache onset."
+        },
+        {
+          "id": "nervous-reset",
+          "title": "Vagus Nerve Reset & Water Pause",
+          "type": "Autonomic Calming",
+          "trigger": "Immediate recovery interval",
+          "benefit": "Suppresses acute cortisol cascade and resets heart rate variability."
+        },
+        {
+          "id": "gentle-walk",
+          "title": "5-Minute Postural Stride",
+          "type": "Kinesthetic Flush",
+          "trigger": "Mid-afternoon dip",
+          "benefit": "Pumps venous blood from calves and oxygenates frontal cortex."
+        }
+      ]
+    },
+    {
+      "id": "log-2026-09-09",
+      "date": "2026-09-09",
+      "timestamp": 1788970465342,
+      "workingHours": 7.5,
+      "sleepHours": 6.8,
+      "sleepQuality": 3,
+      "fatigueLevel": 5,
+      "mood": "neutral",
+      "bedtime": "23:30",
+      "wakeTime": "07:00",
+      "activities": {
+        "screenTimeHours": 7,
+        "breaksTaken": 3,
+        "physicalActivityMinutes": 35,
+        "caffeineCups": 2,
+        "waterGlasses": 6,
+        "highCognitiveLoad": false,
+        "outdoorTimeMinutes": 25
+      },
+      "predictedStressScore": 15,
+      "stressTier": "Low",
+      "stressDrivers": [
+        "Elevated physiological tiredness (5/10)"
+      ],
+      "sleepAnalysis": {
+        "actualHours": 6.8,
+        "targetRestorativeGoal": 8,
+        "deficitHours": 1.2,
+        "sleepScore": 78,
+        "status": "mild_deficit",
+        "suggestedBedtimeForTomorrow": "22:45",
+        "recommendationText": "You are 1.2h short of the optimal 8.0h restorative ceiling. Prioritize wind-down tonight at 22:45 to restore full equilibrium."
+      },
+      "recommendedTechniques": [
+        {
+          "id": "box-breathing",
+          "title": "Box Breathing (4x4)",
+          "category": "breathing",
+          "duration": "4 min",
+          "description": "Navy SEAL grounding pattern that synchronizes autonomic nervous tone and restores mental clarity.",
+          "steps": [
+            "Inhale through nose for 4 counts.",
+            "Hold breath with soft throat for 4 counts.",
+            "Exhale gently through mouth for 4 counts.",
+            "Hold empty lungs calmly for 4 counts.",
+            "Repeat for 6 full boxes."
+          ]
+        },
+        {
+          "id": "pmr-scan",
+          "title": "Progressive Muscle Decompression",
+          "category": "somatic",
+          "duration": "6 - 8 min",
+          "description": "Systematically release residual tension in jaw, shoulders, and lower lumbar region.",
+          "steps": [
+            "Squeeze shoulders up to ears for 5 seconds, noticing tension.",
+            "Release abruptly and let shoulder blades melt downward on exhale.",
+            "Tense fists and forearms tightly for 5s, then release completely.",
+            "Notice the warmth and rush of blood flow entering the relaxed muscles."
+          ]
+        },
+        {
+          "id": "sensory-54321",
+          "title": "5-4-3-2-1 Sensory Grounding",
+          "category": "mental",
+          "duration": "3 min",
+          "description": "Interrupts acute thought spirals by re-anchoring cognitive attention to immediate surroundings.",
+          "steps": [
+            "Acknowledge 5 things you can see right now in your room.",
+            "Touch 4 physical textures (e.g. cotton, cool desk surface, pen).",
+            "Listen for 3 distinct ambient sounds (fan, distant traffic, breath).",
+            "Notice 2 scents or clean air sensations.",
+            "Identify 1 pleasant taste or take a crisp sip of water."
+          ]
+        }
+      ],
+      "suggestedBreaks": [
+        {
+          "id": "eye-20",
+          "title": "20-20-20 Ocular Reset",
+          "type": "Visual Rest",
+          "trigger": "After 45m screen exposure",
+          "benefit": "Relaxes ciliary eye muscles and reduces digital headache onset."
+        },
+        {
+          "id": "mindful-sip",
+          "title": "Hydration & Spinal Unfurl",
+          "type": "Ergonomic Pause",
+          "trigger": "Hourly interval",
+          "benefit": "Rehydrates spinal discs and maintains steady alertness."
+        },
+        {
+          "id": "nature-glance",
+          "title": "Window Gaze & Deep Stretch",
+          "type": "Mental Horizon Shift",
+          "trigger": "Task transition",
+          "benefit": "Promotes alpha brainwave frequency and prevents tunnel-vision fatigue."
+        }
+      ]
+    }
+  ]
+}

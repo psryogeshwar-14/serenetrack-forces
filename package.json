@@ -1,0 +1,31 @@
+{
+  "name": "serenetrack-forces",
+  "version": "2.1.0-crpf-forces",
+  "description": "AI-Based Predictive Personnel Stress & Welfare Monitoring System for Uniformed Forces (MHA / CRPF PS #26186)",
+  "main": "server/server.js",
+  "type": "module",
+  "scripts": {
+    "start": "node server/server.js",
+    "dev": "node --watch server/server.js",
+    "seed": "node server/seed.js",
+    "test": "node test/api.test.js && node test/sih_features.test.js && node test/forces_system.test.js",
+    "test:sih": "node test/sih_features.test.js",
+    "test:forces": "node test/forces_system.test.js"
+  },
+  "keywords": [
+    "stress-management",
+    "sleep-tracker",
+    "binaural-beats",
+    "soundscapes",
+    "autonomic-nervous-system",
+    "sih"
+  ],
+  "author": "",
+  "license": "MIT",
+  "dependencies": {
+    "@google/genai": "^2.24.0",
+    "cors": "^2.8.5",
+    "dotenv": "^16.4.7",
+    "express": "^4.21.2"
+  }
+}
