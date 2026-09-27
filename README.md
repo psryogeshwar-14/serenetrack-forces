@@ -14,12 +14,11 @@
 | Resource | Link / Access Details |
 |---|---|
 | 💻 **GitHub Repository** | [https://github.com/psryogeshwar-14/serenetrack-forces](https://github.com/psryogeshwar-14/serenetrack-forces) |
-| ⚡ **Direct Instant Access (No Password)** | [https://770d3363daba4b.lhr.life](https://770d3363daba4b.lhr.life) *(Direct 1-click access)* |
-| 🌐 **Live Web Application (Localtunnel)** | [https://thick-turkeys-invent.loca.lt](https://thick-turkeys-invent.loca.lt) *(Tunnel Password: `103.214.61.125`)* |
+| ⚡ **Live Web Application (Active Now)** | [https://thick-turkeys-invent.loca.lt](https://thick-turkeys-invent.loca.lt) *(Tunnel Password: `103.214.61.125`)* |
 | ☁️ **Render Cloud Production Service** | [https://serenetrack-forces.onrender.com](https://serenetrack-forces.onrender.com) |
 | 🎬 **Official SIH Video Demo** | *[YouTube Demo Video Link (Paste Link Here)]* |
-| 🏥 **Live API Health Check** | [https://770d3363daba4b.lhr.life/api/health](https://770d3363daba4b.lhr.life/api/health) |
-| 📁 **Anonymized HR Dataset Export** | [`/api/forces/export/anonymized-dataset`](https://770d3363daba4b.lhr.life/api/forces/export/anonymized-dataset) |
+| 🏥 **Live API Health Check** | [https://thick-turkeys-invent.loca.lt/api/health](https://thick-turkeys-invent.loca.lt/api/health) |
+| 📁 **Anonymized HR Dataset Export** | [`/api/forces/export/anonymized-dataset`](https://thick-turkeys-invent.loca.lt/api/forces/export/anonymized-dataset) |
 
 ---
 
