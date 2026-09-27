@@ -642,7 +642,7 @@ export function quickDispatchIntervention(personnelId) {
 const SCENARIO_REPRESENTATIVE_MAP = {
   sukma_cobra_crisis: { battalion: '204 CoBRA Battalion', jawanId: 'CRPF-204-001' },
   srinagar_ci_ops: { battalion: '110 Bn CRPF', jawanId: 'CRPF-110-001' },
-  raf_riot_order: { battalion: '103 RAF Battalion', jawanId: 'CRPF-103-001' },
+  raf_riot_order: { battalion: '103 RAF Battalion', jawanId: 'RAF-103-001' },
   peace_station_delhi: { battalion: '50 Bn CRPF', jawanId: 'CRPF-050-001' }
 };
 

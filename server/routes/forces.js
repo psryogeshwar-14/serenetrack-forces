@@ -84,7 +84,7 @@ router.get('/personnel/:id', (req, res) => {
  * POST /api/forces/assessments
  * Mobile Self-Assessment Submission
  */
-router.post('/assessments', (req, res) => {
+router.post(['/assessments', '/assessment'], (req, res) => {
   try {
     const {
       personnelId,
@@ -149,7 +149,7 @@ router.get('/alerts', (req, res) => {
  * POST /api/forces/alerts/:id/ack
  * Acknowledge Alert
  */
-router.post('/alerts/:id/ack', (req, res) => {
+router.post(['/alerts/:id/ack', '/alerts/:id/acknowledge'], (req, res) => {
   try {
     const role = req.body.role || 'welfare_officer';
     const result = acknowledgeAlert(req.params.id, role);
@@ -223,7 +223,7 @@ router.post('/interventions', (req, res) => {
  */
 router.post('/simulate', (req, res) => {
   try {
-    const { scenario } = req.body;
+    const scenario = req.body.scenario || req.body.scenarioKey;
 
     const SCENARIOS = {
       sukma_cobra_crisis: {
@@ -349,7 +349,7 @@ router.get('/audit', (req, res) => {
  * GET /api/forces/dataset
  * Export Anonymized HR & Deployment Dataset as specified in SIH PS #26186
  */
-router.get('/dataset', (req, res) => {
+router.get(['/dataset', '/export/anonymized-dataset'], (req, res) => {
   try {
     const anonymizedList = getPersonnelList({ role: 'commander' });
     res.setHeader('Content-Type', 'application/json');
