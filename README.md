@@ -16,6 +16,7 @@
 | 💻 **GitHub Repository** | [https://github.com/psryogeshwar-14/serenetrack-forces](https://github.com/psryogeshwar-14/serenetrack-forces) |
 | ⚡ **Live Web Application** | [https://thick-turkeys-invent.loca.lt](https://thick-turkeys-invent.loca.lt) *(Tunnel Password: `103.214.61.125`)* |
 | ☁️ **Render Cloud Production Service** | [https://serenetrack-forces.onrender.com](https://serenetrack-forces.onrender.com) |
+| 🎬 **Official SIH Video Demo** | *[YouTube Demo Video Link (Paste Link Here)]* |
 | 🏥 **Live API Health Check** | [https://thick-turkeys-invent.loca.lt/api/health](https://thick-turkeys-invent.loca.lt/api/health) |
 | 📁 **Anonymized HR Dataset Export** | [`/api/forces/export/anonymized-dataset`](https://thick-turkeys-invent.loca.lt/api/forces/export/anonymized-dataset) |
 
@@ -170,6 +171,23 @@ npm run test:sih
   - Anonymized HR dataset export and privacy audit trail logging.
 - **`test/api.test.js`**: Core backend REST API sanity tests.
 - **`test/sih_features.test.js`**: CBT-I worry vault, circadian decay, and bilingual engine tests.
+
+---
+
+## 🎬 Smart India Hackathon Demo Video & Presentation Guide
+
+For the official SIH 3 to 5-minute video presentation, follow this precise script and on-screen navigation sequence.
+
+### ⏱️ Recommended 4-Minute Presentation Sequence
+
+| Timestamp | Screen / Visual to Show | What to Click / Demonstrate | Exact Talking Points to Narrate |
+|---|---|---|---|
+| **0:00 - 0:45** | **Header & SIH Problem Statement Banner** | Point out CRPF logo, Problem Statement ID **26186**, MHA Police II Division. | *"Respected Jury members, personnel in our Central Armed Police Forces—CRPF, CoBRA, BSF, and RAF—operate in intense hardship zones with chronic family separation and sleep deficits. Today, stress detection relies on delayed self-reporting. We present SereneTrack Forces: an AI-powered, predictive stress and welfare monitoring platform built with a strictly non-punitive welfare doctrine."* |
+| **0:45 - 1:30** | **⚡ 1-Click SIH Judge Theaters** | Click **🔴 Sukma CoBRA Ambush (204 CoBRA)** button. Watch dials spike. | *"To demonstrate real-time predictive behavior, notice our 1-click operational simulators. When deployed in Sukma, Bastar with 220 days since home leave, 6 night ambushes, and severe HRV drop, our engine predicts an Autonomic Strain of 99/100 and Burnout Risk of 99%. Now click 🟢 Static Peace Garrison—strain instantly normalizes to 12/100 with 96% force readiness."* |
+| **1:30 - 2:30** | **Role-Based Access Control (RBAC)** | Toggle between **🎖️ Unit Commander** and **🩺 Welfare Officer** tabs. | *"Notice our core architectural innovation: the **Commander Privacy Shield**. When the Commandant views the dashboard, jawans are identified strictly by anonymized tokens like `J-COBRA-784`, preventing stigmatization or career penalties. Only the authorized Medical Officer in the Welfare Officer view sees identifiable clinical records for compassionate intervention."* |
+| **2:30 - 3:15** | **🪖 Field Jawan Mobile App** | Switch to **🪖 Field Jawan Mobile App** tab. Show PSS-10 and SOS Button. | *"In the field, jawans have a lightweight, low-bandwidth mobile app. Jawans complete a 60-second check-in and standardized PSS-10 clinical screener. If overwhelmed, the red **Confidential Welfare SOS** button allows immediate, off-the-record connection to the Unit Welfare Subedar or 24/7 Tele-MANAS (14416) helpline."* |
+| **3:15 - 3:50** | **Automated Alerts & Proactive Interventions** | Go back to Welfare Officer tab. Click **Acknowledge (ALT-...)** and dispatch leave. | *"In the Welfare cockpit, automated alerts highlight acute burnout. The officer clicks 'Acknowledge' and dispatches compassionate fast-track 15-day home leave and 48-hour garrison R&R—shifting welfare from reactive grief to proactive prevention."* |
+| **3:50 - 4:30** | **Bilingual Toggle, Export & 100% Tests** | Toggle Hindi/English (`🌐 हिंदी / ENG`), click **Export Anonymized Dataset**, show terminal. | *"The platform is fully bilingual in Hindi and English. Finally, our anonymized dataset export conforms with MHA data governance, and all 8 pillars of Problem Statement #26186 are backed by our automated test suite with 100% test pass rate. Thank you, Jai Hind!"* |
 
 ---
 
