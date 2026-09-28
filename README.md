@@ -32,6 +32,20 @@ Currently, stress identification depends on manual observation and ad-hoc self-r
 
 ---
 
+## 📐 Technical Architecture & System Data Flow
+
+![SereneTrack Forces Technical Architecture](public/images/technical_architecture.jpg)
+
+### End-to-End Technical Pipeline:
+1. **Heterogeneous Ingestion Stream**: Ingests 6 core HRMS administrative parameters (leave history, hardship zones, shift overtimes, night sentries, transfer frequency, training courses) alongside voluntary smartwatch biometrics (HRV rMSSD ms, sleep deficit) and low-bandwidth mobile PSS-10 self-assessments.
+2. **Commander Privacy Shield (RBAC Boundary)**: Enforces cryptographic pseudonymization (`J-COBRA-784`), preventing commanders from viewing personal medical records and eliminating workplace stigma.
+3. **AI Predictive Behavioral Analytics Engine**: Multi-factor mathematical modeling ($5\text{--}99$ scale) computing Autonomic Strain, Burnout Risk ($2\text{--}99\%$), and Force Operational Readiness ($10\text{--}99\%$) with full Explainable AI (XAI) feature attribution drivers.
+4. **Dual Operational Cockpits**:
+   - **Battalion Commander View**: Anonymized company heatmaps, battalion readiness percentage, and macro leave backlog distribution.
+   - **Unit Medical Officer View**: Unmasked clinical triage matrix, automated early-warning alerts, and 1-click fast-track compassionate leave dispatch.
+
+---
+
 ## 🏛️ The 8 Core Expected Solution Pillars (PS #26186)
 
 ### 1. 🎖️ Personnel Wellness Monitoring Dashboard
